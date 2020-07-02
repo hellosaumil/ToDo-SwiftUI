@@ -13,6 +13,11 @@ enum GradientTypes {
     case linear, radient, angular
 }
 
+extension View {
+    public func foregroundOverlay<Overlay: View>(_ overlay: Overlay) -> some View {
+        self.overlay(overlay).mask(self)
+    }
+}
 
 func myGradient(
     
