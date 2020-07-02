@@ -16,6 +16,7 @@
 		6B08087824A4083800208A7C /* ListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08087724A4083800208A7C /* ListDetailView.swift */; };
 		6B08087B24A40B0400208A7C /* HelperViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08087A24A40B0400208A7C /* HelperViews.swift */; };
 		6BF8BF6A24ADB42A00D56A40 /* ListMasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF8BF6924ADB42A00D56A40 /* ListMasterView.swift */; };
+		6BF8BF6C24ADB4D600D56A40 /* ListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF8BF6B24ADB4D600D56A40 /* ListCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		6B08087724A4083800208A7C /* ListDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailView.swift; sourceTree = "<group>"; };
 		6B08087A24A40B0400208A7C /* HelperViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperViews.swift; sourceTree = "<group>"; };
 		6BF8BF6924ADB42A00D56A40 /* ListMasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMasterView.swift; sourceTree = "<group>"; };
+		6BF8BF6B24ADB4D600D56A40 /* ListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			children = (
 				6BF8BF6924ADB42A00D56A40 /* ListMasterView.swift */,
 				6B08087724A4083800208A7C /* ListDetailView.swift */,
+				6BF8BF6B24ADB4D600D56A40 /* ListCellView.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B08084124A4062B00208A7C /* AppDelegate.swift in Sources */,
+				6BF8BF6C24ADB4D600D56A40 /* ListCellView.swift in Sources */,
 				6B08087824A4083800208A7C /* ListDetailView.swift in Sources */,
 				6BF8BF6A24ADB42A00D56A40 /* ListMasterView.swift in Sources */,
 				6B08084324A4062B00208A7C /* SceneDelegate.swift in Sources */,
