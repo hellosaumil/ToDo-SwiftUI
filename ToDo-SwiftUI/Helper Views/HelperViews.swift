@@ -149,3 +149,25 @@ struct BindingTextRowView: View {
         }
     }
 }
+
+
+struct FloatingActionButton: View {
+    
+    var systemImageName: String = "plus"
+    @Binding var bgColor: Color
+    var color: Color = .white
+    var font: Font = .body
+    
+    var action: () -> Void
+    
+    var body: some View {
+        
+        Button(action: action) {
+            getSystemImage(self.systemImageName, self.color, self.font, scale: .medium)
+                .background(self.bgColor)
+                .clipShape(Circle())
+                .padding(.horizontal)
+                .shadow(color: .primary, radius: 8)
+        }
+    }
+}
