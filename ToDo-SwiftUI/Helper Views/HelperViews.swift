@@ -13,6 +13,12 @@ enum GradientTypes {
     case linear, radient, angular
 }
 
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
 extension View {
     public func foregroundOverlay<Overlay: View>(_ overlay: Overlay) -> some View {
         self.overlay(overlay).mask(self)
@@ -100,5 +106,46 @@ struct RoundedButton: View {
             .foregroundColor(foregroundColor)
             .background(color)
             .cornerRadius(14)
+    }
+}
+
+struct BindingTextRowView: View {
+    
+    @Binding var headline: String
+    @Binding var subheadline: String
+    @Binding var caption: String
+    
+    var body: some View {
+        
+        HStack {
+            
+            Text(self.headline).bold()
+            
+            Spacer()
+            
+            if self.caption == "" {
+                
+                Text("\(self.subheadline)")
+                    .foregroundColor(.gray)
+                    .lineLimit(2)
+                    .font(.system(size: 16, design: .monospaced))
+                
+            } else {
+                
+                VStack(alignment: .trailing) {
+                    
+                    Text("\(self.subheadline)")
+                        .foregroundColor(.gray)
+                        .lineLimit(2)
+                        .font(.system(size: 16, design: .serif))
+                    
+                    Text("\(self.caption)")
+                        .foregroundColor(.gray)
+                        .lineLimit(2)
+                        .font(.system(size: 14, design: .monospaced))
+                    
+                }
+            }
+        }
     }
 }

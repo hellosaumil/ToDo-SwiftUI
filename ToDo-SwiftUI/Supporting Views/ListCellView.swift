@@ -10,14 +10,13 @@ import SwiftUI
 
 struct ListCellView: View {
     
-    @State var item: String = "Want to-do something"
+    @State var item: String = "want to-do something"
     
     var body: some View {
         
         HStack {
             
             getSystemImage("hexagon.fill", font: .body)
-                .padding(.leading, -8)
                 .padding(.trailing, -4)
                 .foregroundOverlay(
                     myGradient(type: .linear,
@@ -29,12 +28,13 @@ struct ListCellView: View {
                 .fontWeight(.medium)
                 .foregroundOverlay( myGradient(type: .linear) )
             
-        }
+        }.padding(.horizontal)
     }
 }
 
 struct ListCellView_Previews: PreviewProvider {
     static var previews: some View {
         ListCellView()
+            .previewLayout(.sizeThatFits)
     }
 }

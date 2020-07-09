@@ -19,13 +19,13 @@ struct ListMasterView: View {
         
         NavigationView {
             
-            Group {
+            List(items, id: \.self) { item in
                 
-                List(items, id: \.self) { item in
+                NavigationLink(destination: ListDetailView(detailTitle: item)) {
                     
                     ListCellView(item: item)
+                        .padding(.leading, -22)
                 }
-                
             }
             .navigationBarTitle(Text("👨🏻‍💻 \(self.ListTitle)"), displayMode: .automatic)
         }
