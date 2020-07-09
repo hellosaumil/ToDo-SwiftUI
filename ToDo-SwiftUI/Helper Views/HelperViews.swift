@@ -171,3 +171,13 @@ struct FloatingActionButton: View {
         }
     }
 }
+
+/// Ref: https://finestructure.co/blog/2020/1/28/enhance-your-swiftui-previews-with-gala
+public func NightAndDay<A: View>(_ name: String? = nil,
+                                 @ViewBuilder items: @escaping () -> A) -> some View {
+    ForEach([ColorScheme.light, .dark], id: \.self) { scheme in
+        items()
+            .previewDisplayName(name.map { "\($0) \(scheme)" } ?? "\(scheme)")
+            .environment(\.colorScheme, scheme)
+    }
+}

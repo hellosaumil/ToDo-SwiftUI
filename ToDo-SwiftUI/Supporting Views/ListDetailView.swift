@@ -12,13 +12,13 @@ struct ListDetailView: View {
     
     @State var detailTitle: String = "In Detail"
     
-    @State private var eventDate = Date()
-    @State private var eventTime = Date()
+    @State var eventDate = Date()
+    @State var eventTime = Date()
     
-    @State private var selectedColor:BaseColors = .orange
-    @State private var selectedShape:BaseShapes = .hexagon
+    @State var selectedColor:BaseColors = .orange
+    @State var selectedShape:BaseShapes = .hexagon
     
-    @State private var isMyFavorite:Bool = false
+    @State var isMyFavorite:Bool = false
     
     
     var body: some View {
@@ -121,14 +121,41 @@ struct ListDetailView: View {
         .navigationBarTitle(Text("\(detailTitle)"))
     }
     
-    private func endEditing(_ force: Bool) {
+    func endEditing(_ force: Bool) {
         UIApplication.shared.endEditing()
     }
     
 }
 
+let tasks: [ToDoTask] = [
+    ToDoTask(),
+    ToDoTask(name: "Practice iOS Dev",
+             dueDate: Date()+2, dueTime: Date()+2,
+             color: .purple, shape: .triangle,
+             isFav: true)
+]
+
 struct ListDetailView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        ListDetailView()
+        
+        Group {
+            
+            NightAndDay { ListDetailView() }
+            
+            ForEach(tasks, id: \.self) { task in
+                
+                NightAndDay {
+                    
+                    ListDetailView(detailTitle: task.todoName,
+                                   eventDate: task.dueTime,
+                                   eventTime: task.dueTime,
+                                   selectedColor: task.todoColor,
+                                   selectedShape: task.todoShape,
+                                   isMyFavorite: task.isMyFavorite)
+                    
+                }
+            }
+        }
     }
 }
