@@ -10,22 +10,24 @@ import SwiftUI
 
 struct ListDetailView: View {
     
-    @State var detailTitle: String = "In Detail"
+    @State var taskName: String = "In Detail"
     
-    @State var eventDate = Date()
-    @State var eventTime = Date()
+    @State var taskDateTime = Date()
     
     @State var selectedColor:BaseColors = .orange
     @State var selectedShape:BaseShapes = .hexagon
     
+    @State var notes: String = ""
     @State var isMyFavorite:Bool = false
+    
+    @ObservedObject private var keyboard = KeyboardResponder()
     
     
     var body: some View {
         
         Form {
             
-            Section(header: Text("Customize")) {
+            Section(header: headerItemGroup(imageName: "text.cursor", text: "Basic Info")) {
                 
                 VStack(alignment: .center) {
                     
@@ -33,17 +35,25 @@ struct ListDetailView: View {
                         
                         Text("Name")
                         
-                        commonUserInput(keyboard: .default,
+                        Spacer()
+                        
+                        commonUserInput(keyboard: .numbersAndPunctuation,
                                         placeholder: "Type a new task name...",
-                                        textfield: $detailTitle, lineLimit: 2,
-                                        fontDesign: .monospaced,
+                                        textfield: $taskName, lineLimit: 2,
+                                        fontDesign: .rounded,
                                         fontSize: .body,
                                         scale: 0.88)
-                            .foregroundColor(Color.primary.opacity(0.75))
+                            
+                            .textFieldStyle(PlainTextFieldStyle())  
+                            .foregroundColor(Color.primary.opacity(0.50))
                     }
                     .padding(.vertical)
-                    
-                    Divider()
+                }
+            }
+            
+            Section(header: headerItemGroup(imageName: "eyedropper.halffull", text: "Customize")) {
+                
+                VStack(alignment: .center) {
                     
                     Picker(selection: $selectedColor, label: Text("Color")) {
                         ForEach(BaseColors.allCases, id: \.id) { colorName in
@@ -76,49 +86,53 @@ struct ListDetailView: View {
                 }
             }
             
-            
-            Section(header: Text("Reminde me on the")) {
+            Section(header: headerItemGroup(imageName: "calendar", text: "Reminde me on the")) {
                 
-                DatePicker(selection: $eventDate,
+                DatePicker(selection: $taskDateTime,
                            in: Date()...,
-                           displayedComponents: .date,
-                           label: {Text("Date")} )
-                
-                
-                DatePicker(selection: $eventTime,
-                           in: Date()...,
-                           displayedComponents: .hourAndMinute,
-                           label: {Text("Time")} )
+                           displayedComponents: [.hourAndMinute, .date] ,
+                           label: {Text("Date & Time")} )
                 
             }
             
-            Section(header: Text("More details")) {
+            Section(header: headerItemGroup(imageName: "text.badge.star", text: "More details")) {
                 
-                TextFieldView(title: "Notes",
-                              text: .constant(""),
-                              placeholder: "Note here so you don't forget...",
-                              backgroundColor: Color.primary.opacity(0.05))
-                    .frame(height: 160)
-                    .padding(.vertical)
-                
+                VStack (alignment: .leading, spacing: 10) {
+                    
+                    Text("Notes").bold()
+                    
+                    commonUserInput(keyboard: .default,
+                                    placeholder: "Note so you don't forget...",
+                                    textfield: $notes, lineLimit: 10,
+                                    fontDesign: .rounded,
+                                    fontSize: .body,
+                                    scale: 0.88)
+                        
+                        .padding()
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .foregroundColor(Color.primary.opacity(0.75))
+                        
+                        .background(Color.primary.opacity(0.05))
+                        .cornerRadius(10)
+                    
+                }
+                .padding(.vertical)
                 
                 HStack {
                     
-                    getSystemImage( isMyFavorite ? "star.fill" : "star",
-                                    font: .body,
-                                    color: .yellow)
+                    getSystemImage(name: isMyFavorite ? "star.fill" : "star",
+                                   color: .yellow, font: .body)
                     
                     Text("Add to Favorites")
                 }
                 .onTapGesture { self.isMyFavorite.toggle() }
+                
             }
-            
-        }
-        .onTapGesture {
-            self.endEditing(true)
         }
             
-        .navigationBarTitle(Text("\(detailTitle)"))
+        .navigationBarTitle(Text("\(taskName)"))
+        .padding(.bottom, keyboard.currentHeight)
+        .edgesIgnoringSafeArea(.bottom)
     }
     
     func endEditing(_ force: Bool) {
@@ -129,10 +143,10 @@ struct ListDetailView: View {
 
 let tasks: [ToDoTask] = [
     ToDoTask(),
-    ToDoTask(name: "Practice iOS Dev",
-             dueDate: Date()+2, dueTime: Date()+2,
+    ToDoTask(name: "Practice iOS Development",
+             dueDateTime: Date()+2,
              color: .purple, shape: .triangle,
-             isFav: true)
+             notes: "Follow 100 Days of SwiftUI", isFav: true)
 ]
 
 struct ListDetailView_Previews: PreviewProvider {
@@ -141,21 +155,42 @@ struct ListDetailView_Previews: PreviewProvider {
         
         Group {
             
-            NightAndDay { ListDetailView() }
-            
             ForEach(tasks, id: \.self) { task in
                 
                 NightAndDay {
                     
-                    ListDetailView(detailTitle: task.todoName,
-                                   eventDate: task.dueTime,
-                                   eventTime: task.dueTime,
-                                   selectedColor: task.todoColor,
-                                   selectedShape: task.todoShape,
-                                   isMyFavorite: task.isMyFavorite)
-                    
+                    ListDetailView(taskName: task.todoName,
+                                   taskDateTime: task.dueDateTime,
+                                   selectedColor: task.todoColor, selectedShape: task.todoShape,
+                                   notes: task.notes, isMyFavorite: task.isMyFavorite)
                 }
             }
         }
+    }
+}
+
+
+final class KeyboardResponder: ObservableObject {
+    private var notificationCenter: NotificationCenter
+    @Published private(set) var currentHeight: CGFloat = 0
+    
+    init(center: NotificationCenter = .default) {
+        notificationCenter = center
+        notificationCenter.addObserver(self, selector: #selector(keyBoardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyBoardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
+    }
+    
+    @objc func keyBoardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            currentHeight = keyboardSize.height
+        }
+    }
+    
+    @objc func keyBoardWillHide(notification: Notification) {
+        currentHeight = 0
     }
 }

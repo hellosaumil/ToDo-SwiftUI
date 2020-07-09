@@ -18,35 +18,35 @@ struct ToDoTask: Codable, Equatable, Hashable {
     let todoID: UUID
     var todoName: String
     
-    var dueDate: Date
-    var dueTime: Date
+    var dueDateTime: Date
     
     var todoColor:BaseColors
     var todoShape:BaseShapes
     
+    var notes: String
     var isMyFavorite:Bool
     
-    init(name: String, dueDate: Date, dueTime: Date,
+    init(name: String, dueDateTime: Date,
          color: BaseColors, shape: BaseShapes,
-         isFav: Bool) {
+         notes: String, isFav: Bool) {
         
         self.todoID = UUID()
         self.todoName = name
         
-        self.dueDate = dueDate
-        self.dueTime = dueTime
+        self.dueDateTime = dueDateTime
         
         self.todoColor = color
         self.todoShape = shape
         
+        self.notes = notes
         self.isMyFavorite = isFav
     }
     
     init() {
         
-        self.init(name: "New ToDo", dueDate: Date(), dueTime: Date(),
-                  color: .green, shape: .shield, isFav: false)
-        
+        self.init(name: "New ToDo", dueDateTime: Date(),
+                  color: .orange, shape: .hexagon,
+                  notes: "", isFav: false)
     }
 }
 

@@ -16,7 +16,7 @@ struct ListCellView: View {
         
         HStack {
             
-            getSystemImage("hexagon.fill", font: .body)
+            getSystemImage(name: "hexagon.fill", font: .body)
                 .padding(.trailing, -4)
                 .foregroundOverlay(
                     myGradient(type: .linear,

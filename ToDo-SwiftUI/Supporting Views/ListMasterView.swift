@@ -21,7 +21,7 @@ struct ListMasterView: View {
             
             List(items, id: \.self) { item in
                 
-                NavigationLink(destination: ListDetailView(detailTitle: item)) {
+                NavigationLink(destination: ListDetailView(taskName: item)) {
                     
                     ListCellView(item: item)
                         .padding(.leading, -22)

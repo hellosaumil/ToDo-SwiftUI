@@ -65,29 +65,35 @@ func myGradient(
     
 }
 
-
-
-func getSystemImage(_ systemName: String = "photo", font:Font = .body, color:Color = .primary) -> some View {
-    
-    getSystemImage(systemName, color, font)
-}
-
-func getSystemImage(_ systemName: String = "photo", _ color:Color = .primary, _ font:Font = .title, scale: Image.Scale = .medium) -> some View {
-    Image(systemName: systemName)
+func getSystemImage(name: String = "photo", color:Color = .primary, font:Font = .title, scale: Image.Scale = .medium) -> some View {
+    Image(systemName: name)
         .foregroundColor(color)
         .font(font)
         .imageScale(scale)
         .padding()
 }
 
-func tabItemGroup(itemText: String, systemName: String) -> some View {
+func tabItemGroup(text: String, imageName: String, imageScale: Image.Scale = .medium) -> some View {
     
     VStack {
-        Text(itemText)
-        getSystemImage(systemName, font: .body)
+        Text(text)
+        getSystemImage(name: imageName, font: .body, scale: imageScale)
     }
     
 }
+
+func headerItemGroup(imageName: String, text: String, imageScale: Image.Scale = .small) -> some View {
+    
+    HStack(spacing: -8) {
+        
+        getSystemImage(name: imageName, color: Color.primary.opacity(0.5),
+                       font: .headline, scale: imageScale)
+            .padding(.leading, -14.0)
+        Text(text)
+    }
+    
+}
+
 
 struct RoundedButton: View {
     
@@ -163,7 +169,9 @@ struct FloatingActionButton: View {
     var body: some View {
         
         Button(action: action) {
-            getSystemImage(self.systemImageName, self.color, self.font, scale: .medium)
+            getSystemImage(name: self.systemImageName,
+                           color: self.color, font: self.font,
+                           scale: .medium)
                 .background(self.bgColor)
                 .clipShape(Circle())
                 .padding(.horizontal)

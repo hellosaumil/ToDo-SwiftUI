@@ -69,6 +69,13 @@ struct TextFieldView_Previews: PreviewProvider {
     }
 }
 
+extension String {
+    
+    var strip: String {
+        return self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
 struct MultiLineTF : UIViewRepresentable {
     
     
@@ -77,16 +84,15 @@ struct MultiLineTF : UIViewRepresentable {
         return MultiLineTF.Coordinator(parent1: self)
     }
     
-    
     @Binding var text : String
-    @State var placeholder: String = "Type Something"
+    @State var placeholder: String = "Type Something..."
     @State var fontSize : CGFloat = 14
     
     func makeUIView(context: UIViewRepresentableContext<MultiLineTF>) -> UITextView{
         
         let view = UITextView()
         
-        if self.text != ""{
+        if self.text.strip != ""{
             
             view.text = self.text
             view.textColor = .black
@@ -99,7 +105,7 @@ struct MultiLineTF : UIViewRepresentable {
         
         
         view.font = .systemFont(ofSize: fontSize)
-        
+        view.returnKeyType = UIReturnKeyType.done
         
         view.isEditable = true
         view.backgroundColor = .clear
@@ -111,7 +117,7 @@ struct MultiLineTF : UIViewRepresentable {
         
     }
     
-    class Coordinator : NSObject,UITextViewDelegate{
+    class Coordinator : NSObject, UITextViewDelegate{
         
         var parent : MultiLineTF
         
@@ -122,7 +128,7 @@ struct MultiLineTF : UIViewRepresentable {
         
         func textViewDidBeginEditing(_ textView: UITextView) {
             
-            if self.parent.text == ""{
+            if self.parent.text.strip == "" {
                 
                 textView.text = ""
                 textView.textColor = .black
@@ -132,24 +138,28 @@ struct MultiLineTF : UIViewRepresentable {
         
         func textViewDidChange(_ textView: UITextView) {
             
-            self.parent.text = textView.text
+            self.parent.text = textView.text.strip
+        }
+        
+        func textViewDidEndEditing(_ textView: UITextView) {
+            
+            textView.resignFirstResponder()
+            self.parent.text = textView.text.strip
         }
     }
 }
 
 func commonUserInput(keyboard keyboardDataType: UIKeyboardType = .default, placeholder tf_msg:String="Placeholder Message", textfield tfTextBinding:Binding<String>, lineLimit:Int = 1, fontDesign:Font.Design = .monospaced, fontSize:Font.TextStyle = .body, scale: CGFloat = 1.0) -> some View {
     
-    
     TextField(tf_msg, text: tfTextBinding, onEditingChanged: { _ in
         
-        tfTextBinding.wrappedValue = tfTextBinding.wrappedValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        tfTextBinding.wrappedValue = tfTextBinding.wrappedValue.strip
         
     })
         .frame(width: UIScreen.main.bounds.width * 0.88 * scale, height: 10*CGFloat(lineLimit))
         .lineLimit(lineLimit)
-        .textFieldStyle(RoundedBorderTextFieldStyle())
         .font(.system(fontSize, design: fontDesign))
         .keyboardType(keyboardDataType)
-    
+        .fixedSize(horizontal: false, vertical: true)
     
 }
