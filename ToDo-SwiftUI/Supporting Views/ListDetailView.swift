@@ -8,45 +8,6 @@
 
 import SwiftUI
 
-
-var dateFormatter: DateFormatter {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .long
-    return formatter
-}
-
-enum BaseColors: String, CaseIterable, Identifiable {
-    
-    case pink, yellow, orange, green, blue, purple
-    var id: String { self.rawValue }
-    
-    var color: Color {
-        
-        switch self {
-            
-        case .pink: return .pink
-        case .yellow: return .yellow
-        case .orange: return .orange
-        case .green: return .green
-        case .blue: return .blue
-        case .purple: return .purple
-            
-            //        default:
-            //            return .primary
-        }
-    }
-}
-
-enum BaseShapes: String, CaseIterable, Identifiable {
-    
-    case triangle, square, rectangle, hexagon, circle, capsule, shield
-    var id: String { self.rawValue }
-    
-    var unfilled:Image { return Image(systemName: "\(self.id)") }
-    var filled:Image { return Image(systemName: "\(self.id).fill") }
-}
-
-
 struct ListDetailView: View {
     
     @State var detailTitle: String = "In Detail"
