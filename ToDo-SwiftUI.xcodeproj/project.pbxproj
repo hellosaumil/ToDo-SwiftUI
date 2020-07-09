@@ -15,6 +15,7 @@
 		6B08084D24A4062D00208A7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B08084B24A4062D00208A7C /* LaunchScreen.storyboard */; };
 		6B08087824A4083800208A7C /* ListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08087724A4083800208A7C /* ListDetailView.swift */; };
 		6B08087B24A40B0400208A7C /* HelperViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08087A24A40B0400208A7C /* HelperViews.swift */; };
+		6B9465FF24B6B6C0005DE211 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9465FE24B6B6C0005DE211 /* TextFieldView.swift */; };
 		6BA518B924ADBC39004061DD /* ListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA518B824ADBC39004061DD /* ListCellView.swift */; };
 		6BA518BB24ADBC7C004061DD /* ListMasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA518BA24ADBC7C004061DD /* ListMasterView.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		6B08084E24A4062D00208A7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B08087724A4083800208A7C /* ListDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailView.swift; sourceTree = "<group>"; };
 		6B08087A24A40B0400208A7C /* HelperViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperViews.swift; sourceTree = "<group>"; };
+		6B9465FE24B6B6C0005DE211 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 		6BA518B824ADBC39004061DD /* ListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellView.swift; sourceTree = "<group>"; };
 		6BA518BA24ADBC7C004061DD /* ListMasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMasterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				6B08087A24A40B0400208A7C /* HelperViews.swift */,
+				6B9465FE24B6B6C0005DE211 /* TextFieldView.swift */,
 			);
 			path = "Helper Views";
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 			files = (
 				6B08084124A4062B00208A7C /* AppDelegate.swift in Sources */,
 				6BA518B924ADBC39004061DD /* ListCellView.swift in Sources */,
+				6B9465FF24B6B6C0005DE211 /* TextFieldView.swift in Sources */,
 				6B08087824A4083800208A7C /* ListDetailView.swift in Sources */,
 				6B08084324A4062B00208A7C /* SceneDelegate.swift in Sources */,
 				6B08087B24A40B0400208A7C /* HelperViews.swift in Sources */,

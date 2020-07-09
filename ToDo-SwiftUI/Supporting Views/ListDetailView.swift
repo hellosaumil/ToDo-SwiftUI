@@ -17,16 +17,16 @@ var dateFormatter: DateFormatter {
 
 enum BaseColors: String, CaseIterable, Identifiable {
     
-    case orange, pink, yellow, green, blue, purple
+    case pink, yellow, orange, green, blue, purple
     var id: String { self.rawValue }
     
     var color: Color {
         
         switch self {
             
-        case .orange: return .orange
         case .pink: return .pink
         case .yellow: return .yellow
+        case .orange: return .orange
         case .green: return .green
         case .blue: return .blue
         case .purple: return .purple
@@ -37,6 +37,15 @@ enum BaseColors: String, CaseIterable, Identifiable {
     }
 }
 
+enum BaseShapes: String, CaseIterable, Identifiable {
+    
+    case triangle, square, rectangle, hexagon, circle, capsule, shield
+    var id: String { self.rawValue }
+    
+    var unfilled:Image { return Image(systemName: "\(self.id)") }
+    var filled:Image { return Image(systemName: "\(self.id).fill") }
+}
+
 
 struct ListDetailView: View {
     
@@ -45,79 +54,109 @@ struct ListDetailView: View {
     @State private var eventDate = Date()
     @State private var eventTime = Date()
     
-    @State private var selectedColor:BaseColors = .pink
+    @State private var selectedColor:BaseColors = .orange
+    @State private var selectedShape:BaseShapes = .hexagon
+    
+    @State private var isMyFavorite:Bool = false
+    
     
     var body: some View {
         
-        VStack {
+        Form {
             
-            Form {
+            Section(header: Text("Customize")) {
                 
-                Section(header: Text("Reminde me on the")) {
-                    
-                    DatePicker(selection: $eventDate,
-                               in: Date()...,
-                               displayedComponents: .date,
-                               label: {Text("Date")} )
-                    
-                    
-                    DatePicker(selection: $eventTime,
-                               in: Date()...,
-                               displayedComponents: .hourAndMinute,
-                               label: {Text("Time")} )
-                    
-                }
-                
-                Section(header: Text("More details")) {
-                    
-                    TextFieldView(title: "Notes",
-                                  text: .constant(""),
-                                  placeholder: "Note here so you don't forget...",
-                                  backgroundColor: Color.primary.opacity(0.05))
-                        .frame(height: 160)
-                        .padding(.vertical)
+                VStack(alignment: .center) {
                     
                     HStack {
-                        getSystemImage("star",
-                                       font: .body,
-                                       color: .yellow)
                         
-                        Text("Add to Favorites")
+                        Text("Name")
+                        
+                        commonUserInput(keyboard: .default,
+                                        placeholder: "Type a new task name...",
+                                        textfield: $detailTitle, lineLimit: 2,
+                                        fontDesign: .monospaced,
+                                        fontSize: .body,
+                                        scale: 0.88)
+                            .foregroundColor(Color.primary.opacity(0.75))
                     }
-                }
-                
-                Section(header:
-                    HStack {
-                        
-                        getSystemImage("paintbrush.fill",
-                                       font: .caption,
-                                       color: selectedColor.color)
-                            .padding(.horizontal, -16)
-                        
-                        Text("Customize")
-                        
-                }) {
-
-                    Picker(selection: $selectedColor, label: Text("")) {
+                    .padding(.vertical)
+                    
+                    Divider()
+                    
+                    Picker(selection: $selectedColor, label: Text("Color")) {
                         ForEach(BaseColors.allCases, id: \.id) { colorName in
-                            Text(colorName.rawValue).tag(colorName)
+                            
+                            Text(colorName.id).tag(colorName)
+                                .foregroundColor(.blue)
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    .padding(.vertical)
+                    .padding(.vertical, 4)
+                    
+                    
+                    Picker(selection: $selectedShape, label: EmptyView()) {
+                        
+                        ForEach(BaseShapes.allCases, id: \.id) { shapeName in
+                            
+                            shapeName.filled.tag(shapeName)
+                                .rotationEffect(Angle(degrees: -90.0))
+                                .foregroundColor( self.selectedColor.color )
+                                .imageScale(.medium)
+                            
+                        }
+                    }
+                    .pickerStyle(WheelPickerStyle())
+                    .frame(height: 32, alignment: .center)
+                    .rotationEffect(Angle(degrees: 90.0))
+                    .scaledToFit()
+                    .clipped()
+                    .padding(.vertical, 4)
                 }
             }
             
-            Spacer()
-            Divider()
             
-            Button(action: {}) {
+            Section(header: Text("Reminde me on the")) {
                 
-                RoundedButton(text: "Save Changes")
+                DatePicker(selection: $eventDate,
+                           in: Date()...,
+                           displayedComponents: .date,
+                           label: {Text("Date")} )
+                
+                
+                DatePicker(selection: $eventTime,
+                           in: Date()...,
+                           displayedComponents: .hourAndMinute,
+                           label: {Text("Time")} )
+                
             }
-            .padding(.top, 8)
+            
+            Section(header: Text("More details")) {
+                
+                TextFieldView(title: "Notes",
+                              text: .constant(""),
+                              placeholder: "Note here so you don't forget...",
+                              backgroundColor: Color.primary.opacity(0.05))
+                    .frame(height: 160)
+                    .padding(.vertical)
+                
+                
+                HStack {
+                    
+                    getSystemImage( isMyFavorite ? "star.fill" : "star",
+                                    font: .body,
+                                    color: .yellow)
+                    
+                    Text("Add to Favorites")
+                }
+                .onTapGesture { self.isMyFavorite.toggle() }
+            }
             
         }
+        .onTapGesture {
+            self.endEditing(true)
+        }
+            
         .navigationBarTitle(Text("\(detailTitle)"))
     }
     
@@ -130,100 +169,5 @@ struct ListDetailView: View {
 struct ListDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ListDetailView()
-    }
-}
-
-struct TextFieldView: View {
-    
-    @State var title: String = "TextField"
-    @Binding var text: String
-    @State var placeholder: String = "Text here..."
-    
-    @State var backgroundColor:Color = Color.primary.opacity(0.05)
-    @State var cornerRadius:CGFloat = 10
-    @State var size:CGFloat = 14
-    
-    var body: some View {
-        
-        VStack(alignment: .leading) {
-            
-            Text(title)
-                .font(.headline)
-                .fontWeight(.semibold)
-            
-            MultiLineTF(text: $text,
-                        placeholder: placeholder,
-                        fontSize: size)
-                .background(backgroundColor)
-                .cornerRadius(cornerRadius)
-        }
-    }
-}
-
-struct MultiLineTF : UIViewRepresentable {
-    
-    
-    func makeCoordinator() -> MultiLineTF.Coordinator {
-        
-        return MultiLineTF.Coordinator(parent1: self)
-    }
-    
-    
-    @Binding var text : String
-    @State var placeholder: String = "Type Something"
-    @State var fontSize : CGFloat = 14
-    
-    func makeUIView(context: UIViewRepresentableContext<MultiLineTF>) -> UITextView{
-        
-        let view = UITextView()
-        
-        if self.text != ""{
-            
-            view.text = self.text
-            view.textColor = .black
-        }
-        else{
-            
-            view.text = self.placeholder
-            view.textColor = .gray
-        }
-        
-        
-        view.font = .systemFont(ofSize: fontSize)
-        
-        
-        view.isEditable = true
-        view.backgroundColor = .clear
-        view.delegate = context.coordinator
-        return view
-    }
-    
-    func updateUIView(_ uiView: UITextView, context: UIViewRepresentableContext<MultiLineTF>) {
-        
-    }
-    
-    class Coordinator : NSObject,UITextViewDelegate{
-        
-        var parent : MultiLineTF
-        
-        init(parent1 : MultiLineTF) {
-            
-            parent = parent1
-        }
-        
-        func textViewDidBeginEditing(_ textView: UITextView) {
-            
-            if self.parent.text == ""{
-                
-                textView.text = ""
-                textView.textColor = .black
-            }
-            
-        }
-        
-        func textViewDidChange(_ textView: UITextView) {
-            
-            self.parent.text = textView.text
-        }
     }
 }
