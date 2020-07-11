@@ -26,9 +26,9 @@ struct ToDoTask: Codable, Equatable, Hashable {
     var notes: String
     var isMyFavorite:Bool
     
-    init(name: String, dueDateTime: Date,
-         color: BaseColors, shape: BaseShapes,
-         notes: String, isFav: Bool) {
+    init(name: String = "New ToDo", dueDateTime: Date = Date(),
+         color: BaseColors = .orange, shape: BaseShapes = .hexagon,
+         notes: String = "", isFav: Bool = false) {
         
         self.todoID = UUID()
         self.todoName = name
@@ -40,13 +40,6 @@ struct ToDoTask: Codable, Equatable, Hashable {
         
         self.notes = notes
         self.isMyFavorite = isFav
-    }
-    
-    init() {
-        
-        self.init(name: "New ToDo", dueDateTime: Date(),
-                  color: .orange, shape: .hexagon,
-                  notes: "", isFav: false)
     }
 }
 
