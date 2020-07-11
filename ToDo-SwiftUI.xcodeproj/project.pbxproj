@@ -342,8 +342,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ToDo-SwiftUI/Preview Content\"";
+				DEVELOPMENT_TEAM = S3UZ2L9UP8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "ToDo-SwiftUI/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -361,8 +363,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ToDo-SwiftUI/Preview Content\"";
+				DEVELOPMENT_TEAM = S3UZ2L9UP8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "ToDo-SwiftUI/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
