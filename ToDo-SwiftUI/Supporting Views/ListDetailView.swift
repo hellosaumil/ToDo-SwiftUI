@@ -10,18 +10,9 @@ import SwiftUI
 
 struct ListDetailView: View {
     
-    @State var taskName: String = "In Detail"
-    
-    @State var taskDateTime = Date()
-    
-    @State var selectedColor:BaseColors = .orange
-    @State var selectedShape:BaseShapes = .hexagon
-    
-    @State var notes: String = ""
-    @State var isMyFavorite:Bool = false
+    @State var todoTask: ToDoTask
     
     @ObservedObject private var keyboard = KeyboardResponder()
-    
     
     var body: some View {
         
@@ -39,7 +30,7 @@ struct ListDetailView: View {
                         
                         commonUserInput(keyboard: .numbersAndPunctuation,
                                         placeholder: "Type a new task name...",
-                                        textfield: $taskName, lineLimit: 2,
+                                        textfield: self.$todoTask.todoName, lineLimit: 2,
                                         fontDesign: .rounded,
                                         fontSize: .body,
                                         scale: 0.88)
@@ -55,7 +46,7 @@ struct ListDetailView: View {
                 
                 VStack(alignment: .center) {
                     
-                    Picker(selection: $selectedColor, label: Text("Color")) {
+                    Picker(selection: self.$todoTask.todoColor, label: Text("Color")) {
                         ForEach(BaseColors.allCases, id: \.id) { colorName in
                             
                             Text(colorName.id).tag(colorName)
@@ -66,13 +57,13 @@ struct ListDetailView: View {
                     .padding(.vertical, 4)
                     
                     
-                    Picker(selection: $selectedShape, label: EmptyView()) {
+                    Picker(selection: self.$todoTask.todoShape, label: EmptyView()) {
                         
                         ForEach(BaseShapes.allCases, id: \.id) { shapeName in
                             
                             shapeName.filled.tag(shapeName)
                                 .rotationEffect(Angle(degrees: -90.0))
-                                .foregroundColor( self.selectedColor.color )
+                                .foregroundColor( self.todoTask.todoColor.color )
                                 .imageScale(.medium)
                             
                         }
@@ -88,7 +79,7 @@ struct ListDetailView: View {
             
             Section(header: headerItemGroup(imageName: "calendar", text: "Reminde me on the")) {
                 
-                DatePicker(selection: $taskDateTime,
+                DatePicker(selection: self.$todoTask.dueDateTime,
                            in: Date()...,
                            displayedComponents: [.hourAndMinute, .date] ,
                            label: {Text("Date & Time")} )
@@ -103,7 +94,7 @@ struct ListDetailView: View {
                     
                     commonUserInput(keyboard: .default,
                                     placeholder: "Note so you don't forget...",
-                                    textfield: $notes, lineLimit: 10,
+                                    textfield: self.$todoTask.notes, lineLimit: 10,
                                     fontDesign: .rounded,
                                     fontSize: .body,
                                     scale: 0.88)
@@ -120,17 +111,17 @@ struct ListDetailView: View {
                 
                 HStack {
                     
-                    getSystemImage(name: isMyFavorite ? "star.fill" : "star",
+                    getSystemImage(name: self.todoTask.isMyFavorite ? "star.fill" : "star",
                                    color: .yellow, font: .body)
                     
                     Text("Add to Favorites")
                 }
-                .onTapGesture { self.isMyFavorite.toggle() }
+                .onTapGesture { self.todoTask.isMyFavorite.toggle() }
                 
             }
         }
             
-        .navigationBarTitle(Text("\(taskName)"))
+        .navigationBarTitle(Text("\(self.todoTask.todoName)"))
         .padding(.bottom, keyboard.currentHeight)
         .edgesIgnoringSafeArea(.bottom)
     }
@@ -141,29 +132,16 @@ struct ListDetailView: View {
     
 }
 
-let tasks: [ToDoTask] = [
-    ToDoTask(),
-    ToDoTask(name: "Practice iOS Development",
-             dueDateTime: Date()+2,
-             color: .purple, shape: .triangle,
-             notes: "Follow 100 Days of SwiftUI", isFav: true)
-]
-
 struct ListDetailView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        Group {
-            
-            ForEach(tasks, id: \.self) { task in
+        
+        ForEach( sampleTasksLite, id: \.todoID) { task in
+        
+            Group {
                 
-                NightAndDay {
-                    
-                    ListDetailView(taskName: task.todoName,
-                                   taskDateTime: task.dueDateTime,
-                                   selectedColor: task.todoColor, selectedShape: task.todoShape,
-                                   notes: task.notes, isMyFavorite: task.isMyFavorite)
-                }
+                NightAndDay { ListDetailView(todoTask: task) }
             }
         }
     }

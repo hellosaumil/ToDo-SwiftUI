@@ -19,6 +19,9 @@
 		6B9465FF24B6B6C0005DE211 /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9465FE24B6B6C0005DE211 /* TextFieldView.swift */; };
 		6BA518B924ADBC39004061DD /* ListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA518B824ADBC39004061DD /* ListCellView.swift */; };
 		6BA518BB24ADBC7C004061DD /* ListMasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA518BA24ADBC7C004061DD /* ListMasterView.swift */; };
+		6BDDF92924BA2FC1001E772B /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDDF92824BA2FC1001E772B /* UserData.swift */; };
+		6BDDF92B24BA2FF3001E772B /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDDF92A24BA2FF3001E772B /* Data.swift */; };
+		6BDDF92D24BA3298001E772B /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDDF92C24BA3298001E772B /* ToDoList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		6B9465FE24B6B6C0005DE211 /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 		6BA518B824ADBC39004061DD /* ListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellView.swift; sourceTree = "<group>"; };
 		6BA518BA24ADBC7C004061DD /* ListMasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMasterView.swift; sourceTree = "<group>"; };
+		6BDDF92824BA2FC1001E772B /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserData.swift; path = "ToDo-SwiftUI/Helper Views/UserData.swift"; sourceTree = SOURCE_ROOT; };
+		6BDDF92A24BA2FF3001E772B /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Data.swift; path = "ToDo-SwiftUI/Helper Views/Data.swift"; sourceTree = SOURCE_ROOT; };
+		6BDDF92C24BA3298001E772B /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToDoList.swift; path = "ToDo-SwiftUI/Helper Views/ToDoList.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +98,9 @@
 			isa = PBXGroup;
 			children = (
 				6B61FF9424B71E25000DDA75 /* ToDoTask.swift */,
+				6BDDF92C24BA3298001E772B /* ToDoList.swift */,
+				6BDDF92824BA2FC1001E772B /* UserData.swift */,
+				6BDDF92A24BA2FF3001E772B /* Data.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -200,10 +209,13 @@
 				6BA518B924ADBC39004061DD /* ListCellView.swift in Sources */,
 				6B9465FF24B6B6C0005DE211 /* TextFieldView.swift in Sources */,
 				6B61FF9524B71E25000DDA75 /* ToDoTask.swift in Sources */,
+				6BDDF92B24BA2FF3001E772B /* Data.swift in Sources */,
 				6B08087824A4083800208A7C /* ListDetailView.swift in Sources */,
 				6B08084324A4062B00208A7C /* SceneDelegate.swift in Sources */,
+				6BDDF92D24BA3298001E772B /* ToDoList.swift in Sources */,
 				6B08087B24A40B0400208A7C /* HelperViews.swift in Sources */,
 				6B08084524A4062B00208A7C /* ContentView.swift in Sources */,
+				6BDDF92924BA2FC1001E772B /* UserData.swift in Sources */,
 				6BA518BB24ADBC7C004061DD /* ListMasterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
