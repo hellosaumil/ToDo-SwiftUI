@@ -10,13 +10,11 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var list: ToDoList
-    
     @EnvironmentObject var userData: UserData
     
     var body: some View {
         
-        ListMasterView(toDoList: list)
+        ToDoListsView(lists: userData.someLists)
         
     }
 }
@@ -25,7 +23,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         
         NightAndDay {
-            ContentView(list: toDoListLite2)
+            ContentView()
             .environmentObject(UserData())
         }
     }

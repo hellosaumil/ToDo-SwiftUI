@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B04E3FD24BAFC7500E2E2CB /* ToDoListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B04E3FC24BAFC7500E2E2CB /* ToDoListsView.swift */; };
 		6B08084124A4062B00208A7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08084024A4062B00208A7C /* AppDelegate.swift */; };
 		6B08084324A4062B00208A7C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08084224A4062B00208A7C /* SceneDelegate.swift */; };
 		6B08084524A4062B00208A7C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08084424A4062B00208A7C /* ContentView.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B04E3FC24BAFC7500E2E2CB /* ToDoListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListsView.swift; sourceTree = "<group>"; };
 		6B08083D24A4062B00208A7C /* ToDo-SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo-SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B08084024A4062B00208A7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B08084224A4062B00208A7C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +57,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B04E3FB24BAFC5100E2E2CB /* ToDo List Views */ = {
+			isa = PBXGroup;
+			children = (
+				6B04E3FC24BAFC7500E2E2CB /* ToDoListsView.swift */,
+				6B08085524A4063900208A7C /* Supporting Views */,
+			);
+			path = "ToDo List Views";
+			sourceTree = "<group>";
+		};
 		6B08083424A4062B00208A7C = {
 			isa = PBXGroup;
 			children = (
@@ -75,7 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				6B08085624A4064000208A7C /* Base Files */,
-				6B08085524A4063900208A7C /* Supporting Views */,
 				6B08087924A40AEC00208A7C /* Helper Views */,
 				6B08085424A4063700208A7C /* Models */,
 				6B08084624A4062D00208A7C /* Assets.xcassets */,
@@ -121,6 +131,7 @@
 				6B08084024A4062B00208A7C /* AppDelegate.swift */,
 				6B08084224A4062B00208A7C /* SceneDelegate.swift */,
 				6B08084424A4062B00208A7C /* ContentView.swift */,
+				6B04E3FB24BAFC5100E2E2CB /* ToDo List Views */,
 			);
 			path = "Base Files";
 			sourceTree = "<group>";
@@ -210,6 +221,7 @@
 				6B9465FF24B6B6C0005DE211 /* TextFieldView.swift in Sources */,
 				6B61FF9524B71E25000DDA75 /* ToDoTask.swift in Sources */,
 				6BDDF92B24BA2FF3001E772B /* Data.swift in Sources */,
+				6B04E3FD24BAFC7500E2E2CB /* ToDoListsView.swift in Sources */,
 				6B08087824A4083800208A7C /* ListDetailView.swift in Sources */,
 				6B08084324A4062B00208A7C /* SceneDelegate.swift in Sources */,
 				6BDDF92D24BA3298001E772B /* ToDoList.swift in Sources */,

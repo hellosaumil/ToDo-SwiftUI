@@ -37,10 +37,10 @@ let toDoListLite: ToDoList = ToDoList(name: "New Watchlist", tasks: [])
 let toDoListLite2: ToDoList = ToDoList(name: "👨🏻‍💻 WWDC Watchlist", tasks: sampleTasks)
 
 
-let listItems: [String] = ["👨🏻‍💻 WWDC Watchlist", "🍕 Favorite Pizza Places",
+let listItems: [String] = ["🍕 Favorite Pizza Places",
 "💼 Target Companies", "🐛 Books to Read"]
 
-let sampleLists: [ToDoList] = listItems.map { ToDoList(name: $0) }
+let sampleLists: [ToDoList] = [toDoListLite2] + listItems.map { ToDoList(name: $0) }
 
 
 // MARK: Data/File Handling Functions
