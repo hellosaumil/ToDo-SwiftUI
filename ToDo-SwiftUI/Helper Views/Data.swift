@@ -42,6 +42,8 @@ let listItems: [String] = ["🍕 Favorite Pizza Places",
 
 let sampleLists: [ToDoList] = [toDoListLite2] + listItems.map { ToDoList(name: $0) }
 
+let userLists: [ToDoList] = [toDoListLite2] + listItems.map { ToDoList(name: $0) }
+
 
 // MARK: Data/File Handling Functions
 

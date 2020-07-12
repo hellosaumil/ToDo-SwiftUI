@@ -11,12 +11,15 @@ import SwiftUI
 struct ListMasterView: View {
     
     @State var toDoList: ToDoList
+    @State var showingModal: Bool = false
+    
+    @State private var tappedTask: ToDoTask = ToDoTask(name: "none")
     
     var body: some View {
         
         VStack {
             
-            ForEach(self.toDoList.todoTasks, id: \.self) { task in
+            ForEach(self.toDoList.todoTasks.indices, id: \.self) { tasksIdx in
                 
                 VStack {
                     
@@ -27,17 +30,17 @@ struct ListMasterView: View {
                             .shadow(color: Color.primary.opacity(0.20),
                                     radius: 4, x: 2, y: 4)
                         
-                        NavigationLink(destination: ListDetailView(todoTask: task)) {
+                        HStack {
                             
-                            HStack {
-                                
-                                ListCellView(item: task.todoName)
-                                
-                                Spacer()
-                                
-                                getSystemImage(name: "chevron.right", color: Color.primary.opacity(0.35),
-                                               font: .callout, scale: .medium)
-                            }
+                            ListCellView(task: self.$toDoList.todoTasks[tasksIdx],
+                                         showingModal: self.$showingModal)
+                            
+                            Spacer()
+                            
+                            getSystemImage(name: "chevron.right", color: Color.primary.opacity(0.35),
+                                           font: .callout, scale: .medium)
+                            
+                            .onTapGesture { self.showingModal.toggle() }
                         }
                     }
                     .padding(.horizontal)
@@ -46,7 +49,6 @@ struct ListMasterView: View {
                     Divider()
                         .padding(.horizontal, 20)
                         .padding(.vertical, 10)
-                    
                 }
             }
             
@@ -63,6 +65,7 @@ struct ListMasterView: View {
             }
         }
         .padding(.vertical)
+            
         .navigationBarTitle(Text(self.toDoList.todoListName),
                             displayMode: .automatic)
     }

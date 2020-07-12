@@ -12,13 +12,15 @@ struct ToDoListsView: View {
     
     @State var lists: [ToDoList]
     
+    @EnvironmentObject var userData: UserData
+    
     var body: some View {
         
         NavigationView {
             
             VStack {
                 
-                ForEach(lists, id: \.todoListID) { list in
+                ForEach(self.lists, id: \.todoListID) { list in
                     
                     VStack {
                         
@@ -83,7 +85,7 @@ struct ToDoListsView_Previews: PreviewProvider {
                 
                 NightAndDay {
                     ToDoListsView(lists: lists)
-                    
+                    .environmentObject(UserData())
                 }
                 
             }

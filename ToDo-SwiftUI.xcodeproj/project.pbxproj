@@ -85,7 +85,10 @@
 		6B08083F24A4062B00208A7C /* ToDo-SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				6B08085624A4064000208A7C /* Base Files */,
+				6B08084024A4062B00208A7C /* AppDelegate.swift */,
+				6B08084224A4062B00208A7C /* SceneDelegate.swift */,
+				6B08084424A4062B00208A7C /* ContentView.swift */,
+				6B04E3FB24BAFC5100E2E2CB /* ToDo List Views */,
 				6B08087924A40AEC00208A7C /* Helper Views */,
 				6B08085424A4063700208A7C /* Models */,
 				6B08084624A4062D00208A7C /* Assets.xcassets */,
@@ -123,17 +126,6 @@
 				6B08087724A4083800208A7C /* ListDetailView.swift */,
 			);
 			path = "Supporting Views";
-			sourceTree = "<group>";
-		};
-		6B08085624A4064000208A7C /* Base Files */ = {
-			isa = PBXGroup;
-			children = (
-				6B08084024A4062B00208A7C /* AppDelegate.swift */,
-				6B08084224A4062B00208A7C /* SceneDelegate.swift */,
-				6B08084424A4062B00208A7C /* ContentView.swift */,
-				6B04E3FB24BAFC5100E2E2CB /* ToDo List Views */,
-			);
-			path = "Base Files";
 			sourceTree = "<group>";
 		};
 		6B08087924A40AEC00208A7C /* Helper Views */ = {

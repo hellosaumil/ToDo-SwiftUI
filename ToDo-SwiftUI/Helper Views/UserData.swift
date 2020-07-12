@@ -13,6 +13,13 @@ final class UserData: ObservableObject {
     
     let willChange = PassthroughSubject<Void, Never>()
     
+    // MARK: user items
+    @Published var currentUserList: [ToDoList] = userLists {
+        willSet {
+            willChange.send()
+        }
+    }
+    
     
     // MARK: todo items
     @Published var someTasks:[ToDoTask] = sampleTasks {

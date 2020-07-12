@@ -26,6 +26,8 @@ struct ToDoTask: Codable, Equatable, Hashable {
     var notes: String
     var isMyFavorite:Bool
     
+    var isCompleted: Bool = false
+    
     init(name: String = "New ToDo", dueDateTime: Date = Date(),
          color: BaseColors = .orange, shape: BaseShapes = .hexagon,
          notes: String = "", isFav: Bool = false) {
