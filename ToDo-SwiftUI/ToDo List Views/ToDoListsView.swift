@@ -31,6 +31,7 @@ struct ToDoListsView: View {
                                 .shadow(color: Color.primary.opacity(0.20),
                                         radius: 4, x: 2, y: 4)
                             
+                            // MARK: Call ListMasterView
                             NavigationLink(destination: ListMasterView(toDoList: list)) {
                                 
                             HStack {

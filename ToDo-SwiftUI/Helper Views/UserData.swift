@@ -34,6 +34,12 @@ final class UserData: ObservableObject {
         }
     }
     
+    @Published var someRandomTasks:[ToDoTask] = randomTasks {
+        willSet {
+            willChange.send()
+        }
+    }
+    
     
     //MARK: todo lists
     @Published var someListLite:ToDoList = toDoListLite {
@@ -49,6 +55,12 @@ final class UserData: ObservableObject {
     }
     
     @Published var someLists:[ToDoList] = sampleLists {
+        willSet {
+            willChange.send()
+        }
+    }
+    
+    @Published var someRandomLists:[ToDoList] = randomLists {
         willSet {
             willChange.send()
         }

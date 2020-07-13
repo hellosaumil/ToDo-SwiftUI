@@ -15,7 +15,6 @@ struct ListDetailView: View {
     
     @ObservedObject private var keyboard = KeyboardResponder()
     
-    
     var body: some View {
         
         VStack {
@@ -65,7 +64,7 @@ struct ListDetailView: View {
                     }
                 }
                 
-                Section(header: headerItemGroup(imageName: "eyedropper.halffull", text: "Customize")) {
+                Section(header: headerItemGroup(imageName: "paintbrush.fill", text: "Customize")) {
                     
                     VStack(alignment: .center) {
                         

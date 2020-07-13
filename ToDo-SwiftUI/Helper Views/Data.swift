@@ -23,6 +23,11 @@ let taskItems: [String] = ["Swift Deep Dive", "What's new in SwiftUI",
 
 let sampleTasks: [ToDoTask] = taskItems.map { ToDoTask(name: $0) }
 
+
+let randomTasks: [ToDoTask] = taskItems.map { ToDoTask(name: $0,
+                                                       color: BaseColors.allCases.randomElement()!,
+                                                       shape: BaseShapes.allCases.randomElement()!) }
+
 let sampleTasksLite: [ToDoTask] = [
     ToDoTask(),
     ToDoTask(name: "Practice iOS Development",
@@ -36,13 +41,21 @@ let sampleTasksLite: [ToDoTask] = [
 let toDoListLite: ToDoList = ToDoList(name: "New Watchlist", tasks: [])
 let toDoListLite2: ToDoList = ToDoList(name: "👨🏻‍💻 WWDC Watchlist", tasks: sampleTasks)
 
+let toDoListRandom: ToDoList = ToDoList(name: "👨🏻‍💻 WWDC Watchlist", tasks: randomTasks)
+
 
 let listItems: [String] = ["🍕 Favorite Pizza Places",
 "💼 Target Companies", "🐛 Books to Read"]
 
 let sampleLists: [ToDoList] = [toDoListLite2] + listItems.map { ToDoList(name: $0) }
 
-let userLists: [ToDoList] = [toDoListLite2] + listItems.map { ToDoList(name: $0) }
+let randomLists: [ToDoList] = [toDoListRandom] + listItems.map { ToDoList(name: $0) }
+
+
+// MARK: User Data from Database
+
+let userLists: [ToDoList] = [toDoListRandom] + listItems.map { ToDoList(name: $0) }
+
 
 
 // MARK: Data/File Handling Functions

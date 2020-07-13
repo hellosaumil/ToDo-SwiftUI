@@ -14,7 +14,7 @@ struct ContentView: View {
     
     var body: some View {
         
-        ToDoListsView(lists: self.userData.currentUserList)
+        ToDoListsView(lists: self.userData.someRandomLists)
         
     }
 }

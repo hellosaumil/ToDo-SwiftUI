@@ -11,7 +11,6 @@ import SwiftUI
 struct ListMasterView: View {
     
     @State var toDoList: ToDoList
-    @State var showingModal: Bool = false
     
     @State private var tappedTask: ToDoTask = ToDoTask(name: "none")
     
@@ -21,35 +20,8 @@ struct ListMasterView: View {
             
             ForEach(self.toDoList.todoTasks.indices, id: \.self) { tasksIdx in
                 
-                VStack {
-                    
-                    ZStack(alignment: .leading) {
-                        
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .foregroundColor(.primary).colorInvert()
-                            .shadow(color: Color.primary.opacity(0.20),
-                                    radius: 4, x: 2, y: 4)
-                        
-                        HStack {
-                            
-                            ListCellView(task: self.$toDoList.todoTasks[tasksIdx],
-                                         showingModal: self.$showingModal)
-                            
-                            Spacer()
-                            
-                            getSystemImage(name: "chevron.right", color: Color.primary.opacity(0.35),
-                                           font: .callout, scale: .medium)
-                            
-                            .onTapGesture { self.showingModal.toggle() }
-                        }
-                    }
-                    .padding(.horizontal)
-                    .frame(height: 60)
-                    
-                    Divider()
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                }
+                // MARK: Call ListCellView
+                ListCellView(task: self.$toDoList.todoTasks[tasksIdx])
             }
             
             Spacer()
@@ -76,17 +48,12 @@ struct ListMasterView_Previews: PreviewProvider {
         
         Group {
             
-            NightAndDay {
+            ForEach( [toDoListLite, toDoListLite2, toDoListRandom], id: \.todoListID ) { list in
                 
-                ListMasterView(toDoList: toDoListLite)
-                
+                NightAndDay {
+                    ListMasterView(toDoList: list)
+                }
             }
-            
-            NightAndDay {
-                ListMasterView(toDoList: toDoListLite2)
-            }
-            
         }
-        
     }
 }
