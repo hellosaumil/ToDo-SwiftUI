@@ -46,18 +46,19 @@ let sampleTasksLite: [ToDoTask] = [
 
 
 
-let toDoListLite: ToDoList = ToDoList(name: "New Watchlist", tasks: [])
-let toDoListLite2: ToDoList = ToDoList(name: "👨🏻‍💻 WWDC Watchlist", tasks: sampleTasks)
+let toDoListLite: ToDoList = ToDoList(icon: "☕️", name: "New Watchlist", tasks: [])
+let toDoListLite2: ToDoList = ToDoList(icon: "👨🏻‍💻", name: "WWDC Watchlist", tasks: sampleTasks)
 
-let toDoListRandom: ToDoList = ToDoList(name: "👨🏻‍💻 WWDC Watchlist", tasks: randomTasks)
+let toDoListRandom: ToDoList = ToDoList(icon: "👨🏻‍💻", name: "WWDC Watchlist", tasks: randomTasks)
 
 
-let listItems: [String] = ["🍕 Favorite Pizza Places",
-                           "💼 Target Companies", "🐛 Books to Read"]
+let listIcons: [String] = ["🍕", "💼", "🐛"]
+let listItems: [String] = ["Favorite Pizza Places",
+                           "Target Companies", "Books to Read"]
 
-let sampleLists: [ToDoList] = [toDoListLite2] + listItems.map { ToDoList(name: $0) }
+let sampleLists: [ToDoList] = [toDoListLite2] + zip(listIcons, listItems).map { ToDoList(icon: $0, name: $1) }
 
-let randomLists: [ToDoList] = [toDoListRandom] + listItems.map { ToDoList(name: $0) }
+let randomLists: [ToDoList] = [toDoListRandom] + zip(listIcons, listItems).map { ToDoList(icon: $0, name: $1) }
 
 
 // MARK: User Data from Database

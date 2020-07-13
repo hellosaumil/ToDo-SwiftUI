@@ -16,14 +16,17 @@ import Foundation
 struct ToDoList: Codable, Equatable, Hashable {
     
     let todoListID: UUID
+    
+    var todoListIcon: String
     var todoListName: String
     
     var todoTasks: [ToDoTask]
     
-    init(name: String = "New ToDo List", tasks: [ToDoTask] = []) {
+    init(icon: String = "🍩", name: String = "New ToDo List", tasks: [ToDoTask] = []) {
         
         self.todoListID = UUID()
         
+        self.todoListIcon = icon
         self.todoListName = name
         self.todoTasks = tasks
     }

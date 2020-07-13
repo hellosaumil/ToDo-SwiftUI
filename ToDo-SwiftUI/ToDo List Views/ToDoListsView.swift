@@ -34,15 +34,23 @@ struct ToDoListsView: View {
                             // MARK: Call ListMasterView
                             NavigationLink(destination: ListMasterView(toDoList: list)) {
                                 
-                            HStack {
-                                
-                                Text(list.todoListName)
-                                    .font(.system(size: 22))
-                                    .foregroundColor(.primary)
+                                HStack {
+                                    
+                                    HStack(spacing: 0) {
+                                        
+                                        Text(list.todoListIcon)
+                                            .font(.system(size: 26))
+                                        
+                                        Text(list.todoListName)
+                                            .font(.system(size: 24))
+                                            .fontWeight(.semibold)
+                                            .foregroundOverlay(myGradient(type: .linear, colors: [.orange, .pink]))
+                                            .padding(.horizontal)
+                                    }
                                     .padding(.horizontal)
-                                
-                                Spacer()
-                                
+                                    
+                                    Spacer()
+                                    
                                     getSystemImage(name: "chevron.right", color: Color.primary.opacity(0.35),
                                                    font: .callout, scale: .medium)
                                 }
@@ -86,7 +94,7 @@ struct ToDoListsView_Previews: PreviewProvider {
                 
                 NightAndDay {
                     ToDoListsView(lists: lists)
-                    .environmentObject(UserData())
+                        .environmentObject(UserData())
                 }
                 
             }
