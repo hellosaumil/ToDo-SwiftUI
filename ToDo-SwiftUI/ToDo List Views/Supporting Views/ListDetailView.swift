@@ -24,13 +24,19 @@ struct ListDetailView: View {
                 Text(self.task.todoName)
                     .font(.system(size: 22))
                     .fontWeight(.bold)
-                    .foregroundColor(self.task.todoColor.color)
+                    .foregroundOverlay(
+                        myGradient(type: self.task.todoGradientScheme,
+                                   colors: [self.task.todoGradientStartColor.color,
+                                            self.task.todoGradientEndColor.color]))
                 
                 Spacer()
                 
                 getSystemImage(name: "xmark.circle.fill",
-                               color: self.task.todoColor.color,
                                font: .headline, scale: .medium)
+                    .foregroundOverlay(
+                        myGradient(type: self.task.todoGradientScheme,
+                                   colors: [self.task.todoGradientStartColor.color,
+                                            self.task.todoGradientEndColor.color]))
                     .onTapGesture { self.showModal.toggle() }
                 
             }
@@ -56,7 +62,7 @@ struct ListDetailView: View {
                                             fontDesign: .rounded,
                                             fontSize: .body,
                                             scale: 0.88)
-                                
+                                .offset(x: 0, y: 1)
                                 .textFieldStyle(PlainTextFieldStyle())
                                 .foregroundColor(Color.primary.opacity(0.50))
                         }
@@ -64,30 +70,24 @@ struct ListDetailView: View {
                     }
                 }
                 
-                Section(header: headerItemGroup(imageName: "paintbrush.fill", text: "Customize")) {
+                Section(header: headerItemGroup(imageName: "square.on.circle.fill", text: "Choose Shape")) {
                     
                     VStack(alignment: .center) {
-                        
-                        Picker(selection: self.$task.todoColor, label: Text("Color")) {
-                            ForEach(BaseColors.allCases, id: \.id) { colorName in
-                                
-                                Text(colorName.id).tag(colorName)
-                                    .foregroundColor(.blue)
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .padding(.vertical, 4)
                         
                         
                         Picker(selection: self.$task.todoShape, label: EmptyView()) {
                             
                             ForEach(BaseShapes.allCases, id: \.id) { shapeName in
                                 
-                                shapeName.filled.tag(shapeName)
+                                getSystemImage(name: shapeName.rawValue+".fill", font: .body,
+                                               scale: .large)
+                                    .tag(shapeName)
                                     .rotationEffect(Angle(degrees: -90.0))
-                                    .foregroundColor( self.task.todoColor.color )
-                                    .imageScale(.medium)
-                                
+                                    
+                                    .foregroundOverlay(
+                                        myGradient(type: self.task.todoGradientScheme,
+                                                   colors: [self.task.todoGradientStartColor.color,
+                                                            self.task.todoGradientEndColor.color]))
                             }
                         }
                         .pickerStyle(WheelPickerStyle())
@@ -96,6 +96,43 @@ struct ListDetailView: View {
                         .scaledToFit()
                         .clipped()
                         .padding(.vertical, 4)
+                        
+                        Divider()
+                        
+                        myGradient(type: self.task.todoGradientScheme,
+                                   colors: [self.task.todoGradientStartColor.color,
+                                            self.task.todoGradientEndColor.color])
+                            .cornerRadius(8)
+                            .frame(height: 24)
+                            .padding(.bottom, 4)
+                        
+                    }
+                }
+                
+                Section(header: headerItemGroup(imageName: "dial.fill", text: "Change Look & Feel")) {
+                    
+                    VStack(alignment: .center) {
+                        
+                        Picker(selection: self.$task.todoGradientScheme, label: Text("Color")) {
+                            ForEach(GradientTypes.allCases, id: \.id) { gcolorName in
+                                
+                                Text(gcolorName.id).tag(gcolorName)
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding(.vertical, 4)
+                        
+                        Divider()
+                        
+                        GradientColorRoll(text: "Start Color",
+                                          selectedColor: self.$task.todoGradientStartColor)
+                        
+                        Divider()
+                        
+                        GradientColorRoll(text: "End Color",
+                                          selectedColor: self.$task.todoGradientEndColor)
+                        
                     }
                 }
                 
@@ -133,7 +170,8 @@ struct ListDetailView: View {
                     
                     HStack {
                         
-                        getSystemImage(name: self.task.isMyFavorite ? "star.fill" : "star",
+                        getSystemImage(name: self.task.isMyFavorite ?
+                            "star.fill" : "star",
                                        color: .yellow, font: .body)
                         
                         Text("Add to Favorites")
@@ -196,5 +234,44 @@ final class KeyboardResponder: ObservableObject {
     
     @objc func keyBoardWillHide(notification: Notification) {
         currentHeight = 0
+    }
+}
+
+struct GradientColorRoll: View {
+    
+    @State var text: String = "Choose Color"
+    @Binding var selectedColor: BaseColors
+    
+    var body: some View {
+        
+        HStack {
+            
+            Text(text).lineLimit(2)
+                .scaledToFit()
+            
+            Spacer()
+            
+            Picker(selection: self.$selectedColor, label: EmptyView()) {
+                
+                ForEach(BaseColors.allCases, id: \.id) { colorName in
+                    
+                    BaseShapes.square.filled.tag(colorName)
+                        .rotationEffect(Angle(degrees: -90.0))
+                        .foregroundColor( colorName.color )
+                        .imageScale(.medium)
+                        .padding(.trailing, 8)
+                    
+                }
+            }
+            .pickerStyle(WheelPickerStyle())
+            .frame(width: UIScreen.main.bounds.width * 0.65,
+                   height: 24,
+                   alignment: .center)
+                .rotationEffect(Angle(degrees: 90.0))
+                .scaledToFit()
+                .clipped()
+                .padding(.vertical, 4)
+            
+        }
     }
 }

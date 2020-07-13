@@ -25,14 +25,22 @@ let sampleTasks: [ToDoTask] = taskItems.map { ToDoTask(name: $0) }
 
 
 let randomTasks: [ToDoTask] = taskItems.map { ToDoTask(name: $0,
-                                                       color: BaseColors.allCases.randomElement()!,
-                                                       shape: BaseShapes.allCases.randomElement()!) }
+                                                       shape: BaseShapes.allCases.randomElement()!,
+                                                       gradientScheme: GradientTypes.allCases.randomElement()!,
+                                                       gradientStartColor: BaseColors.allCases.randomElement()!,
+                                                       gradientEndColor: BaseColors.allCases.randomElement()!)
+}
 
 let sampleTasksLite: [ToDoTask] = [
     ToDoTask(),
     ToDoTask(name: "Practice iOS Development",
              dueDateTime: Date()+2,
-             color: .purple, shape: .triangle,
+             shape: .triangle,
+             
+             gradientScheme: .linear,
+             gradientStartColor: .pink,
+             gradientEndColor: .purple,
+             
              notes: "Follow 100 Days of SwiftUI", isFav: true)
 ]
 
@@ -45,7 +53,7 @@ let toDoListRandom: ToDoList = ToDoList(name: "👨🏻‍💻 WWDC Watchlist", 
 
 
 let listItems: [String] = ["🍕 Favorite Pizza Places",
-"💼 Target Companies", "🐛 Books to Read"]
+                           "💼 Target Companies", "🐛 Books to Read"]
 
 let sampleLists: [ToDoList] = [toDoListLite2] + listItems.map { ToDoList(name: $0) }
 

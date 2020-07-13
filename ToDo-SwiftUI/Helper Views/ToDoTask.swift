@@ -20,8 +20,11 @@ struct ToDoTask: Codable, Equatable, Hashable {
     
     var dueDateTime: Date
     
-    var todoColor:BaseColors
     var todoShape:BaseShapes
+    
+    var todoGradientScheme: GradientTypes
+    var todoGradientStartColor: BaseColors
+    var todoGradientEndColor: BaseColors
     
     var notes: String
     var isMyFavorite:Bool
@@ -29,7 +32,13 @@ struct ToDoTask: Codable, Equatable, Hashable {
     var isCompleted: Bool = false
     
     init(name: String = "New ToDo", dueDateTime: Date = Date(),
-         color: BaseColors = .orange, shape: BaseShapes = .hexagon,
+         
+         shape: BaseShapes = .hexagon,
+         
+         gradientScheme: GradientTypes = .linear,
+         gradientStartColor: BaseColors = .pink,
+         gradientEndColor: BaseColors = .purple,
+         
          notes: String = "", isFav: Bool = false) {
         
         self.todoID = UUID()
@@ -37,8 +46,11 @@ struct ToDoTask: Codable, Equatable, Hashable {
         
         self.dueDateTime = dueDateTime
         
-        self.todoColor = color
         self.todoShape = shape
+        
+        self.todoGradientScheme = gradientScheme
+        self.todoGradientStartColor = gradientStartColor
+        self.todoGradientEndColor = gradientEndColor
         
         self.notes = notes
         self.isMyFavorite = isFav

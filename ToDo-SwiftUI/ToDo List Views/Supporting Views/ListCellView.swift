@@ -74,16 +74,17 @@ struct ToDoCellRowItem: View {
         HStack {
             
             getSystemImage(name: "\(self.task.todoShape)" +
-                ((self.task.isCompleted) ? ".fill" : ""),
-                           color: self.task.todoColor.color, font: .body)
-            //                .foregroundOverlay(myGradient(type: .linear,
-            //                                              colors: [.red, .purple]))
+                ((self.task.isCompleted) ? ".fill" : ""), color: .primary, font: .body)
+                .foregroundOverlay(myGradient(type: self.task.todoGradientScheme,
+                                              colors: [self.task.todoGradientStartColor.color,
+                                                       self.task.todoGradientEndColor.color]))
             
             Text("\(self.task.todoName)")
                 .font(.system(size: 20))
                 .fontWeight(.medium)
-                .foregroundColor(self.task.todoColor.color)
-            //                .foregroundOverlay( myGradient(type: .linear) )
+                .foregroundOverlay(myGradient(type: self.task.todoGradientScheme,
+                colors: [self.task.todoGradientStartColor.color,
+                         self.task.todoGradientEndColor.color]))
         }
         .padding(.horizontal)
             

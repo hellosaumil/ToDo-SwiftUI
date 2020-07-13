@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-enum GradientTypes: String, CaseIterable {
+enum GradientTypes: String, CaseIterable, Codable {
     case linear, radient, angular
     var id: String { self.rawValue }
 }
