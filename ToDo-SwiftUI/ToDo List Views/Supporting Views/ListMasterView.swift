@@ -16,7 +16,7 @@ struct ListMasterView: View {
     
     var body: some View {
         
-        VStack {
+        ScrollView {
             
             ForEach(self.toDoList.todoTasks.indices, id: \.self) { tasksIdx in
                 
@@ -36,7 +36,6 @@ struct ListMasterView: View {
                 
             }
         }
-        .padding(.vertical)
             
         .navigationBarTitle(Text(self.toDoList.todoListName),
                             displayMode: .automatic)

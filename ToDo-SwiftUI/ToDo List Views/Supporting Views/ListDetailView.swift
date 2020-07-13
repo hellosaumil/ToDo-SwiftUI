@@ -14,7 +14,8 @@ struct ListDetailView: View {
     @Binding var showModal: Bool
     
     @ObservedObject private var keyboard = KeyboardResponder()
-    
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         
         VStack {
@@ -33,6 +34,7 @@ struct ListDetailView: View {
                 
                 getSystemImage(name: "xmark.circle.fill",
                                font: .headline, scale: .medium)
+                    .padding(.trailing, -16)
                     .foregroundOverlay(
                         myGradient(type: self.task.todoGradientScheme,
                                    colors: [self.task.todoGradientStartColor.color,
@@ -183,8 +185,7 @@ struct ListDetailView: View {
             .padding(.bottom, keyboard.currentHeight)
             .edgesIgnoringSafeArea(.bottom)
         }
-        .background(Color.primary.colorInvert())
-        
+            .background(colorScheme == .dark ? Color.black : Color.white)
     }
     
     func endEditing(_ force: Bool) {
