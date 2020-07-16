@@ -57,9 +57,11 @@ struct ToDoTask: Codable, Equatable, Hashable {
     }
 }
 
-var dateFormatter: DateFormatter {
+var customDateFormatter: DateFormatter {
     let formatter = DateFormatter()
     formatter.dateStyle = .long
+    formatter.timeStyle = .short
+    
     return formatter
 }
 

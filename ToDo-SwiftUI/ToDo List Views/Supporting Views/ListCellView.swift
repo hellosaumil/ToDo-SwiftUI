@@ -15,7 +15,7 @@ struct ListCellView: View {
     @State private var showingModal: Bool = false
     
     @Environment(\.colorScheme) var colorScheme
-
+    
     
     var body: some View {
         
@@ -43,14 +43,25 @@ struct ListCellView: View {
             }
             .padding(.horizontal)
             .frame(height: 60)
-            
+                
             .sheet(isPresented: self.$showingModal) {
                 
                 // MARK: Call DetailView
                 ListDetailView(task: self.$task,
                                showModal: self.$showingModal)
                     .background(self.colorScheme == .dark ? Color.black : Color.white)
-
+                
+            }
+            
+            // MARK: TODO Context Menu for ToDo Cell
+            .contextMenu {
+                
+                ZStack {
+                    
+                    Text("Name: \(self.task.todoName)").lineLimit(4)
+                    Text("Shape: \(self.task.todoShape.rawValue)")
+                    Text("Due on: \( customDateFormatter.string(from: self.task.dueDateTime) )")
+                }
             }
             
             Divider()
@@ -88,8 +99,8 @@ struct ToDoCellRowItem: View {
                 .font(.system(size: 20))
                 .fontWeight(.medium)
                 .foregroundOverlay(myGradient(type: self.task.todoGradientScheme,
-                colors: [self.task.todoGradientStartColor.color,
-                         self.task.todoGradientEndColor.color]))
+                                              colors: [self.task.todoGradientStartColor.color,
+                                                       self.task.todoGradientEndColor.color]))
         }
         .padding(.horizontal)
             
