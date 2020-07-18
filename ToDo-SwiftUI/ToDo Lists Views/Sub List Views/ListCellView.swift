@@ -25,7 +25,7 @@ struct ListCellView: View {
                 
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .foregroundColor(.primary).colorInvert()
-                    .shadow(color: Color.primary.opacity(0.20),
+                    .shadow(color: Color.secondary.opacity(0.40),
                             radius: 4, x: 2, y: 4)
                 
                 HStack {
@@ -35,7 +35,7 @@ struct ListCellView: View {
                     
                     Spacer()
                     
-                    getSystemImage(name: "pencil.and.ellipsis.rectangle", color: Color.primary.opacity(0.35),
+                    getSystemImage(name: "pencil.and.ellipsis.rectangle", color: Color.secondary.opacity(0.40),
                                    font: .callout, scale: .medium)
                         
                         .onTapGesture { self.showingModal.toggle() }
