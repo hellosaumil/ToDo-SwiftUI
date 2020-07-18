@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ToDoListsView: View {
     
-    @State var lists: [ToDoList]
+    @Binding var lists: [ToDoList]
     
     @EnvironmentObject var userData: UserData
     
@@ -20,7 +20,7 @@ struct ToDoListsView: View {
             
             VStack {
                 
-                ForEach(self.lists, id: \.todoListID) { list in
+                ForEach(self.lists.indices, id: \.self) { listID in
                     
                     VStack {
                         
@@ -32,16 +32,16 @@ struct ToDoListsView: View {
                                         radius: 4, x: 2, y: 4)
                             
                             // MARK: Call ListMasterView
-                            NavigationLink(destination: ListMasterView(toDoList: list)) {
+                            NavigationLink(destination: ListMasterView(toDoList: self.$lists[listID])) {
                                 
                                 HStack {
                                     
                                     HStack(spacing: 0) {
                                         
-                                        Text(list.todoListIcon)
+                                        Text(self.lists[listID].todoListIcon)
                                             .font(.system(size: 26))
                                         
-                                        Text(list.todoListName)
+                                        Text(self.lists[listID].todoListName)
                                             .font(.system(size: 24))
                                             .fontWeight(.semibold)
                                             .foregroundOverlay(myGradient(type: .linear, colors: [.orange, .pink]))
@@ -93,7 +93,7 @@ struct ToDoListsView_Previews: PreviewProvider {
             ForEach([[], sampleLists], id: \.self) { lists in
                 
                 NightAndDay {
-                    ToDoListsView(lists: lists)
+                    ToDoListsView(lists: .constant(lists))
                         .environmentObject(UserData())
                 }
                 

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ListMasterView: View {
     
-    @State var toDoList: ToDoList
+    @Binding var toDoList: ToDoList
     
     @State private var tappedTask: ToDoTask = ToDoTask(name: "none")
     
@@ -50,7 +50,7 @@ struct ListMasterView_Previews: PreviewProvider {
             ForEach( [toDoListLite, toDoListLite2, toDoListRandom], id: \.todoListID ) { list in
                 
                 NightAndDay {
-                    ListMasterView(toDoList: list)
+                    ListMasterView(toDoList: .constant(list))
                 }
             }
         }
