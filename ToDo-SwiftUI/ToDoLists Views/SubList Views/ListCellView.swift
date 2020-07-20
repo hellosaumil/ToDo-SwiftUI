@@ -11,7 +11,7 @@ import SwiftUI
 struct ListCellView: View {
     
     @Binding var task: ToDoTask
-    @State private var moreInfoTapped: Bool = true
+    @State private var moreInfoTapped: Bool = false
     
     var body: some View {
         
@@ -41,24 +41,24 @@ struct ListCellView: View {
                     
                     // MARK: Call ToDoCellRow
                     ToDoCellRowItem(task: self.$task)
-                    .onTapGesture {
-                        
-                        withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
+                        .onTapGesture {
+                            
+                            withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
                     }
                     
                 }
                 .frame(height: 60)
-                
-                // MARK: TODO Context Menu for ToDo Cell
-                .contextMenu {
                     
-                    ZStack {
+                    // MARK: TODO Context Menu for ToDo Cell
+                    .contextMenu {
                         
-                        Text("Name: \(self.task.todoName)").lineLimit(4)
-                        Text("Shape: \(self.task.todoShape.rawValue)")
-                        Text("Due on: \( customDateFormatter.string(from: self.task.dueDateTime) )")
-                    }
-            }
+                        ZStack {
+                            
+                            Text("Name: \(self.task.todoName)").lineLimit(4)
+                            Text("Shape: \(self.task.todoShape.rawValue)")
+                            Text("Due on: \( customDateFormatter.string(from: self.task.dueDateTime) )")
+                        }
+                }
                 
             }
             .padding()
@@ -67,7 +67,7 @@ struct ListCellView: View {
             Divider()
                 .padding(.horizontal, 16)
         }
-
+        
     }
 }
 
@@ -95,7 +95,7 @@ struct ToDoCellRowItem: View {
                 .foregroundOverlay(myGradient(type: self.task.todoGradientScheme,
                                               colors: [self.task.todoGradientStartColor.color,
                                                        self.task.todoGradientEndColor.color]))
-            .onTapGesture { self.task.isCompleted.toggle() }
+                .onTapGesture { self.task.isCompleted.toggle() }
             
             Text("\(self.task.todoName)")
                 .font(.system(size: 20, weight: .regular, design: .monospaced))

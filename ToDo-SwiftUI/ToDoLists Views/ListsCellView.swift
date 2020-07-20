@@ -12,7 +12,7 @@ struct ListsCellView: View {
     
     @Binding var list: ToDoList
     
-    @State private var moreInfoTapped: Bool = true
+    @State private var moreInfoTapped: Bool = false
     
     var body: some View {
         
@@ -26,7 +26,9 @@ struct ListsCellView: View {
                         .foregroundColor(Color.secondary.opacity(0.10))
                         .frame(height: 20).offset(y: 8)
                     
+                    
                     ProgressBarView(list: self.$list)
+                        .animation(.interactiveSpring())
                     
                 }
                 .frame(height: 40)
@@ -59,9 +61,26 @@ struct ListsCellView: View {
                     
                 }
                 .frame(height: 60)
+                .onAppear(perform: {self.list.updateProgress()})
                 .onTapGesture {
                     
-                    withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
+                    withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) {
+                        
+                        self.list.resetProgress()
+                        self.moreInfoTapped.toggle()
+                        self.list.updateProgress()
+                        
+                    }
+                }
+                    // MARK: TODO Context Menu for ToDoList Cell
+                    .contextMenu {
+                        
+                        ZStack {
+                            
+                            Text("Name: \(self.list.todoListIcon) \(self.list.todoListName)").lineLimit(4)
+                            
+                            Text("Progress: \(String(format: "%.1f", self.list.progress))%")
+                        }
                 }
                 
             }
@@ -107,10 +126,10 @@ struct ToDoListCellRowItem: View {
                 .shadow(color: Color.secondary.opacity(0.40),
                         radius: 2, x: 2, y: 4)
                 .onTapGesture {
-                    self.list.updateProgress(by: 10)
+                    self.list.updateProgress()
             }
             
-            Text(self.list.todoListName)
+            Text(self.list.todoListName).strikethrough(self.list.progress == 100, color: self.list.todoGradientStartColor.color)
                 .lineLimit(2)
                 .font(.system(size: 22, weight: .bold, design: .default))
                 .foregroundOverlay(myGradient(type: self.list.todoGradientScheme,
