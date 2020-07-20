@@ -49,7 +49,7 @@ let sampleTasksLite: [ToDoTask] = [
 let toDoListLite: ToDoList = ToDoList(icon: "☕️", name: "New Watchlist", tasks: [])
 let toDoListLite2: ToDoList = ToDoList(icon: "👨🏻‍💻", name: "WWDC Watchlist", tasks: sampleTasks)
 
-let toDoListRandom: ToDoList = ToDoList(icon: "👨🏻‍💻", name: "WWDC Watchlist", tasks: randomTasks)
+var toDoListRandom: ToDoList = ToDoList(icon: "👨🏻‍💻", name: "WWDC Watchlist", tasks: randomTasks)
 
 
 let listIcons: [String] = ["🍕", "💼", "🐛"]
@@ -62,7 +62,6 @@ let randomLists: [ToDoList] = [toDoListRandom] + zip(listIcons, listItems).map {
 
 
 // MARK: User Data from Database
-
 let userLists: [ToDoList] = [toDoListRandom] + listItems.map { ToDoList(name: $0) }
 
 

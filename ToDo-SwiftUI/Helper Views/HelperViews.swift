@@ -66,10 +66,14 @@ func myGradient(
     
 }
 
-func getSystemImage(name: String = "photo", color:Color = .primary, font:Font = .title, scale: Image.Scale = .medium) -> some View {
+func getSystemImage(name: String = "photo", color:Color = .primary,
+                    fontSize:CGFloat = 20,
+                    weight: Font.Weight = .regular , design: Font.Design = .default,
+                    scale: Image.Scale = .medium) -> some View {
+    
     Image(systemName: name)
         .foregroundColor(color)
-        .font(font)
+        .font(.system(size: fontSize, weight: weight, design: design) )
         .imageScale(scale)
         .padding()
 }
@@ -78,7 +82,7 @@ func tabItemGroup(text: String, imageName: String, imageScale: Image.Scale = .me
     
     VStack {
         Text(text)
-        getSystemImage(name: imageName, font: .body, scale: imageScale)
+        getSystemImage(name: imageName, fontSize: 16, scale: imageScale)
     }
     
 }
@@ -88,11 +92,35 @@ func headerItemGroup(imageName: String, text: String, imageScale: Image.Scale = 
     HStack(spacing: -8) {
         
         getSystemImage(name: imageName, color: Color.primary.opacity(0.5),
-                       font: .headline, scale: imageScale)
+                       fontSize: 16, weight: .medium, scale: imageScale)
             .padding(.leading, -14.0)
         Text(text)
     }
     
+}
+
+// Taken from hexStringToUIColor: https://stackoverflow.com/questions/24263007/how-to-use-hex-color-values
+
+func hexColor (hex:String) -> UIColor {
+    var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+    if (cString.hasPrefix("#")) {
+        cString.remove(at: cString.startIndex)
+    }
+
+    if ((cString.count) != 6) {
+        return UIColor.gray
+    }
+
+    var rgbValue:UInt64 = 0
+    Scanner(string: cString).scanHexInt64(&rgbValue)
+
+    return UIColor(
+        red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+        green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+        blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+        alpha: CGFloat(1.0)
+    )
 }
 
 
@@ -163,7 +191,7 @@ struct FloatingActionButton: View {
     var systemImageName: String = "plus"
     @Binding var bgColor: Color
     var color: Color = .white
-    var font: Font = .body
+    var fontSize: CGFloat = 20
     
     var action: () -> Void
     
@@ -171,7 +199,7 @@ struct FloatingActionButton: View {
         
         Button(action: action) {
             getSystemImage(name: self.systemImageName,
-                           color: self.color, font: self.font,
+                           color: self.color, fontSize: self.fontSize,
                            scale: .medium)
                 .background(self.bgColor)
                 .clipShape(Circle())

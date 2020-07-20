@@ -18,17 +18,23 @@ struct ToDoListsView: View {
         
         NavigationView {
             
+            ScrollView {
+            
             VStack {
+                
+                Divider()
                 
                 ForEach(self.lists.indices, id: \.self) { listID in
                     
+                    // MARK: Call ListsCellView
                     ListsCellView(list: self.$lists[listID])
-                    
                 }
                 
                 Spacer()
                 
                 if self.lists.isEmpty {
+                    
+                    
                     
                     Text("No Lists Found")
                         .font(.headline)
@@ -38,9 +44,11 @@ struct ToDoListsView: View {
                     
                 }
             }
-            .padding(.vertical)
+            .animation(.spring())
             .navigationBarTitle(Text("ToDo Lists"),
                                 displayMode: .automatic)
+        }
+            
         }
     }
 }

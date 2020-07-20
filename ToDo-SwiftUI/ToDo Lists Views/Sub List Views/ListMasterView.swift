@@ -18,6 +18,8 @@ struct ListMasterView: View {
         
         ScrollView {
             
+            Divider()
+            
             ForEach(self.toDoList.todoTasks.indices, id: \.self) { tasksIdx in
                 
                 // MARK: Call ListCellView
@@ -36,7 +38,6 @@ struct ListMasterView: View {
                 
             }
         }
-            
         .navigationBarTitle(Text(self.toDoList.todoListName),
                             displayMode: .automatic)
     }

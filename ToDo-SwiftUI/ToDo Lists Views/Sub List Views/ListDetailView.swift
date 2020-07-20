@@ -15,7 +15,7 @@ struct ListDetailView: View {
     
     @ObservedObject private var keyboard = KeyboardResponder()
     @Environment(\.colorScheme) var colorScheme
-
+    
     var body: some View {
         
         VStack {
@@ -33,7 +33,7 @@ struct ListDetailView: View {
                 Spacer()
                 
                 getSystemImage(name: "xmark.circle.fill",
-                               font: .headline, scale: .medium)
+                               weight: .medium, scale: .medium)
                     .padding(.trailing, -16)
                     .foregroundOverlay(
                         myGradient(type: self.task.todoGradientScheme,
@@ -81,8 +81,8 @@ struct ListDetailView: View {
                             
                             ForEach(BaseShapes.allCases, id: \.id) { shapeName in
                                 
-                                getSystemImage(name: shapeName.rawValue+".fill", font: .body,
-                                               scale: .large)
+                                getSystemImage(name: shapeName.rawValue+".fill", fontSize: 22,
+                                               scale: .medium)
                                     .tag(shapeName)
                                     .rotationEffect(Angle(degrees: -90.0))
                                     
@@ -93,7 +93,7 @@ struct ListDetailView: View {
                             }
                         }
                         .pickerStyle(WheelPickerStyle())
-                        .frame(height: 32, alignment: .center)
+                        .frame(height: 40, alignment: .center)
                         .rotationEffect(Angle(degrees: 90.0))
                         .scaledToFit()
                         .clipped()
@@ -174,7 +174,7 @@ struct ListDetailView: View {
                         
                         getSystemImage(name: self.task.isMyFavorite ?
                             "star.fill" : "star",
-                                       color: .yellow, font: .body)
+                                       color: .yellow)
                         
                         Text("Add to Favorites")
                     }
@@ -185,7 +185,7 @@ struct ListDetailView: View {
             .padding(.bottom, keyboard.currentHeight)
             .edgesIgnoringSafeArea(.bottom)
         }
-            .background(colorScheme == .dark ? Color.black : Color.white)
+        .background(colorScheme == .dark ? Color.black : Color.white)
     }
     
     func endEditing(_ force: Bool) {
