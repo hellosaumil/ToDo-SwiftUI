@@ -41,14 +41,13 @@ struct ListCellView: View {
                     
                     // MARK: Call ToDoCellRow
                     ToDoCellRowItem(task: self.$task)
+                    .onTapGesture {
+                        
+                        withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
+                    }
                     
                 }
                 .frame(height: 60)
-                .onTapGesture {
-                    
-                    withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
-                    
-                }
                 
                 // MARK: TODO Context Menu for ToDo Cell
                 .contextMenu {
@@ -114,8 +113,6 @@ struct TaskEditBarView: View {
     @Binding var task: ToDoTask
     @State private var showingModal: Bool = false
     
-    @Environment(\.colorScheme) var colorScheme
-    
     var body: some View {
         
         HStack {
@@ -148,24 +145,19 @@ struct TaskEditBarView: View {
                 getSystemImage(name: "slider.horizontal.3",
                                color: Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .medium).padding(0)
-                    .onTapGesture { self.showingModal.toggle() }
                 
             }
             .padding(.trailing, 4)
+            .onTapGesture { self.showingModal.toggle() }
             
         }
         .offset(x: 10, y: 8)
-            
         .sheet(isPresented: self.$showingModal) {
             
             // MARK: Call DetailView
             ListDetailView(task: self.$task,
                            showModal: self.$showingModal)
-                
-                .background(self.colorScheme == .dark ? Color.black : Color.white)
-            
         }
-        
         
     }
 }

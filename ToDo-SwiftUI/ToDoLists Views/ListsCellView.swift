@@ -113,9 +113,9 @@ struct ToDoListCellRowItem: View {
             Text(self.list.todoListName)
                 .lineLimit(2)
                 .font(.system(size: 22, weight: .bold, design: .default))
-                .foregroundOverlay(
-                    myGradient(type: .linear,
-                               colors: [.pink, .purple, .blue]))
+                .foregroundOverlay(myGradient(type: self.list.todoGradientScheme,
+                                              colors: [self.list.todoGradientStartColor.color,
+                                                       self.list.todoGradientEndColor.color]))
                 
                 .padding(.horizontal)
         }
@@ -126,6 +126,7 @@ struct ToDoListCellRowItem: View {
 struct ProgressBarView: View {
     
     @Binding var list: ToDoList
+    @State private var showingModal: Bool = false
     
     var body: some View {
         
@@ -154,14 +155,20 @@ struct ProgressBarView: View {
                 getSystemImage(name: "slider.horizontal.3",
                                color: Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .medium).padding(0)
-                //                            .onTapGesture { self.showingModal.toggle() }
                 
             }
             .padding(.trailing, 4)
+            .onTapGesture { self.showingModal.toggle() }
             
         }
         .offset(x: 10, y: 8)
-        
+        .sheet(isPresented: self.$showingModal) {
+            
+            // MARK: Call ListsDetailView
+            ListsDetailsView(list: self.$list,
+                             showModal: self.$showingModal)
+            
+        }
     }
 }
 

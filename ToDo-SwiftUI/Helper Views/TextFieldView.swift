@@ -163,3 +163,18 @@ func commonUserInput(keyboard keyboardDataType: UIKeyboardType = .default, place
         .fixedSize(horizontal: false, vertical: true)
     
 }
+
+func iconUserInput(keyboard keyboardDataType: UIKeyboardType = .default, placeholder tf_msg:String="Placeholder Message", textfield tfTextBinding:Binding<String>, lineLimit:Int = 1, fontDesign:Font.Design = .monospaced, fontSize:Font.TextStyle = .body, scale: CGFloat = 1.0) -> some View {
+    
+    TextField(tf_msg, text: tfTextBinding, onEditingChanged: { _ in
+        
+        tfTextBinding.wrappedValue = String(tfTextBinding.wrappedValue.strip[tfTextBinding.wrappedValue.strip.startIndex])
+        
+    })
+        .frame(width: UIScreen.main.bounds.width * 0.88 * scale, height: 10*CGFloat(lineLimit))
+        .lineLimit(lineLimit)
+        .font(.system(fontSize, design: fontDesign))
+        .keyboardType(keyboardDataType)
+        .fixedSize(horizontal: false, vertical: true)
+    
+}

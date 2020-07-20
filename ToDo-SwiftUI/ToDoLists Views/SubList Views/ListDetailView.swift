@@ -14,7 +14,6 @@ struct ListDetailView: View {
     @Binding var showModal: Bool
     
     @ObservedObject private var keyboard = KeyboardResponder()
-    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         
@@ -185,7 +184,6 @@ struct ListDetailView: View {
             .padding(.bottom, keyboard.currentHeight)
             .edgesIgnoringSafeArea(.bottom)
         }
-        .background(colorScheme == .dark ? Color.black : Color.white)
     }
     
     func endEditing(_ force: Bool) {
