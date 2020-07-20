@@ -30,7 +30,7 @@ struct ListsCellView: View {
                     
                 }
                 .frame(height: 40)
-                .offset(y: (moreInfoTapped) ? 32 : 0)
+                .offset(y: (moreInfoTapped) ?    32 : 0)
                 
                 ZStack(alignment: .leading) {
                     
@@ -138,7 +138,9 @@ struct ProgressBarView: View {
                     .foregroundColor(Color.secondary.opacity(0.20))
                 
                 ProgressBarItem(percentComplete: self.$list.progress)
-                    .foregroundOverlay(myGradient(type: .linear, colors: [.blue, .pink]))
+                    .foregroundOverlay(myGradient(type: self.list.todoGradientScheme,
+                                                  colors: [self.list.todoGradientStartColor.color,
+                                                           self.list.todoGradientEndColor.color]))
                 
             }
             
