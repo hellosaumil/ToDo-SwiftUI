@@ -41,13 +41,12 @@ struct ListCellView: View {
                     
                     // MARK: Call ToDoCellRow
                     ToDoCellRowItem(task: self.$task)
-                        .onTapGesture {
-                            
-                            withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
-                    }
-                    
                 }
                 .frame(height: 60)
+                .onTapGesture {
+                    
+                    withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
+                }
                     
                     // MARK: TODO Context Menu for ToDo Cell
                     .contextMenu {
@@ -148,10 +147,10 @@ struct TaskEditBarView: View {
                 
             }
             .padding(.trailing, 4)
-            .onTapGesture { self.showingModal.toggle() }
             
         }
         .offset(x: 10, y: 8)
+        .onTapGesture { self.showingModal.toggle() }
         .sheet(isPresented: self.$showingModal) {
             
             // MARK: Call DetailView
