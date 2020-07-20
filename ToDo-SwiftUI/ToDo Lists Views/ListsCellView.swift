@@ -27,7 +27,7 @@ struct ListsCellView: View {
                         .shadow(color: Color.primary,
                                 radius: 2, x: 0, y: 4)
                     
-                    ProgrssBarView(list: self.$list)
+                    ProgressBarView(list: self.$list)
                     
                 }
                 .frame(height: 40)
@@ -124,7 +124,7 @@ struct ToDoListCellRowItem: View {
     }
 }
 
-struct ProgrssBarView: View {
+struct ProgressBarView: View {
     
     @Binding var list: ToDoList
     
