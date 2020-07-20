@@ -65,6 +65,13 @@ var customDateFormatter: DateFormatter {
     return formatter
 }
 
+var customMiniDateFormatter: DateFormatter {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "E, MMM d B"
+    return formatter
+}
+
+
 enum BaseColors: String, CaseIterable, Identifiable, Codable {
     
     case pink, yellow, orange, green, blue, purple

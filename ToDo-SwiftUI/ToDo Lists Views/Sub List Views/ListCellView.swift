@@ -11,7 +11,7 @@ import SwiftUI
 struct ListCellView: View {
     
     @Binding var task: ToDoTask
-    @State private var moreInfoTapped: Bool = false
+    @State private var moreInfoTapped: Bool = true
     
     var body: some View {
         
@@ -22,9 +22,8 @@ struct ListCellView: View {
                 ZStack(alignment: .center) {
                     
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .foregroundColor(Color.secondary.opacity(0.06))
-                        .shadow(color: Color.primary,
-                                radius: 2, x: 0, y: 4)
+                        .foregroundColor(Color.secondary.opacity(0.10))
+                        .frame(height: 20).offset(y: 8)
                     
                     // MARK: Call TaskEditBarView
                     TaskEditBarView(task: self.$task)
@@ -125,14 +124,15 @@ struct TaskEditBarView: View {
                 
                 getSystemImage(name: "calendar",
                                color: .secondary,
-                               fontSize: 10, weight: .light)
+                               fontSize: 12, weight: .light)
                     .opacity(0.70)
-                    .padding(0).offset(y: 1)
+                    .padding(0)
                 
                 
-                Text("Due on: \( customDateFormatter.string(from: self.task.dueDateTime) )")
-                    .foregroundColor(.secondary).opacity(0.70)
+                Text("Due on: \( customMiniDateFormatter.string(from: self.task.dueDateTime) )")
                     .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.secondary).opacity(0.60)
             }
             .padding(.leading, -18)
             

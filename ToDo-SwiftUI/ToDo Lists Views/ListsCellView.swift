@@ -22,16 +22,15 @@ struct ListsCellView: View {
                 
                 ZStack(alignment: .center) {
                     
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .foregroundColor(Color.secondary.opacity(0.06))
-                        .shadow(color: Color.primary,
-                                radius: 2, x: 0, y: 4)
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                        .foregroundColor(Color.secondary.opacity(0.10))
+                        .frame(height: 20).offset(y: 8)
                     
                     ProgressBarView(list: self.$list)
                     
                 }
                 .frame(height: 40)
-                .offset(y: (moreInfoTapped) ? 36 : 0)
+                .offset(y: (moreInfoTapped) ? 32 : 0)
                 
                 ZStack(alignment: .leading) {
                     
