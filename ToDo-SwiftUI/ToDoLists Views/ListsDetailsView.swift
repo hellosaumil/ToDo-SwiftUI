@@ -65,15 +65,9 @@ struct ListsDetailsView: View {
                             
                             Spacer()
                             
-                            iconUserInput(keyboard: .numbersAndPunctuation,
-                                            placeholder: "Select a new emoji...",
-                                            textfield: self.$list.todoListName, lineLimit: 2,
-                                            fontDesign: .rounded,
-                                            fontSize: .body,
-                                            scale: 0.88)
-                                .offset(x: 0, y: 1)
-                                .textFieldStyle(PlainTextFieldStyle())
-                                .foregroundColor(Color.primary.opacity(0.50))
+                            TextField("Label: ", text: self.$list.todoListName)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .foregroundColor(Color.primary.opacity(0.50))
                         }
                         .padding(.vertical)
                     }
@@ -84,10 +78,16 @@ struct ListsDetailsView: View {
                     
                     HStack {
                     
-                    Text("Tap on the Icon...\t").font(.callout).foregroundColor(.secondary)
+                        Text("Icon")
                         
-                     
-                        TextField("Label: ", text: self.$list.todoListIcon)
+                        Spacer()
+                        
+                        iconUserInput(keyboard: .numbersAndPunctuation,
+                                    placeholder: "Type an emoji...",
+                                    textfield: self.$list.todoListIcon, lineLimit: 2,
+                                    fontDesign: .default,
+                                    fontSize: .title,
+                                    scale: 0.88)
                         .textFieldStyle(PlainTextFieldStyle())
                         .foregroundColor(Color.primary.opacity(0.50))
                         
