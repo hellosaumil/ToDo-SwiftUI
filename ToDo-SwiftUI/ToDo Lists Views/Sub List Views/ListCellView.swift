@@ -32,7 +32,6 @@ struct ListCellView: View {
                 }
                 .frame(height: 40)
                 .offset(y: (moreInfoTapped) ? 36 : 0)
-                .animation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25))
                 
                 ZStack(alignment: .leading) {
                     
@@ -46,7 +45,11 @@ struct ListCellView: View {
                     
                 }
                 .frame(height: 60)
-                .onTapGesture { self.moreInfoTapped.toggle() }
+                .onTapGesture {
+                    
+                    withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
+                    
+                }
                 
                 // MARK: TODO Context Menu for ToDo Cell
                 .contextMenu {
@@ -66,7 +69,7 @@ struct ListCellView: View {
             Divider()
                 .padding(.horizontal, 16)
         }
-        .animation(.easeInOut)
+
     }
 }
 

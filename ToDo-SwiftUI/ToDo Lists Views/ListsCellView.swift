@@ -12,7 +12,7 @@ struct ListsCellView: View {
     
     @Binding var list: ToDoList
     
-    @State private var moreInfoTapped: Bool = false
+    @State private var moreInfoTapped: Bool = true
     
     var body: some View {
         
@@ -25,15 +25,13 @@ struct ListsCellView: View {
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .foregroundColor(Color.secondary.opacity(0.06))
                         .shadow(color: Color.primary,
-                        radius: 2, x: 0, y: 4)
+                                radius: 2, x: 0, y: 4)
                     
                     ProgrssBarView(list: self.$list)
                     
                 }
                 .frame(height: 40)
                 .offset(y: (moreInfoTapped) ? 36 : 0)
-                .animation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25))
-                
                 
                 ZStack(alignment: .leading) {
                     
@@ -54,24 +52,28 @@ struct ListsCellView: View {
                             NavigationLink(destination: ListMasterView(toDoList: self.$list)) {
                                 getSystemImage(name: "chevron.right",
                                                color: Color.secondary.opacity(0.35),
-                                               fontSize: 12, scale: .medium)
+                                               fontSize: 12, scale: .large).padding(.vertical, -10)
+                                    .rotationEffect(Angle(degrees: (moreInfoTapped) ? 90 : 0))
                             }
                         }
                     }
                     
                 }
                 .frame(height: 60)
-                .onTapGesture { self.moreInfoTapped.toggle() }
+                .onTapGesture {
+                    
+                    withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
+                }
                 
             }
             .padding()
             .padding(.bottom, (moreInfoTapped) ? 20 : 0)
             
             Divider()
-            .padding(.horizontal, 16)
-
+                .padding(.horizontal, 16)
+            
         }
-        .animation(.easeInOut)
+        
     }
 }
 
@@ -177,7 +179,6 @@ struct ProgressBarItem: View {
             RoundedRectangle(cornerRadius: 10)
                 .frame(width: UIScreen.main.bounds.width * totalWidth * (percentComplete/100),
                        height: barHeight)
-                .animation(.easeInOut)
             
             Spacer()
         }

@@ -44,7 +44,6 @@ struct ToDoListsView: View {
                     
                 }
             }
-            .animation(.spring())
             .navigationBarTitle(Text("ToDo Lists"),
                                 displayMode: .automatic)
         }
