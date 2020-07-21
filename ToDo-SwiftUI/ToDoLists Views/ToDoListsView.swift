@@ -20,54 +20,40 @@ struct ToDoListsView: View {
         
         NavigationView {
             
-            ZStack {
+            VStack {
                 
-                ScrollView {
+                Divider()
+                
+                if self.lists.isEmpty {
                     
-                    VStack {
-                        
-                        Divider()
+                    Spacer()
+                    
+                    Text("No Lists Found")
+                        .font(.system(size: 20))
+                        .foregroundColor(.gray)
+                    
+                    Spacer()
+                    
+                } else {
+                    
+                    ScrollView {
                         
                         ForEach(self.lists.indices, id: \.self) { listID in
                             
                             // MARK: Call ListsCellView
                             ListsCellView(list: self.$lists[listID])
                         }
-                        
-                        Spacer()
-                        
-                        if self.lists.isEmpty {
-                            
-                            
-                            
-                            Text("No Lists Found")
-                                .font(.headline)
-                                .foregroundColor(.gray)
-                            
-                            Spacer()
-                            
-                        }
                     }
-                    .navigationBarTitle(Text("ToDo Lists"),
-                                        displayMode: .automatic)
                 }
-                    
+            }
+            .navigationBarTitle(Text("ToDo Lists"),
+                                displayMode: .automatic)
+                
                 .sheet(isPresented: self.$showingModal) {
                     
                     // MARK: Call ListsDetailView
                     ListsDetailsView(list: self.$lists[self.lists.underestimatedCount-1],
                                      showModal: self.$showingModal)
-                    
-                }
-                
-                FloatingActionButton(systemImageName: "plus", fontSize: 20,
-                                     action: {
-                                        
-                                        withAnimation { self.lists.append(ToDoList()) }
-//                                        self.showingModal.toggle()
-                })
-                    .position(x: UIScreen.main.bounds.midX * 1.70,
-                              y: UIScreen.main.bounds.maxY * 0.77)
             }
         }
     }

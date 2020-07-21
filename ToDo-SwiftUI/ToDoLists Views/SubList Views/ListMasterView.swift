@@ -18,51 +18,42 @@ struct ListMasterView: View {
     
     var body: some View {
         
-        ZStack {
+        VStack {
             
-            ScrollView {
-                
-                Divider()
-                
-                ForEach(self.toDoList.todoTasks.indices, id: \.self) { tasksIdx in
-                    
-                    // MARK: Call ListCellView
-                    ListCellView(task: self.$toDoList.todoTasks[tasksIdx])
-                }
+            Divider()
+            
+            if self.toDoList.todoTasks.isEmpty {
                 
                 Spacer()
                 
-                if self.toDoList.todoTasks.isEmpty {
+                Text("No Tasks Found")
+                    .font(.system(size: 20))
+                    .foregroundColor(.gray)
+                
+                Spacer()
+                
+            } else {
+                
+                ScrollView {
                     
-                    Text("No Tasks Found")
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    
-                    Spacer()
+                    ForEach(self.toDoList.todoTasks.indices, id: \.self) { tasksIdx in
+                        
+                        // MARK: Call ListCellView
+                        ListCellView(task: self.$toDoList.todoTasks[tasksIdx])
+                    }
                     
                 }
-            }
-            .navigationBarTitle(Text(self.toDoList.todoListName),
-                                displayMode: .automatic)
                 
-            .sheet(isPresented: self.$showingModal) {
-                    
-                    // MARK: Call ListDetailView
-                    ListDetailView(task: self.$toDoList.todoTasks[self.toDoList.todoTasks.underestimatedCount-1],
-                                   showModal: self.$showingModal)
-                    
             }
+        }
+        .navigationBarTitle(Text(self.toDoList.todoListName),
+                            displayMode: .automatic)
             
-            FloatingActionButton(systemImageName: "plus", fontSize: 20,
-                                 action: {
-                                    
-                                    withAnimation { self.toDoList.todoTasks.append(ToDoTask()) }
-//                                    self.showingModal.toggle()
-                                    
-            })
-                .position(x: UIScreen.main.bounds.midX * 1.70,
-                          y: UIScreen.main.bounds.maxY * 0.77)
-            
+            .sheet(isPresented: self.$showingModal) {
+                
+                // MARK: Call ListDetailView
+                ListDetailView(task: self.$toDoList.todoTasks[self.toDoList.todoTasks.underestimatedCount-1],
+                               showModal: self.$showingModal)
         }
     }
 }
