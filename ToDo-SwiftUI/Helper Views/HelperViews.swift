@@ -189,8 +189,6 @@ struct BindingTextRowView: View {
 struct FloatingActionButton: View {
     
     var systemImageName: String = "plus"
-    @Binding var bgColor: Color
-    var color: Color = .white
     var fontSize: CGFloat = 20
     
     var action: () -> Void
@@ -198,13 +196,15 @@ struct FloatingActionButton: View {
     var body: some View {
         
         Button(action: action) {
+            
             getSystemImage(name: self.systemImageName,
-                           color: self.color, fontSize: self.fontSize,
-                           scale: .medium)
-                .background(self.bgColor)
+                           color: .primary, fontSize: self.fontSize,
+                scale: .medium).colorInvert()
+                .padding(4)
+                .background(myGradient(type: .linear, colors: [.red, .purple]))
                 .clipShape(Circle())
-                .padding(.horizontal)
-                .shadow(color: .primary, radius: 8)
+                .shadow(color: Color.primary.opacity(0.20), radius: 10)
+            
         }
     }
 }

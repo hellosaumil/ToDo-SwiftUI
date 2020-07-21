@@ -29,9 +29,15 @@ struct ListsDetailsView: View {
             
             HStack {
                 
+                Text(self.list.todoListIcon)
+                    .font(.system(size: 24))
+                    .shadow(color: Color.secondary.opacity(0.40),
+                            radius: 2, x: 2, y: 4)
+                
                 Text(self.list.todoListName)
                     .font(.system(size: 22))
                     .fontWeight(.bold)
+                    .offset(x: 0, y: 1)
                     .foregroundOverlay(
                         myGradient(type: self.list.todoGradientScheme,
                                    colors: [self.list.todoGradientStartColor.color,
@@ -66,8 +72,9 @@ struct ListsDetailsView: View {
                             Spacer()
                             
                             TextField("Label: ", text: self.$list.todoListName)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .foregroundColor(Color.primary.opacity(0.50))
+                                .textFieldStyle(PlainTextFieldStyle())
+                                .foregroundColor(Color.primary.opacity(0.50))
+                                .offset(x: 0 , y: 1)
                         }
                         .padding(.vertical)
                     }
@@ -77,19 +84,19 @@ struct ListsDetailsView: View {
                     
                     
                     HStack {
-                    
-                        Text("Icon")
+                        
+                        Text("Emoji")
                         
                         Spacer()
                         
-                        iconUserInput(keyboard: .numbersAndPunctuation,
-                                    placeholder: "Type an emoji...",
-                                    textfield: self.$list.todoListIcon, lineLimit: 2,
-                                    fontDesign: .default,
-                                    fontSize: .title,
-                                    scale: 0.88)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .foregroundColor(Color.primary.opacity(0.50))
+                        iconUserInput(keyboard: .twitter,
+                                      placeholder: "Type an emoji...",
+                                      textfield: self.$list.todoListIcon, lineLimit: 1,
+                                      fontDesign: .default,
+                                      fontSize: .body,
+                                      scale: 0.88)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .foregroundColor(Color.primary.opacity(0.50))
                         
                     }
                 }
@@ -99,11 +106,11 @@ struct ListsDetailsView: View {
                     VStack(alignment: .center) {
                         
                         myGradient(type: self.list.todoGradientScheme,
-                               colors: [self.list.todoGradientStartColor.color,
-                                        self.list.todoGradientEndColor.color])
-                        .cornerRadius(8)
-                        .frame(height: 24)
-                        .padding(.bottom, 4)
+                                   colors: [self.list.todoGradientStartColor.color,
+                                            self.list.todoGradientEndColor.color])
+                            .cornerRadius(8)
+                            .frame(height: 24)
+                            .padding(.bottom, 4)
                         
                         Divider()
                         
@@ -145,9 +152,11 @@ struct ListsDetailsView: View {
                     .onTapGesture { self.list.isMyFavorite.toggle() }
                     
                 }
+                
             }
             .padding(.bottom, keyboard.currentHeight)
             .edgesIgnoringSafeArea(.bottom)
+            
         }
     }
     

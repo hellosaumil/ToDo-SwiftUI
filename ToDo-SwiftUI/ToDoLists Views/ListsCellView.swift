@@ -125,9 +125,6 @@ struct ToDoListCellRowItem: View {
                 .font(.system(size: 24))
                 .shadow(color: Color.secondary.opacity(0.40),
                         radius: 2, x: 2, y: 4)
-                .onTapGesture {
-                    self.list.updateProgress()
-            }
             
             Text(self.list.todoListName).strikethrough(self.list.progress == 100, color: self.list.todoGradientStartColor.color)
                 .lineLimit(2)
@@ -179,10 +176,10 @@ struct ProgressBarView: View {
                 
             }
             .padding(.trailing, 4)
-            .onTapGesture { self.showingModal.toggle() }
             
         }
         .offset(x: 10, y: 8)
+        .onTapGesture { self.showingModal.toggle() }
         .sheet(isPresented: self.$showingModal) {
             
             // MARK: Call ListsDetailView
