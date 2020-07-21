@@ -62,10 +62,9 @@ struct ToDoListsView: View {
                 
                 FloatingActionButton(systemImageName: "plus", fontSize: 20,
                                      action: {
-                                        withAnimation(.easeInOut) {
-                                            self.lists.append(ToDoList())
-                                            self.showingModal.toggle()
-                                        }
+                                        
+                                        withAnimation { self.lists.append(ToDoList()) }
+//                                        self.showingModal.toggle()
                 })
                     .position(x: UIScreen.main.bounds.midX * 1.70,
                               y: UIScreen.main.bounds.maxY * 0.77)
