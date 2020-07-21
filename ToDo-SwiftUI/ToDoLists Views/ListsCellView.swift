@@ -20,19 +20,21 @@ struct ListsCellView: View {
             
             ZStack {
                 
-                ZStack(alignment: .center) {
-                    
-                    RoundedRectangle(cornerRadius: 6, style: .continuous)
-                        .foregroundColor(Color.secondary.opacity(0.10))
-                        .frame(height: 20).offset(y: 8)
-                    
-                    
-                    ProgressBarView(list: self.$list)
-                        .animation(.interactiveSpring())
-                    
+                if moreInfoTapped {
+                    ZStack(alignment: .center) {
+                        
+                        RoundedRectangle(cornerRadius: 6, style: .continuous)
+                            .foregroundColor(Color.secondary.opacity(0.10))
+                            .frame(height: 20).offset(y: 8)
+                        
+                        
+                        ProgressBarView(list: self.$list)
+                            .animation(.interactiveSpring())
+                        
+                    }
+                    .frame(height: 40)
+                    .offset(y: (moreInfoTapped) ? 32 : 0)
                 }
-                .frame(height: 40)
-                .offset(y: (moreInfoTapped) ?    32 : 0)
                 
                 ZStack(alignment: .leading) {
                     
@@ -127,7 +129,7 @@ struct ToDoListCellRowItem: View {
                         radius: 2, x: 2, y: 4)
             
             Text(self.list.todoListName).strikethrough(self.list.progress == 100, color: self.list.todoGradientStartColor.color)
-                .lineLimit(2)
+                .lineLimit(1)
                 .font(.system(size: 22, weight: .bold, design: .default))
                 .foregroundOverlay(myGradient(type: self.list.todoGradientScheme,
                                               colors: [self.list.todoGradientStartColor.color,

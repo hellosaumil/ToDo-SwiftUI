@@ -15,14 +15,13 @@ struct ToDoListsView: View {
     @EnvironmentObject var userData: UserData
     
     @State private var showingModal: Bool = false
+    @State private var showingDelete: Bool = false
     
     var body: some View {
         
         NavigationView {
             
             VStack {
-                
-                Divider()
                 
                 if self.lists.isEmpty {
                     
@@ -38,10 +37,26 @@ struct ToDoListsView: View {
                     
                     ScrollView {
                         
+                        Divider()
+                        
                         ForEach(self.lists.indices, id: \.self) { listID in
                             
-                            // MARK: Call ListsCellView
-                            ListsCellView(list: self.$lists[listID])
+                            HStack {
+                                
+                                if self.showingDelete {
+                                    
+                                    getSystemImage(name: "minus.circle.fill", color: .red)
+                                        .padding(.horizontal, -4)
+                                        .padding(.trailing, -20)
+                                        .onTapGesture { withAnimation(.easeInOut) { () -> () in
+                                            if !self.lists.isEmpty { self.lists.remove(at: listID) }
+                                            }}
+                                }
+                                
+                                // MARK: Call ListsCellView
+                                ListsCellView(list: self.$lists[listID]).tag(listID).transition(AnyTransition.scale)
+                                
+                            }
                         }
                     }
                 }
@@ -49,6 +64,25 @@ struct ToDoListsView: View {
             .navigationBarTitle(Text("ToDo Lists"),
                                 displayMode: .automatic)
                 
+                .navigationBarItems(
+                    trailing:
+                    
+                    HStack {
+                        getSystemImage(name: "plus.circle.fill", scale: .large)
+                            .foregroundOverlay(myGradient(type: .linear,
+                                                          colors: [hexColor(hex: "#4facfe"),
+                                                                   hexColor(hex: "#00f2fe")]))
+                            .padding(.horizontal, -12)
+                            .onTapGesture { withAnimation { self.lists.append(ToDoList()) } }
+                        
+                        getSystemImage(name: "minus.circle.fill", scale: .large)
+                            .foregroundOverlay(myGradient(type: .linear,
+                                                          colors: [hexColor(hex: "#ff0844"),
+                                                                   hexColor(hex: "#ffb199")]))
+                            .padding(.horizontal, -12)
+                            .onTapGesture { withAnimation(.spring()) { self.showingDelete.toggle() } }
+                    }
+            )
                 .sheet(isPresented: self.$showingModal) {
                     
                     // MARK: Call ListsDetailView

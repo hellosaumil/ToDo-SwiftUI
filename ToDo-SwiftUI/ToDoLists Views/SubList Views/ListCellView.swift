@@ -19,18 +19,20 @@ struct ListCellView: View {
             
             ZStack {
                 
-                ZStack(alignment: .center) {
-                    
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .foregroundColor(Color.secondary.opacity(0.10))
-                        .frame(height: 20).offset(y: 8)
-                    
-                    // MARK: Call TaskEditBarView
-                    TaskEditBarView(task: self.$task)
-                    
+                if self.moreInfoTapped {
+                    ZStack(alignment: .center) {
+                        
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .foregroundColor(Color.secondary.opacity(0.10))
+                            .frame(height: 20).offset(y: 8)
+                        
+                        // MARK: Call TaskEditBarView
+                        TaskEditBarView(task: self.$task)
+                        
+                    }
+                    .frame(height: 40)
+                    .offset(y: (moreInfoTapped) ? 36 : 0)
                 }
-                .frame(height: 40)
-                .offset(y: (moreInfoTapped) ? 36 : 0)
                 
                 ZStack(alignment: .leading) {
                     
