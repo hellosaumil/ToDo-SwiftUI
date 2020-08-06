@@ -86,6 +86,14 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
         self.progress = 0
     }
     
+    func isAllComplete() -> Bool {
+        
+        guard !self.todoTasks.isEmpty else {
+            return false
+        }
+        
+        return (self.todoTasks.filter{ ($0.isCompleted) }).count < self.todoTasks.count
+    }
     
     func completeTasks() {
         

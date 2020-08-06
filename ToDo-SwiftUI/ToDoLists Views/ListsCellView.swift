@@ -58,24 +58,28 @@ struct ListsCellView: View {
                             
                             Text("Progress: \(String(format: "%.1f", self.list.progress))%")
                             
-                            Button(action: {
-                                self.list.completeTasks()
-                                self.list.updateProgress()
-                            }) {
-                                Text("Complete All Tasks")
-                                Image(systemName: "globe")
+                            // MARK: Complete/Reset All Tasks in the List
+                            if !self.list.todoTasks.isEmpty {
+                                
+                                Button(action: {
+                                    
+                                    if self.list.isAllComplete() {
+                                        self.list.completeTasks()
+                                    } else {
+                                        self.list.incompleteTasks()
+                                    }
+                                    
+                                    self.list.updateProgress()
+                                    
+                                }) {
+                                    
+                                    Text(self.list.isAllComplete() ? "Complete all tasks" : "Reset all tasks")
+                                    Image(systemName: self.list.isAllComplete() ? "checkmark.circle.fill" : "minus.circle.fill" )
+                                }
+                                
                             }
                             
-                            Button(action: {
-                                self.list.incompleteTasks()
-                                self.list.updateProgress()
-                            }) {
-                                Text("Reset All Tasks")
-                                Image(systemName: "globe")
-                            }
                         }
-                        
-                        
                         
                     }
                     .frame(height: 60)
