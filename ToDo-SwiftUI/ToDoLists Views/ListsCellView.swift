@@ -10,8 +10,7 @@ import SwiftUI
 
 struct ListsCellView: View {
     
-    @Binding var list: ToDoList
-    
+    @ObservedObject var list: ToDoList
     @State private var moreInfoTapped: Bool = false
     
     var body: some View {
@@ -20,50 +19,59 @@ struct ListsCellView: View {
             
             ZStack {
                 
-                if moreInfoTapped {
-                    ZStack(alignment: .center) {
-                        
-                        RoundedRectangle(cornerRadius: 6, style: .continuous)
-                            .foregroundColor(Color.secondary.opacity(0.10))
-                            .frame(height: 20).offset(y: 8)
-                        
-                        
-                        ProgressBarView(list: self.$list)
-                            .animation(.interactiveSpring())
-                        
+                ZStack {
+                    
+                    if moreInfoTapped {
+                        ZStack(alignment: .center) {
+                            
+                            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                .foregroundColor(Color.secondary.opacity(0.10))
+                                .frame(height: 20).offset(y: 8)
+                            
+                            
+                            ProgressBarView(list: self.list)
+                                .animation(.easeInOut)
+                            
+                        }
+                        .frame(height: 40)
+                        .offset(y: (moreInfoTapped) ? 32 : 0)
                     }
-                    .frame(height: 40)
-                    .offset(y: (moreInfoTapped) ? 32 : 0)
-                }
-                
-                ZStack(alignment: .leading) {
                     
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .foregroundColor(.primary).colorInvert()
-                        .shadow(color: Color.secondary.opacity(0.40),
-                                radius: 4, x: 0, y: 4)
-                    
-                    VStack(spacing: 0) {
+                    ZStack(alignment: .leading) {
+                        
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .foregroundColor(.primary).colorInvert()
+                            .shadow(color: Color.secondary.opacity(0.40),
+                                    radius: 4, x: 0, y: 4)
+                        
                         HStack {
                             
                             // MARK: Call ToDoListCellRowItem
-                            ToDoListCellRowItem(list: self.$list)
+                            ToDoListCellRowItem(list: self.list)
                             
                             Spacer()
+                        }
+                        .contextMenu {
+                            // MARK: TODO Context Menu for ToDoList Cell
                             
-                            // MARK: Call ListMasterView
-                            NavigationLink(destination: ListMasterView(toDoList: self.$list)) {
-                                getSystemImage(name: "chevron.right",
-                                               color: Color.secondary.opacity(0.35),
-                                               fontSize: 12, scale: .large).padding(.vertical, -10)
-                                    .rotationEffect(Angle(degrees: (moreInfoTapped) ? 90 : 0))
+                            ZStack {
+                                
+                                Text("Name: \(self.list.todoListIcon) \(self.list.todoListName)").lineLimit(4)
+                                
+                                Text("Progress: \(String(format: "%.1f", self.list.progress))%")
                             }
                         }
+                        
+                        
+                        
                     }
+                    .frame(height: 60)
+                    .onAppear(perform: {self.list.updateProgress()})
                     
                 }
-                .frame(height: 60)
-                .onAppear(perform: {self.list.updateProgress()})
+                .padding(.vertical)
+                .padding(.bottom, (moreInfoTapped) ? 20 : 0)
+                    
                 .onTapGesture {
                     
                     withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) {
@@ -74,24 +82,27 @@ struct ListsCellView: View {
                         
                     }
                 }
-                    // MARK: TODO Context Menu for ToDoList Cell
-                    .contextMenu {
+                
+                // MARK: Call ListMasterView
+                ScrollView {
+                    
+                    NavigationLink(destination: ListMasterView(toDoList: list)) {
                         
-                        ZStack {
+                        getSystemImage(name: "chevron.right",
+                                       color: Color.secondary.opacity(0.35), fontSize: 12,
+                                       scale: .large).padding(.vertical, -10)
                             
-                            Text("Name: \(self.list.todoListIcon) \(self.list.todoListName)").lineLimit(4)
-                            
-                            Text("Progress: \(String(format: "%.1f", self.list.progress))%")
-                        }
+                            .rotationEffect(Angle(degrees: (moreInfoTapped) ? 90 : 0))
+                        
+                    }
                 }
+                .offset(y: UIScreen.main.bounds.height * 0.040 )
+                .padding(.leading, UIScreen.main.bounds.width * 0.80 )
                 
             }
-            .padding()
-            .padding(.bottom, (moreInfoTapped) ? 20 : 0)
             
             Divider()
                 .padding(.horizontal, 16)
-            
         }
         
     }
@@ -102,22 +113,21 @@ struct ListsCellView_Previews: PreviewProvider {
         
         Group {
             
-            ForEach([sampleLists[0]], id: \.todoListID) { list in
+            ForEach([sampleLists[0]], id: \.id) { list in
                 
                 NightAndDay {
-                    ListsCellView(list: .constant(list))
+                    
+                    ListsCellView(list: list)
                         .previewLayout(.sizeThatFits)
                 }
-                
             }
-            
         }
     }
 }
 
 struct ToDoListCellRowItem: View {
     
-    @Binding var list: ToDoList
+    @ObservedObject var list: ToDoList
     
     var body: some View {
         
@@ -143,7 +153,7 @@ struct ToDoListCellRowItem: View {
 
 struct ProgressBarView: View {
     
-    @Binding var list: ToDoList
+    @ObservedObject var list: ToDoList
     @State private var showingModal: Bool = false
     
     var body: some View {
@@ -185,7 +195,7 @@ struct ProgressBarView: View {
         .sheet(isPresented: self.$showingModal) {
             
             // MARK: Call ListsDetailView
-            ListsDetailsView(list: self.$list,
+            ListsDetailsView(list: self.list,
                              showModal: self.$showingModal)
             
         }
@@ -203,7 +213,7 @@ struct ProgressBarItem: View {
         HStack {
             
             RoundedRectangle(cornerRadius: 10)
-                .frame(width: UIScreen.main.bounds.width * totalWidth * (percentComplete/100),
+                .frame(width: UIScreen.main.bounds.width * 0.90 * totalWidth * (percentComplete/100),
                        height: barHeight)
             
             Spacer()

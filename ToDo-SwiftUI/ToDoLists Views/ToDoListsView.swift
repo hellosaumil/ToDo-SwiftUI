@@ -10,9 +10,7 @@ import SwiftUI
 
 struct ToDoListsView: View {
     
-    @Binding var lists: [ToDoList]
-    
-    @EnvironmentObject var userData: UserData
+    @ObservedObject var allLists: AllLists
     
     @State private var showingModal: Bool = false
     @State private var showingDelete: Bool = false
@@ -21,73 +19,59 @@ struct ToDoListsView: View {
         
         NavigationView {
             
-            VStack {
+            ZStack {
                 
-                if self.lists.isEmpty {
+                VStack {
                     
-                    Spacer()
-                    
-                    Text("No Lists Found")
-                        .font(.system(size: 20))
-                        .foregroundColor(.gray)
-                    
-                    Spacer()
-                    
-                } else {
-                    
-                    ScrollView {
+                    if self.allLists.myLists.isEmpty {
                         
-                        Divider()
+                        Spacer()
                         
-                        ForEach(self.lists.indices, id: \.self) { listID in
+                        Text("No Lists Found")
+                            .font(.system(size: 20))
+                            .foregroundColor(.gray)
+                        
+                        Spacer()
+                        
+                    } else {
+                        
+                        List  {
                             
-                            HStack {
-                                
-                                if self.showingDelete {
-                                    
-                                    getSystemImage(name: "minus.circle.fill", color: .red)
-                                        .padding(.horizontal, -4)
-                                        .padding(.trailing, -20)
-                                        .onTapGesture { withAnimation(.easeInOut) { () -> () in
-                                            if !self.lists.isEmpty { self.lists.remove(at: listID) }
-                                            }}
-                                }
+                            ForEach(self.allLists.myLists, id: \.self) { list in
                                 
                                 // MARK: Call ListsCellView
-                                ListsCellView(list: self.$lists[listID]).tag(listID).transition(AnyTransition.scale)
+                                ListsCellView(list: list)
                                 
                             }
+                            .onDelete { (IndexSet) in
+                                self.allLists.myLists.remove(atOffsets: IndexSet)
+                            }
+                        }
+                            
+                        .onAppear {
+                            UITableView.appearance().separatorStyle = .none
                         }
                     }
                 }
-            }
-            .navigationBarTitle(Text("ToDo Lists"),
-                                displayMode: .automatic)
-                
-                .navigationBarItems(
-                    trailing:
+                .navigationBarTitle(Text("ToDo Lists"),
+                                    displayMode: .automatic)
                     
-                    HStack {
-                        getSystemImage(name: "plus.circle.fill", scale: .large)
-                            .foregroundOverlay(myGradient(type: .linear,
-                                                          colors: [hexColor(hex: "#4facfe"),
-                                                                   hexColor(hex: "#00f2fe")]))
-                            .padding(.horizontal, -12)
-                            .onTapGesture { withAnimation { self.lists.append(ToDoList()) } }
+                    .sheet(isPresented: self.$showingModal, onDismiss: {self.showingModal = false}) {
                         
-                        getSystemImage(name: "minus.circle.fill", scale: .large)
-                            .foregroundOverlay(myGradient(type: .linear,
-                                                          colors: [hexColor(hex: "#ff0844"),
-                                                                   hexColor(hex: "#ffb199")]))
-                            .padding(.horizontal, -12)
-                            .onTapGesture { withAnimation(.spring()) { self.showingDelete.toggle() } }
+                        
+                        // MARK: Call ListsDetailView
+                        ListsDetailsView(list: self.allLists.myLists[self.allLists.myLists.count-1],
+                                         showModal: self.$showingModal)
+                }
+                
+                FloatingActionButton(action: {
+                    withAnimation(.easeInOut) {
+                        self.allLists.myLists.append(ToDoList())
+                        self.showingModal = true
                     }
-            )
-                .sheet(isPresented: self.$showingModal) {
-                    
-                    // MARK: Call ListsDetailView
-                    ListsDetailsView(list: self.$lists[self.lists.underestimatedCount-1],
-                                     showModal: self.$showingModal)
+                })
+                    .position(x: UIScreen.main.bounds.midX * 1.70,
+                              y: UIScreen.main.bounds.maxY * 0.77)
             }
         }
     }
@@ -96,17 +80,10 @@ struct ToDoListsView: View {
 struct ToDoListsView_Previews: PreviewProvider {
     static var previews: some View {
         
-        Group {
-            
-            ForEach([[], sampleLists], id: \.self) { lists in
-                
-                NightAndDay {
-                    ToDoListsView(lists: .constant(lists))
-                        .environmentObject(UserData())
-                }
-                
-            }
-            
+        NightAndDay {
+            ToDoListsView(allLists: AllLists(lists: randomLists) )
         }
     }
 }
+
+

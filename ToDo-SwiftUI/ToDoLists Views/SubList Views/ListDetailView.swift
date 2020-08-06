@@ -10,10 +10,10 @@ import SwiftUI
 
 struct ListDetailView: View {
     
-    @Binding var task: ToDoTask
+    @ObservedObject var task: ToDoTask
     @Binding var showModal: Bool
     
-    @ObservedObject private var keyboard = KeyboardResponder()
+    @State private var keyboard = KeyboardResponder()
     
     var body: some View {
         
@@ -184,6 +184,7 @@ struct ListDetailView: View {
             .padding(.bottom, keyboard.currentHeight)
             .edgesIgnoringSafeArea(.bottom)
         }
+        
     }
     
     func endEditing(_ force: Bool) {
@@ -196,13 +197,12 @@ struct ListDetailView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        
-        ForEach(sampleTasksLite, id: \.todoID) { task in
+        ForEach(sampleTasksLite, id: \.id) { task in
             
             Group {
                 
                 NightAndDay {
-                    ListDetailView(task: .constant(task),
+                    ListDetailView(task: task,
                                    showModal: .constant(true))
                 }
             }

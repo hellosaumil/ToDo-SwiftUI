@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ListMasterView: View {
     
-    @Binding var toDoList: ToDoList
+    @ObservedObject var toDoList: ToDoList
     
     @State private var tappedTask: ToDoTask = ToDoTask(name: "none")
     
@@ -19,74 +19,55 @@ struct ListMasterView: View {
     
     var body: some View {
         
-        VStack {
-            
-            if self.toDoList.todoTasks.isEmpty {
+        ZStack {
+            VStack {
                 
-                Spacer()
-                
-                Text("No Tasks Found")
-                    .font(.system(size: 20))
-                    .foregroundColor(.gray)
-                
-                Spacer()
-                
-            } else {
-                
-                ScrollView {
+                if self.toDoList.todoTasks.isEmpty {
                     
-                    Divider()
+                    Spacer()
                     
-                    ForEach(self.toDoList.todoTasks.indices, id: \.self) { tasksIdx in
+                    Text("No Tasks Found")
+                        .font(.system(size: 20))
+                        .foregroundColor(.gray)
+                    
+                    Spacer()
+                    
+                } else {
+                    
+                    ScrollView {
                         
-                        HStack {
-                            
-                            if self.showingDelete {
-                                
-                                getSystemImage(name: "minus.circle.fill", color: .red)
-                                    .padding(.horizontal, -4)
-                                    .padding(.trailing, -20)
-                                    .onTapGesture { withAnimation(.easeInOut) { () -> () in
-                                        if !self.toDoList.todoTasks.isEmpty { self.toDoList.todoTasks.remove(at: tasksIdx) }
-                                        }}
-                            }
+                        Divider()
+                        
+                        ForEach(self.toDoList.todoTasks, id: \.self) { tasks in
                             
                             // MARK: Call ListCellView
-                            ListCellView(task: self.$toDoList.todoTasks[tasksIdx])
-                            
+                            ListCellView(task: tasks)
+                        }
+                        .onDelete { (IndexSet) in
+                            self.toDoList.todoTasks.remove(atOffsets: IndexSet)
                         }
                     }
-                    
                 }
-                
             }
+            
+            FloatingActionButton(systemImageName: "plus", fontSize: 20,
+                                 action: {
+                                    withAnimation(.easeInOut) {
+                                        self.toDoList.todoTasks.append(ToDoTask())
+                                        self.showingModal = true
+                                    }
+            })
+                .position(x: UIScreen.main.bounds.midX * 1.70,
+                          y: UIScreen.main.bounds.maxY * 0.77)
+            
         }
         .navigationBarTitle(Text(self.toDoList.todoListName),
                             displayMode: .automatic)
             
-            .navigationBarItems(
-                trailing:
-                
-                HStack {
-                    getSystemImage(name: "plus.circle.fill", scale: .large)
-                        .foregroundOverlay(myGradient(type: .linear,
-                                                      colors: [hexColor(hex: "#4facfe"),
-                                                               hexColor(hex: "#00f2fe")]))
-                        .padding(.horizontal, -12)
-                        .onTapGesture { withAnimation { self.toDoList.todoTasks.append(ToDoTask()) } }
-                    
-                    getSystemImage(name: "minus.circle.fill", scale: .large)
-                        .foregroundOverlay(myGradient(type: .linear,
-                                                      colors: [hexColor(hex: "#ff0844"),
-                                                               hexColor(hex: "#ffb199")]))
-                        .padding(.horizontal, -12)
-                        .onTapGesture { withAnimation(.spring()) { self.showingDelete.toggle() } }
-                }
-        )
-            .sheet(isPresented: self.$showingModal) {
+            .sheet(isPresented: self.$showingModal, onDismiss: {self.showingModal = false}) {
                 
                 // MARK: Call ListDetailView
-                ListDetailView(task: self.$toDoList.todoTasks[self.toDoList.todoTasks.underestimatedCount-1],
+                ListDetailView(task: self.toDoList.todoTasks[self.toDoList.todoTasks.underestimatedCount-1],
                                showModal: self.$showingModal)
         }
     }
@@ -97,10 +78,11 @@ struct ListMasterView_Previews: PreviewProvider {
         
         Group {
             
-            ForEach( [toDoListLite, toDoListLite2, toDoListRandom], id: \.todoListID ) { list in
+            ForEach( [toDoListLite, toDoListLite2, toDoListRandom], id: \.id ) { list in
                 
                 NightAndDay {
-                    ListMasterView(toDoList: .constant(list))
+                    
+                    ListMasterView(toDoList: list)
                 }
             }
         }

@@ -10,18 +10,10 @@ import SwiftUI
 
 struct ListsDetailsView: View {
     
-    @Binding var list: ToDoList
+    @State var list: ToDoList
     @Binding var showModal: Bool
     
-    @ObservedObject private var keyboard = KeyboardResponder()
-    
-    //    var todoListIcon: String
-    //    var todoListName: String
-    //
-    //    var todoTasks: [ToDoTask]
-    //
-    //    var progress: CGFloat
-    //    var isMyFavorite: Bool
+    @State private var keyboard = KeyboardResponder()
     
     var body: some View {
         
@@ -169,11 +161,9 @@ struct ListsDetailsView: View {
 struct ListsDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         
-        ForEach(randomLists, id: \.todoListID) { list in
+        ForEach(randomLists, id: \.id) { list in
             
-            
-            ListsDetailsView(list: .constant(list),
-                             showModal: .constant(true))
+            ListsDetailsView(list: list, showModal: .constant(true))
             
         }
     }

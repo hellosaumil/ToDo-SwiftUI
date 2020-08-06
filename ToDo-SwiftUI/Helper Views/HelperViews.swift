@@ -103,18 +103,18 @@ func headerItemGroup(imageName: String, text: String, imageScale: Image.Scale = 
 
 func hexColor (hex:String) -> Color {
     var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
+    
     if (cString.hasPrefix("#")) {
         cString.remove(at: cString.startIndex)
     }
-
+    
     if ((cString.count) != 6) {
         return Color(UIColor.gray)
     }
-
+    
     var rgbValue:UInt64 = 0
     Scanner(string: cString).scanHexInt64(&rgbValue)
-
+    
     return Color(UIColor(
         red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
         green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
@@ -199,13 +199,27 @@ struct FloatingActionButton: View {
             
             getSystemImage(name: self.systemImageName,
                            color: .primary, fontSize: self.fontSize,
-                scale: .medium).colorInvert()
+                           scale: .medium).colorInvert()
                 .padding(4)
                 .background(myGradient(type: .linear, colors: [.red, .purple]))
                 .clipShape(Circle())
                 .shadow(color: Color.primary.opacity(0.20), radius: 10)
             
         }
+    }
+}
+
+struct CustomBarButton: View {
+    
+    @State var imageName: String = "plus.circle.fill"
+    
+    var body: some View {
+        
+        getSystemImage(name: self.imageName, scale: .large)
+            .foregroundOverlay(myGradient(type: .linear,
+                                          colors: [hexColor(hex: "#4facfe"),
+                                                   hexColor(hex: "#00f2fe")]))
+            .padding(.horizontal, -12)
     }
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ListCellView: View {
     
-    @Binding var task: ToDoTask
+    @ObservedObject var task: ToDoTask
     @State private var moreInfoTapped: Bool = false
     
     var body: some View {
@@ -27,7 +27,7 @@ struct ListCellView: View {
                             .frame(height: 20).offset(y: 8)
                         
                         // MARK: Call TaskEditBarView
-                        TaskEditBarView(task: self.$task)
+                        TaskEditBarView(task: self.task)
                         
                     }
                     .frame(height: 40)
@@ -42,7 +42,7 @@ struct ListCellView: View {
                                 radius: 4, x: 0, y: 4)
                     
                     // MARK: Call ToDoCellRow
-                    ToDoCellRowItem(task: self.$task)
+                    ToDoCellRowItem(task: self.task)
                 }
                 .frame(height: 60)
                 .onTapGesture {
@@ -76,14 +76,14 @@ var someTask = ToDoTask(name: "want to-do something")
 
 struct ListCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ListCellView(task: .constant(someTask))
+        ListCellView(task: someTask)
             .previewLayout(.sizeThatFits)
     }
 }
 
 struct ToDoCellRowItem: View {
     
-    @Binding var task: ToDoTask
+    @ObservedObject var task: ToDoTask
     
     var body: some View {
         
@@ -111,7 +111,7 @@ struct ToDoCellRowItem: View {
 
 struct TaskEditBarView: View {
     
-    @Binding var task: ToDoTask
+    @ObservedObject var task: ToDoTask
     @State private var showingModal: Bool = false
     
     var body: some View {
@@ -156,7 +156,7 @@ struct TaskEditBarView: View {
         .sheet(isPresented: self.$showingModal) {
             
             // MARK: Call DetailView
-            ListDetailView(task: self.$task,
+            ListDetailView(task: self.task,
                            showModal: self.$showingModal)
         }
         

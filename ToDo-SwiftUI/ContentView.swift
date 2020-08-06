@@ -10,11 +10,11 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var userData: UserData
+    @ObservedObject var allLists: AllLists
     
     var body: some View {
         
-        ToDoListsView(lists: self.$userData.someRandomLists)
+        ToDoListsView(allLists: self.allLists)
         
     }
 }
@@ -22,9 +22,10 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         
-//        NightAndDay {
-            ContentView()
-            .environmentObject(UserData())
-//        }
+        NightAndDay {
+            
+            ContentView(allLists: AllLists() )
+
+        }
     }
 }

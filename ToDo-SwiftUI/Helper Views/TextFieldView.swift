@@ -43,7 +43,7 @@ struct TextFieldView: View {
             }
             
         } else {
-                  
+            
             HStack(alignment: .center) {
                 
                 Text(title)
