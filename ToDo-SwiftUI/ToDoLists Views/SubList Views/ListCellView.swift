@@ -53,12 +53,9 @@ struct ListCellView: View {
                     // MARK: TODO Context Menu for ToDo Cell
                     .contextMenu {
                         
-                        ZStack {
-                            
-                            Text("Name: \(self.task.todoName)").lineLimit(4)
-                            Text("Shape: \(self.task.todoShape.rawValue)")
-                            Text("Due on: \( customDateFormatter.string(from: self.task.dueDateTime) )")
-                        }
+                        Text("Name: \(self.task.todoName)").lineLimit(4)
+                        Text("Shape: \(self.task.todoShape.rawValue)")
+                        Text("Due on: \( customDateFormatter.string(from: self.task.dueDateTime) )")
                 }
                 
             }
@@ -98,7 +95,7 @@ struct ToDoCellRowItem: View {
                                                        self.task.todoGradientEndColor.color]))
                 .onTapGesture { self.task.isCompleted.toggle() }
             
-            Text("\(self.task.todoName)")
+            Text("\(self.task.todoName)").strikethrough(self.task.isCompleted, color: self.task.todoGradientStartColor.color)
                 .font(.system(size: 20, weight: .regular, design: .monospaced))
                 .fontWeight(.semibold)
                 .foregroundOverlay(myGradient(type: self.task.todoGradientScheme,
@@ -146,6 +143,7 @@ struct TaskEditBarView: View {
                 getSystemImage(name: "slider.horizontal.3",
                                color: Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .medium).padding(0)
+                    .onTapGesture { self.showingModal.toggle() }
                 
             }
             .padding(.trailing, 4)

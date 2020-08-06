@@ -54,7 +54,7 @@ struct ListMasterView: View {
                                  action: {
                                     withAnimation(.easeInOut) {
                                         self.toDoList.todoTasks.append(ToDoTask())
-                                        self.showingModal = true
+//                                        self.showingModal = true
                                     }
             })
                 .position(x: UIScreen.main.bounds.midX * 1.70,

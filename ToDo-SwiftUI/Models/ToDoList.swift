@@ -85,4 +85,20 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     func resetProgress() {
         self.progress = 0
     }
+    
+    
+    func completeTasks() {
+        
+        for index in self.todoTasks.indices {
+            self.todoTasks[index].isCompleted = true
+        }
+    }
+    
+    func incompleteTasks() {
+        
+        for index in self.todoTasks.indices {
+            self.todoTasks[index].isCompleted = false
+        }
+    }
+    
 }

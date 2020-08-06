@@ -54,11 +54,24 @@ struct ListsCellView: View {
                         .contextMenu {
                             // MARK: TODO Context Menu for ToDoList Cell
                             
-                            ZStack {
-                                
-                                Text("Name: \(self.list.todoListIcon) \(self.list.todoListName)").lineLimit(4)
-                                
-                                Text("Progress: \(String(format: "%.1f", self.list.progress))%")
+                            Text("Name: \(self.list.todoListIcon) \(self.list.todoListName)").lineLimit(4)
+                            
+                            Text("Progress: \(String(format: "%.1f", self.list.progress))%")
+                            
+                            Button(action: {
+                                self.list.completeTasks()
+                                self.list.updateProgress()
+                            }) {
+                                Text("Complete All Tasks")
+                                Image(systemName: "globe")
+                            }
+                            
+                            Button(action: {
+                                self.list.incompleteTasks()
+                                self.list.updateProgress()
+                            }) {
+                                Text("Reset All Tasks")
+                                Image(systemName: "globe")
                             }
                         }
                         
@@ -185,6 +198,7 @@ struct ProgressBarView: View {
                 getSystemImage(name: "slider.horizontal.3",
                                color: Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .medium).padding(0)
+                    .onTapGesture { self.showingModal.toggle() }
                 
             }
             .padding(.trailing, 4)
