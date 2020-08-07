@@ -15,56 +15,50 @@ struct ListCellView: View {
     
     var body: some View {
         
-        VStack {
+        ZStack {
             
-            ZStack {
-                
-                if self.moreInfoTapped {
-                    ZStack(alignment: .center) {
-                        
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .foregroundColor(Color.secondary.opacity(0.10))
-                            .frame(height: 20).offset(y: 8)
-                        
-                        // MARK: Call TaskEditBarView
-                        TaskEditBarView(task: self.task)
-                        
-                    }
-                    .frame(height: 40)
-                    .offset(y: (moreInfoTapped) ? 36 : 0)
-                }
-                
-                ZStack(alignment: .leading) {
+            if self.moreInfoTapped {
+                ZStack(alignment: .center) {
                     
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .foregroundColor(.primary).colorInvert()
-                        .shadow(color: Color.secondary.opacity(0.40),
-                                radius: 4, x: 0, y: 4)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .foregroundColor(Color.secondary.opacity(0.10))
+                        .frame(height: 20).offset(y: 8)
                     
-                    // MARK: Call ToDoCellRow
-                    ToDoCellRowItem(task: self.task)
-                }
-                .frame(height: 60)
-                .onTapGesture {
+                    // MARK: Call TaskEditBarView
+                    TaskEditBarView(task: self.task)
                     
-                    withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
                 }
-                    
-                    // MARK: TODO Context Menu for ToDo Cell
-                    .contextMenu {
-                        
-                        Text("Name: \(self.task.todoName)").lineLimit(4)
-                        Text("Shape: \(self.task.todoShape.rawValue)")
-                        Text("Due on: \( customDateFormatter.string(from: self.task.dueDateTime) )")
-                }
-                
+                .frame(height: 40)
+                .offset(y: (moreInfoTapped) ? 36 : 0)
             }
-            .padding()
-            .padding(.bottom, (moreInfoTapped) ? 20 : 0)
             
-            Divider()
-                .padding(.horizontal, 16)
+            ZStack(alignment: .leading) {
+                
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .foregroundColor(.primary).colorInvert()
+                    .shadow(color: Color.secondary.opacity(0.40),
+                            radius: 4, x: 0, y: 4)
+                
+                // MARK: Call ToDoCellRow
+                ToDoCellRowItem(task: self.task)
+            }
+            .frame(height: 60)
+            .onTapGesture {
+                
+                withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { self.moreInfoTapped.toggle() }
+            }
+            
+            // MARK: TODO Context Menu for ToDo Cell
+            .contextMenu {
+                
+                Text("Name: \(self.task.todoName)").lineLimit(4)
+                Text("Shape: \(self.task.todoShape.rawValue)")
+                Text("Due on: \( customDateFormatter.string(from: self.task.dueDateTime) )")
+            }
+            
         }
+        .padding(.vertical)
+        .padding(.bottom, (moreInfoTapped) ? 20 : 0)
         
     }
 }
@@ -88,8 +82,8 @@ struct ToDoCellRowItem: View {
             
             // MARK: Complete Task
             getSystemImage(name: "\(self.task.todoShape)" +
-                ((self.task.isCompleted) ? ".fill" : ""), color: .primary,
-                                                          fontSize: 20, weight: .medium)
+                            ((self.task.isCompleted) ? ".fill" : ""), color: .primary,
+                           fontSize: 20, weight: .medium)
                 .foregroundOverlay(myGradient(type: self.task.todoGradientScheme,
                                               colors: [self.task.todoGradientStartColor.color,
                                                        self.task.todoGradientEndColor.color]))

@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 enum GradientTypes: String, CaseIterable, Codable {
-    case linear, radient, angular
+    case linear, radient, angular, none
     var id: String { self.rawValue }
 }
 
@@ -62,6 +62,9 @@ func myGradient(
             startRadius: startRadius,
             endRadius: endRadius
         ))
+    
+    case .none:
+        return AnyView(EmptyView())
     }
     
 }
@@ -206,6 +209,9 @@ struct FloatingActionButton: View {
                 .shadow(color: Color.primary.opacity(0.20), radius: 10)
             
         }
+        .position(x: UIScreen.main.bounds.width * 0.82,
+                  y: UIScreen.main.bounds.height * 0.92 )
+        .ignoresSafeArea()
     }
 }
 

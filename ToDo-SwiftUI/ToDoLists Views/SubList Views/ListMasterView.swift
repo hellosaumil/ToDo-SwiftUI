@@ -34,19 +34,20 @@ struct ListMasterView: View {
                     
                 } else {
                     
-                    ScrollView {
-                        
-                        Divider()
+                    List {
                         
                         ForEach(self.toDoList.todoTasks, id: \.self) { tasks in
                             
                             // MARK: Call ListCellView
                             ListCellView(task: tasks)
+                                .padding(.trailing, -16)
                         }
                         .onDelete { (IndexSet) in
                             self.toDoList.todoTasks.remove(atOffsets: IndexSet)
                         }
                     }
+                    .padding(.trailing)
+                    .listStyle(PlainListStyle())
                 }
             }
             
@@ -57,9 +58,6 @@ struct ListMasterView: View {
 //                                        self.showingModal = true
                                     }
             })
-                .position(x: UIScreen.main.bounds.midX * 1.70,
-                          y: UIScreen.main.bounds.maxY * 0.77)
-            
         }
         .navigationBarTitle(Text(self.toDoList.todoListName),
                             displayMode: .automatic)

@@ -15,111 +15,105 @@ struct ListsCellView: View {
     
     var body: some View {
         
-        VStack {
+        ZStack {
             
             ZStack {
                 
-                ZStack {
-                    
-                    if moreInfoTapped {
-                        ZStack(alignment: .center) {
-                            
-                            RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                .foregroundColor(Color.secondary.opacity(0.10))
-                                .frame(height: 20).offset(y: 8)
-                            
-                            
-                            ProgressBarView(list: self.list)
-                                .animation(.easeInOut)
-                            
-                        }
-                        .frame(height: 40)
-                        .offset(y: (moreInfoTapped) ? 32 : 0)
+                if moreInfoTapped {
+                    ZStack(alignment: .center) {
+                        
+                        RoundedRectangle(cornerRadius: 6, style: .continuous)
+                            .foregroundColor(Color.secondary.opacity(0.10))
+                            .frame(height: 20).offset(y: 8)
+                        
+                        
+                        ProgressBarView(list: self.list)
+                            .animation(.easeInOut)
+                        
                     }
+                    .frame(height: 40)
+                    .offset(y: (moreInfoTapped) ? 32 : 0)
+                }
+                
+                ZStack(alignment: .leading) {
                     
-                    ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .foregroundColor(.primary).colorInvert()
+                        .shadow(color: Color.secondary.opacity(0.40),
+                                radius: 4, x: 0, y: 4)
+                    
+                    HStack {
                         
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .foregroundColor(.primary).colorInvert()
-                            .shadow(color: Color.secondary.opacity(0.40),
-                                    radius: 4, x: 0, y: 4)
+                        // MARK: Call ToDoListCellRowItem
+                        ToDoListCellRowItem(list: self.list)
                         
-                        HStack {
+                        Spacer()
+                    }
+                    .contextMenu {
+                        // MARK: TODO Context Menu for ToDoList Cell
+                        
+                        Text("Name: \(self.list.todoListIcon) \(self.list.todoListName)").lineLimit(4)
+                        
+                        Text("Progress: \(String(format: "%.1f", self.list.progress))%")
+                        
+                        // MARK: Complete/Reset All Tasks in the List
+                        if !self.list.todoTasks.isEmpty {
                             
-                            // MARK: Call ToDoListCellRowItem
-                            ToDoListCellRowItem(list: self.list)
-                            
-                            Spacer()
-                        }
-                        .contextMenu {
-                            // MARK: TODO Context Menu for ToDoList Cell
-                            
-                            Text("Name: \(self.list.todoListIcon) \(self.list.todoListName)").lineLimit(4)
-                            
-                            Text("Progress: \(String(format: "%.1f", self.list.progress))%")
-                            
-                            // MARK: Complete/Reset All Tasks in the List
-                            if !self.list.todoTasks.isEmpty {
+                            Button(action: {
                                 
-                                Button(action: {
-                                    
-                                    if self.list.isAllComplete() {
-                                        self.list.completeTasks()
-                                    } else {
-                                        self.list.incompleteTasks()
-                                    }
-                                    
-                                    self.list.updateProgress()
-                                    
-                                }) {
-                                    
-                                    Text(self.list.isAllComplete() ? "Complete all tasks" : "Reset all tasks")
-                                    Image(systemName: self.list.isAllComplete() ? "checkmark.circle.fill" : "minus.circle.fill" )
+                                if self.list.isAllComplete() {
+                                    self.list.completeTasks()
+                                } else {
+                                    self.list.incompleteTasks()
                                 }
                                 
+                                self.list.updateProgress()
+                                
+                            }) {
+                                
+                                Text(self.list.isAllComplete() ? "Complete all tasks" : "Reset all tasks")
+                                Image(systemName: self.list.isAllComplete() ? "checkmark.circle.fill" : "minus.circle.fill" )
                             }
                             
                         }
                         
                     }
-                    .frame(height: 60)
-                    .onAppear(perform: {self.list.updateProgress()})
                     
                 }
-                .padding(.vertical)
-                .padding(.bottom, (moreInfoTapped) ? 20 : 0)
-                    
-                .onTapGesture {
-                    
-                    withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) {
-                        
-                        self.list.resetProgress()
-                        self.moreInfoTapped.toggle()
-                        self.list.updateProgress()
-                        
-                    }
-                }
-                
-                // MARK: Call ListMasterView
-                ScrollView {
-                    
-                    NavigationLink(destination: ListMasterView(toDoList: list)) {
-                        
-                        getSystemImage(name: "chevron.right",
-                                       color: Color.secondary.opacity(0.35), fontSize: 12,
-                                       scale: .large).padding(.vertical, -10)
-                            
-                            .rotationEffect(Angle(degrees: (moreInfoTapped) ? 90 : 0))
-                        
-                    }
-                }
-                .offset(y: UIScreen.main.bounds.height * 0.040 )
-                .padding(.leading, UIScreen.main.bounds.width * 0.80 )
+                .frame(height: 60)
+                .onAppear(perform: {self.list.updateProgress()})
                 
             }
+            .padding(.vertical)
+            .padding(.bottom, (moreInfoTapped) ? 20 : 0)
             
-            Divider()
-                .padding(.horizontal, 16)
+            .onTapGesture {
+                
+                withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) {
+                    
+                    self.list.resetProgress()
+                    self.moreInfoTapped.toggle()
+                    self.list.updateProgress()
+                    
+                }
+            }
+            
+            // MARK: Call ListMasterView
+            ScrollView {
+                
+                NavigationLink(destination: ListMasterView(toDoList: list)) {
+                    
+                    getSystemImage(name: "chevron.right",
+                                   color: Color.secondary.opacity(0.35), fontSize: 12,
+                                   scale: .large).padding(.vertical, -10)
+                        
+                        .rotationEffect(Angle(degrees: (moreInfoTapped) ? 90 : 0))
+                    
+                }
+            }
+            .offset(y: UIScreen.main.bounds.height * 0.040 )
+            .padding(.leading, UIScreen.main.bounds.width * 0.80 )
+            
         }
         
     }
@@ -179,18 +173,18 @@ struct ProgressBarView: View {
             
             ZStack(alignment: .center) {
                 
-                ProgressBarItem(percentComplete: .constant(100))
+                ProgressBarItem(percentComplete: .constant(100), scheme: .constant(.none),
+                                startColor: .constant(.secondary),
+                                endColor: .constant(.secondary))
                     .foregroundColor(Color.secondary.opacity(0.20))
                 
-                ProgressBarItem(percentComplete: self.$list.progress)
-                    .foregroundOverlay(myGradient(type: self.list.todoGradientScheme,
-                                                  colors: [self.list.todoGradientStartColor.color,
-                                                           self.list.todoGradientEndColor.color]))
-                
+                ProgressBarItem(percentComplete: self.$list.progress,
+                                scheme: self.$list.todoGradientScheme,
+                                startColor: self.$list.todoGradientStartColor.color,
+                                endColor: self.$list.todoGradientEndColor.color)
             }
             
             Spacer()
-            
             
             HStack(spacing: -22) {
                 
@@ -226,13 +220,21 @@ struct ProgressBarItem: View {
     @State var totalWidth: CGFloat = 0.70
     @State var barHeight: CGFloat = 4
     
+    @Binding var scheme: GradientTypes
+    @Binding var startColor: Color
+    @Binding var endColor: Color
+    
     var body: some View {
         
         HStack {
             
             RoundedRectangle(cornerRadius: 10)
-                .frame(width: UIScreen.main.bounds.width * 0.90 * totalWidth * (percentComplete/100),
+                .frame(width: UIScreen.main.bounds.width * 0.95 * totalWidth * (percentComplete/100),
                        height: barHeight)
+                
+                .foregroundOverlay(myGradient(type: self.scheme,
+                                              colors: [ self.startColor,
+                                                        self.endColor ]))
             
             Spacer()
         }

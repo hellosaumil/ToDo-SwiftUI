@@ -47,21 +47,9 @@ struct ToDoListsView: View {
                                 self.allLists.myLists.remove(atOffsets: IndexSet)
                             }
                         }
-                            
-                        .onAppear {
-                            UITableView.appearance().separatorStyle = .none
-                        }
+                        .padding(.trailing)
+                        .listStyle(PlainListStyle())
                     }
-                }
-                .navigationBarTitle(Text("ToDo Lists"),
-                                    displayMode: .automatic)
-                    
-                    .sheet(isPresented: self.$showingModal, onDismiss: {self.showingModal = false}) {
-                        
-                        
-                        // MARK: Call ListsDetailView
-                        ListsDetailsView(list: self.allLists.myLists[self.allLists.myLists.count-1],
-                                         showModal: self.$showingModal)
                 }
                 
                 FloatingActionButton(action: {
@@ -70,9 +58,19 @@ struct ToDoListsView: View {
 //                        self.showingModal = true
                     }
                 })
-                    .position(x: UIScreen.main.bounds.midX * 1.70,
-                              y: UIScreen.main.bounds.maxY * 0.77)
             }
+            .navigationBarTitle(Text("ToDo Lists"),
+                                displayMode: .automatic)
+            
+                .sheet(isPresented: self.$showingModal, onDismiss: {self.showingModal = false}) {
+                    
+                    
+                    // MARK: Call ListsDetailView
+                    ListsDetailsView(list: self.allLists.myLists[self.allLists.myLists.count-1],
+                                     showModal: self.$showingModal)
+            }
+        
+        
         }
     }
 }
@@ -81,7 +79,7 @@ struct ToDoListsView_Previews: PreviewProvider {
     static var previews: some View {
         
         NightAndDay {
-            ToDoListsView(allLists: AllLists(lists: randomLists) )
+            ToDoListsView(allLists: AllLists(lists: sampleLists) )
         }
     }
 }

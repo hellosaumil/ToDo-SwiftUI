@@ -47,6 +47,8 @@ struct ListDetailView: View {
             
             Form {
                 
+                ColorPicker("NEW", selection: self.$task.todoGradientStartColor.color)
+                
                 Section(header: headerItemGroup(imageName: "text.cursor", text: "Basic Info")) {
                     
                     VStack(alignment: .center) {
@@ -57,15 +59,12 @@ struct ListDetailView: View {
                             
                             Spacer()
                             
-                            commonUserInput(keyboard: .numbersAndPunctuation,
-                                            placeholder: "Type a new task name...",
-                                            textfield: self.$task.todoName, lineLimit: 2,
-                                            fontDesign: .rounded,
-                                            fontSize: .body,
-                                            scale: 0.88)
-                                .offset(x: 0, y: 1)
-                                .textFieldStyle(PlainTextFieldStyle())
+                            TextField("Name here...", text: self.$task.todoName)
                                 .foregroundColor(Color.primary.opacity(0.50))
+                                .lineSpacing(2)
+                                .offset(x: 0, y: 1)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                            
                         }
                         .padding(.vertical)
                     }
@@ -146,40 +145,51 @@ struct ListDetailView: View {
                     
                 }
                 
+                
                 Section(header: headerItemGroup(imageName: "text.badge.star", text: "More details")) {
                     
-                    VStack (alignment: .leading, spacing: 10) {
+                    VStack (alignment: .center) {
                         
-                        Text("Notes").bold()
+                        VStack (alignment: .leading, spacing: 10) {
+                            
+                            Text("Notes").bold()
+                            
+                            commonUserInput(keyboard: .default,
+                                            placeholder: "Note so you don't forget...",
+                                            textfield: self.$task.notes, lineLimit: 10,
+                                            fontDesign: .rounded,
+                                            fontSize: .body,
+                                            scale: 0.83)
+                                
+                                .padding()
+                                .textFieldStyle(PlainTextFieldStyle())
+                                .foregroundColor(Color.primary.opacity(0.75))
+                                
+                                .background(Color.primary.opacity(0.05))
+                                .cornerRadius(10)
+                            
+                        }
+                        .padding(.vertical)
                         
-                        commonUserInput(keyboard: .default,
-                                        placeholder: "Note so you don't forget...",
-                                        textfield: self.$task.notes, lineLimit: 10,
-                                        fontDesign: .rounded,
-                                        fontSize: .body,
-                                        scale: 0.88)
+                        Divider()
+                        
+                        
+                        HStack {
                             
-                            .padding()
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .foregroundColor(Color.primary.opacity(0.75))
+                            getSystemImage(name: self.task.isMyFavorite ?
+                                            "star.fill" : "star",
+                                           color: .yellow)
                             
-                            .background(Color.primary.opacity(0.05))
-                            .cornerRadius(10)
+                            Text("Add to Favorites")
+                            
+                            Spacer()
+                        }
+                        .onTapGesture { self.task.isMyFavorite.toggle() }
                         
                     }
-                    .padding(.vertical)
-                    
-                    HStack {
-                        
-                        getSystemImage(name: self.task.isMyFavorite ?
-                            "star.fill" : "star",
-                                       color: .yellow)
-                        
-                        Text("Add to Favorites")
-                    }
-                    .onTapGesture { self.task.isMyFavorite.toggle() }
                     
                 }
+                
             }
             .padding(.bottom, keyboard.currentHeight)
             .edgesIgnoringSafeArea(.bottom)
@@ -258,7 +268,6 @@ struct GradientColorRoll: View {
                         .rotationEffect(Angle(degrees: -90.0))
                         .foregroundColor( colorName.color )
                         .imageScale(.medium)
-                        .padding(.trailing, 8)
                     
                 }
             }
@@ -266,10 +275,11 @@ struct GradientColorRoll: View {
             .frame(width: UIScreen.main.bounds.width * 0.65,
                    height: 24,
                    alignment: .center)
-                .rotationEffect(Angle(degrees: 90.0))
-                .scaledToFit()
-                .clipped()
-                .padding(.vertical, 4)
+            .rotationEffect(Angle(degrees: 90.0))
+            .scaledToFit()
+            .clipped()
+            .padding(.vertical, 4)
+            .padding(.leading, -30)
             
         }
     }

@@ -24,7 +24,7 @@ struct ContentView_Previews: PreviewProvider {
         
         NightAndDay {
             
-            ContentView(allLists: AllLists() )
+            ContentView(allLists: AllLists(lists: randomLists) )
 
         }
     }

@@ -87,15 +87,25 @@ enum BaseColors: String, CaseIterable, Identifiable, Codable {
     
     var color: Color {
         
-        switch self {
+        get {
+         
+            switch self {
+                
+            case .pink: return .pink
+            case .yellow: return .yellow
+            case .orange: return .orange
+            case .green: return .green
+            case .blue: return .blue
+            case .purple: return .purple
+                
+            }
             
-        case .pink: return .pink
-        case .yellow: return .yellow
-        case .orange: return .orange
-        case .green: return .green
-        case .blue: return .blue
-        case .purple: return .purple
+        }
+        
+        
+        set {
             
+            self = .pink
         }
     }
 }

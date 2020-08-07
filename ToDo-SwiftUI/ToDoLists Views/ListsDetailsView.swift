@@ -53,6 +53,15 @@ struct ListsDetailsView: View {
             
             Form {
                 
+                HStack {
+                    
+                    Text("Progress:")
+                    
+                    Spacer()
+                    
+                    Text("\(String(format: "%.1f", self.list.progress))%")
+                }
+                
                 Section(header: headerItemGroup(imageName: "text.cursor", text: "Basic Info")) {
                     
                     VStack(alignment: .center) {
@@ -86,7 +95,7 @@ struct ListsDetailsView: View {
                                       textfield: self.$list.todoListIcon, lineLimit: 1,
                                       fontDesign: .default,
                                       fontSize: .body,
-                                      scale: 0.88)
+                                      scale: 0.78)
                             .textFieldStyle(PlainTextFieldStyle())
                             .foregroundColor(Color.primary.opacity(0.50))
                         
