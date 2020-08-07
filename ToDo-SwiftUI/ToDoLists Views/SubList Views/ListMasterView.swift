@@ -50,23 +50,30 @@ struct ListMasterView: View {
                     .listStyle(PlainListStyle())
                 }
             }
-            
-            FloatingActionButton(systemImageName: "plus", fontSize: 20,
-                                 action: {
-                                    withAnimation(.easeInOut) {
-                                        self.toDoList.todoTasks.append(ToDoTask())
-//                                        self.showingModal = true
-                                    }
-            })
         }
         .navigationBarTitle(Text(self.toDoList.todoListName),
                             displayMode: .automatic)
+        
+        .navigationBarItems(trailing:
+                                
+                                Button(action: {
+                                    withAnimation(.easeInOut) {
+                                        self.toDoList.todoTasks.append(ToDoTask())
+                                        // self.showingModal = true
+                                    }
+                                    
+                                }, label: {
+                                    Text("+ New Task")
+                                        .font(.headline)
+                                        .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
+                                })
+        )
+        
+        .sheet(isPresented: self.$showingModal, onDismiss: {self.showingModal = false}) {
             
-            .sheet(isPresented: self.$showingModal, onDismiss: {self.showingModal = false}) {
-                
-                // MARK: Call ListDetailView
-                ListDetailView(task: self.toDoList.todoTasks[self.toDoList.todoTasks.underestimatedCount-1],
-                               showModal: self.$showingModal)
+            // MARK: Call ListDetailView
+            ListDetailView(task: self.toDoList.todoTasks[self.toDoList.todoTasks.underestimatedCount-1],
+                           showModal: self.$showingModal)
         }
     }
 }

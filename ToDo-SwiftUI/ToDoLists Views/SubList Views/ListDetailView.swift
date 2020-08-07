@@ -47,8 +47,6 @@ struct ListDetailView: View {
             
             Form {
                 
-                ColorPicker("NEW", selection: self.$task.todoGradientStartColor.color)
-                
                 Section(header: headerItemGroup(imageName: "text.cursor", text: "Basic Info")) {
                     
                     VStack(alignment: .center) {

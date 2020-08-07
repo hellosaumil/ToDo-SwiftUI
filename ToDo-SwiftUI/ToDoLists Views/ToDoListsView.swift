@@ -51,26 +51,34 @@ struct ToDoListsView: View {
                         .listStyle(PlainListStyle())
                     }
                 }
-                
-                FloatingActionButton(action: {
-                    withAnimation(.easeInOut) {
-                        self.allLists.myLists.append(ToDoList())
-//                        self.showingModal = true
-                    }
-                })
             }
             .navigationBarTitle(Text("ToDo Lists"),
                                 displayMode: .automatic)
             
-                .sheet(isPresented: self.$showingModal, onDismiss: {self.showingModal = false}) {
-                    
-                    
-                    // MARK: Call ListsDetailView
-                    ListsDetailsView(list: self.allLists.myLists[self.allLists.myLists.count-1],
-                                     showModal: self.$showingModal)
+            .navigationBarItems(trailing:
+                                    
+                                    Button(action: {
+                                        withAnimation(.easeInOut) {
+                                            self.allLists.myLists.append(ToDoList())
+                                            // self.showingModal = true
+                                        }
+                                        
+                                    }, label: {
+                                        Text("+ New List")
+                                            .font(.headline)
+                                            .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
+                                    })
+            )
+            
+            .sheet(isPresented: self.$showingModal, onDismiss: {self.showingModal = false}) {
+                
+                
+                // MARK: Call ListsDetailView
+                ListsDetailsView(list: self.allLists.myLists[self.allLists.myLists.count-1],
+                                 showModal: self.$showingModal)
             }
-        
-        
+            
+            
         }
     }
 }
