@@ -53,13 +53,22 @@ struct ListsDetailsView: View {
             
             Form {
                 
-                HStack {
+                VStack(spacing: 6) {
                     
-                    Text("Progress:")
+                    HStack {
+                        
+                        Text("Progress:")
+                        
+                        Spacer()
+                        
+                        Text("\(String(format: "%.1f", self.list.progress))%")
+                        
+                    }
                     
-                    Spacer()
-                    
-                    Text("\(String(format: "%.1f", self.list.progress))%")
+                    ProgressView(value: self.list.progress)
+                        .foregroundOverlay(myGradient(type: self.list.todoGradientScheme,
+                                                      colors: [self.list.todoGradientStartColor.color,
+                                                               self.list.todoGradientEndColor.color]))
                 }
                 
                 Section(header: headerItemGroup(imageName: "text.cursor", text: "Basic Info")) {
@@ -145,7 +154,7 @@ struct ListsDetailsView: View {
                     HStack {
                         
                         getSystemImage(name: self.list.isMyFavorite ?
-                            "star.fill" : "star",
+                                        "star.fill" : "star",
                                        color: .yellow)
                         
                         Text("Add to Favorites")

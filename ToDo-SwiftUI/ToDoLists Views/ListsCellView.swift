@@ -11,7 +11,7 @@ import SwiftUI
 struct ListsCellView: View {
     
     @ObservedObject var list: ToDoList
-    @State private var moreInfoTapped: Bool = false
+    @State private var moreInfoTapped: Bool = true
     
     var body: some View {
         
@@ -25,7 +25,6 @@ struct ListsCellView: View {
                         RoundedRectangle(cornerRadius: 6, style: .continuous)
                             .foregroundColor(Color.secondary.opacity(0.10))
                             .frame(height: 20).offset(y: 8)
-                        
                         
                         ProgressBarView(list: self.list)
                             .animation(.easeInOut)
@@ -171,18 +170,10 @@ struct ProgressBarView: View {
         
         HStack {
             
-            ZStack(alignment: .center) {
-                
-                ProgressBarItem(percentComplete: .constant(100), scheme: .constant(.none),
-                                startColor: .constant(.secondary),
-                                endColor: .constant(.secondary))
-                    .foregroundColor(Color.secondary.opacity(0.20))
-                
-                ProgressBarItem(percentComplete: self.$list.progress,
-                                scheme: self.$list.todoGradientScheme,
-                                startColor: self.$list.todoGradientStartColor.color,
-                                endColor: self.$list.todoGradientEndColor.color)
-            }
+            ProgressView(value: self.list.progress + 0.60)
+                .foregroundOverlay(myGradient(type: self.list.todoGradientScheme,
+                                              colors: [self.list.todoGradientStartColor.color,
+                                                       self.list.todoGradientEndColor.color]))
             
             Spacer()
             
@@ -229,7 +220,7 @@ struct ProgressBarItem: View {
         HStack {
             
             RoundedRectangle(cornerRadius: 10)
-                .frame(width: UIScreen.main.bounds.width * 0.95 * totalWidth * (percentComplete/100),
+                .frame(width: UIScreen.main.bounds.width * 0.88 * totalWidth * (percentComplete/100),
                        height: barHeight)
                 
                 .foregroundOverlay(myGradient(type: self.scheme,
