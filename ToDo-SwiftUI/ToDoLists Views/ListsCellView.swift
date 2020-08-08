@@ -170,7 +170,7 @@ struct ProgressBarView: View {
         
         HStack {
             
-            ProgressView(value: self.list.progress + 0.60)
+            ProgressView(value: self.list.progress)
                 .foregroundOverlay(myGradient(type: self.list.todoGradientScheme,
                                               colors: [self.list.todoGradientStartColor.color,
                                                        self.list.todoGradientEndColor.color]))
