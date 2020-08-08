@@ -25,6 +25,10 @@ class AllLists: ObservableObject {
     }
 }
 
+enum iconPresets: String, CaseIterable, Codable {
+    case 👨🏻‍💻, 🍩, 📱, 🍕, 🌊, 🏀, 📚, 🏔, 🥂, 🍟
+    var id: String { rawValue }
+}
 
 class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
@@ -51,13 +55,13 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     @Published var isMyFavorite: Bool
     
-    init(icon: String = "🍩", name: String = "New ToDo List",
+    init(icon: String = iconPresets.allCases.randomElement()!.rawValue, name: String = "New ToDo List",
          
          tasks: [ToDoTask] = [ToDoTask](),
          
-         gradientScheme: GradientTypes = .linear,
-         gradientStartColor: BaseColors = .pink,
-         gradientEndColor: BaseColors = .purple,
+         gradientScheme: GradientTypes = GradientTypes.allCases.randomElement()!,
+         gradientStartColor: BaseColors = BaseColors.allCases.randomElement()!,
+         gradientEndColor: BaseColors = BaseColors.allCases.randomElement()!,
          
          isFav: Bool = false) {
         

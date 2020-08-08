@@ -38,11 +38,11 @@ class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     
     init(name: String = "New ToDo", dueDateTime: Date = Date(),
          
-         shape: BaseShapes = .hexagon,
+         shape: BaseShapes = BaseShapes.allCases.randomElement()!,
          
-         gradientScheme: GradientTypes = .linear,
-         gradientStartColor: BaseColors = .pink,
-         gradientEndColor: BaseColors = .purple,
+         gradientScheme: GradientTypes = GradientTypes.allCases.randomElement()!,
+         gradientStartColor: BaseColors = BaseColors.allCases.randomElement()!,
+         gradientEndColor: BaseColors = BaseColors.allCases.randomElement()!,
          
          notes: String = "", isFav: Bool = false) {
         
@@ -83,25 +83,15 @@ enum BaseColors: String, CaseIterable, Identifiable, Codable {
     
     var color: Color {
         
-        get {
-         
-            switch self {
-                
-            case .pink: return .pink
-            case .yellow: return .yellow
-            case .orange: return .orange
-            case .green: return .green
-            case .blue: return .blue
-            case .purple: return .purple
-                
-            }
-            
-        }
+        switch self {
         
-        
-        set {
+        case .pink: return .pink
+        case .yellow: return .yellow
+        case .orange: return .orange
+        case .green: return .green
+        case .blue: return .blue
+        case .purple: return .purple
             
-            self = .pink
         }
     }
 }
