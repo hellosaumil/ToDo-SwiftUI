@@ -47,20 +47,37 @@ struct ToDoListCellView: View {
                         
                         Spacer()
                         
-                        // MARK: Call ListMasterView
-                        ScrollView {
+                        HStack (spacing: -12) {
                             
-                            NavigationLink(destination: ToDoTasksDetailView(toDoList: list)) {
+                            getSystemImage(name: list.isLocked ? "lock.fill" : "lock.open.fill", scale: .small)
+                                .foregroundOverlay(myGradient(type: list.todoGradientScheme,
+                                                              colors: [list.todoGradientStartColor.color, list.todoGradientEndColor.color]))
+                                .opacity( list.isLocked ? 0.75 : 0.50 )
+                                .shadow(color: .secondary, radius: 4, x: 2, y: 2)
+                                .onTapGesture(count: 1, perform: {
+                                    if !list.isLocked { withAnimation{ list.isLocked = true }}
+                                })
+                            
+                            if !list.isLocked {
                                 
-                                getSystemImage(name: "chevron.right",
-                                               color: Color.secondary.opacity(0.35), fontSize: 12,
-                                               scale: .large).padding(.vertical, -10)
+                                // MARK: Call ListMasterView
+                                ScrollView {
                                     
+                                    NavigationLink(destination: ToDoTasksDetailView(toDoList: list)) {
+                                        
+                                        getSystemImage(name: "chevron.right",
+                                                       color: Color.secondary.opacity(0.35), fontSize: 12,
+                                                       scale: .large).padding(.vertical, -10)
+                                            
+                                            
+                                            .rotationEffect(Angle(degrees: (moreInfoTapped) ? 90 : 0))
+                                    }
                                     
-                                    .rotationEffect(Angle(degrees: (moreInfoTapped) ? 90 : 0))
+                                }.offset(y: 18)
+                                
                             }
                             
-                        }.offset(y: 18)
+                        }
                         
                     }
                     
@@ -68,13 +85,11 @@ struct ToDoListCellView: View {
                     .contextMenu {
                         
                         Button(action: {})
-                        { Text("\(list.todoListIcon) \(list.todoListName)")
-                            Image(systemName: "list.star") }
-                        
+                        { Text("\(list.todoListIcon) \(list.todoListName)") }
                         
                         Button(action: {})
-                        { Text("Progress \(String(format: "%.1f", list.progress))%")
-                            Image(systemName: "circle") }
+                        { Text("\(String(format: "%.1f", list.progress))% Progress")
+                            Image(systemName: "arrow.triangle.2.circlepath") }
                         
                         // MARK: Complete/Reset All Tasks in the List
                         if !list.todoTasks.isEmpty {
@@ -95,11 +110,16 @@ struct ToDoListCellView: View {
                         Button(action: { list.todoTasks.append(ToDoTask()) })
                             { Text("Add New Task"); Image(systemName: "plus") }
                         
-                        Button(action: { withAnimation { list.isMyFavorite.toggle() } })
+                        Button(action: { withAnimation { if !list.isLocked { list.isMyFavorite.toggle() } } })
                         { Text( list.isMyFavorite ? "Remove to Favorites" : "Add to Favorites" )
                             Image(systemName: list.isMyFavorite ? "star.slash.fill" : "star.fill" ) }
+                        
+                        // MARK: Call authUser
+                        Button(action: {list.isLocked.toggle()}) {
+                            Text( !list.isLocked ? "Lock" : "Authenticate" )
+                            Image(systemName: !list.isLocked ? "lock.fill" : "ellipsis.rectangle.fill" )
+                        }
                     }
-                    
                 }
                 .frame(height: 60)
                 .onAppear(perform: {list.updateProgress()})
@@ -120,6 +140,23 @@ struct ToDoListCellView: View {
             
         }
         .frame(maxWidth: 500)
+    }
+    
+    // MARK: authUser: check if user unlocked using biometrics
+    func authUser() {
+        
+        if list.isLocked {
+            
+            DispatchQueue.main.async {
+                
+                authenticate { (authStatus) in
+                    
+                    withAnimation { list.isLocked = authStatus }
+                }
+            }
+            
+        }
+        
     }
 }
 
@@ -188,19 +225,19 @@ struct ProgressBarView: View {
                 getSystemImage(name: (list.isMyFavorite) ? "star.fill" : "star",
                                color: (list.isMyFavorite) ? Color.yellow.opacity(0.80) : Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .small).padding(0)
-                    .onTapGesture { list.isMyFavorite.toggle() }
+                    .onTapGesture { if !list.isLocked { list.isMyFavorite.toggle() } }
                 
                 getSystemImage(name: "slider.horizontal.3",
                                color: Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .medium).padding(0)
-                    .onTapGesture { showingModal.toggle() }
+                    .onTapGesture { if !list.isLocked { showingModal.toggle() } }
                 
             }
             .padding(.trailing, 4)
             
         }
         .offset(x: 10, y: 8)
-        .onTapGesture { showingModal.toggle() }
+        .onTapGesture { if !list.isLocked { showingModal.toggle() } }
         .sheet(isPresented: $showingModal) {
             
             // MARK: Call ToDoListInfoView

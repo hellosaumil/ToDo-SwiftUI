@@ -55,6 +55,8 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     @Published var isMyFavorite: Bool
     
+    @Published var isLocked: Bool
+    
     init(icon: String = iconPresets.allCases.randomElement()!.rawValue, name: String = "New ToDo List",
          
          tasks: [ToDoTask] = [ToDoTask](),
@@ -75,6 +77,8 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
         
         self.progress = 0
         self.isMyFavorite = isFav
+        
+        self.isLocked = false
     }
     
     // MARK: Update Progress

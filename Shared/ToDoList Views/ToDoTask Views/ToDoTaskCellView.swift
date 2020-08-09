@@ -54,7 +54,7 @@ struct ToDoTaskCellView: View {
                     { Text("\(task.todoName)"); Image(systemName: "\(task.todoShape.id)") }
                 
                 Button(action: {} )
-                { Text(" Due on \( customDateFormatter.string(from: task.dueDateTime)) ")
+                { Text("Due on \( customDateFormatter.string(from: task.dueDateTime)) ")
                     Image(systemName: "calendar") }
                 
                 Button(action: { withAnimation { task.isCompleted.toggle() } })
