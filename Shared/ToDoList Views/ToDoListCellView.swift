@@ -23,7 +23,9 @@ struct ToDoListCellView: View {
                     ZStack(alignment: .center) {
                         
                         RoundedRectangle(cornerRadius: 6, style: .continuous)
-                            .foregroundColor(Color.secondary.opacity(0.10))
+                            .foregroundOverlay(myGradient(type: list.todoGradientScheme,
+                                                          colors: [list.todoGradientStartColor.color,
+                                                                   list.todoGradientEndColor.color])).opacity(0.025)
                             .frame(height: 20).offset(y: 8)
                         
                         ProgressBarView(list: list)
@@ -85,7 +87,7 @@ struct ToDoListCellView: View {
                     .contextMenu {
                         
                         Button(action: {})
-                        { Text("\(list.todoListIcon) \(list.todoListName)") }
+                            { Text("\(list.todoListIcon) \(list.todoListName)") }
                         
                         Button(action: {})
                         { Text("\(String(format: "%.1f", list.progress))% Progress")
