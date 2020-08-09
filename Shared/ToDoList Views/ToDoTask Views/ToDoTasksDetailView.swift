@@ -48,7 +48,7 @@ struct ToDoTasksDetailView: View {
                 }
             }
         }
-        .navigationBarTitle(Text(toDoList.todoListName),
+        .navigationBarTitle(Text("\(toDoList.todoListIcon) \(toDoList.todoListName)"),
                             displayMode: .automatic)
         
         .navigationBarItems(trailing:
