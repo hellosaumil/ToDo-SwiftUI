@@ -24,6 +24,7 @@
 		6B628FD424DF359B008E496E /* ToDoTaskInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FD324DF359B008E496E /* ToDoTaskInfoView.swift */; };
 		6B628FD724DF35E0008E496E /* GradientColorRoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FD624DF35E0008E496E /* GradientColorRoll.swift */; };
 		6B7EB4ED24DFCF2E006ED2B0 /* BiometricsAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB4EC24DFCF2E006ED2B0 /* BiometricsAuthentication.swift */; };
+		6B7EB4EF24DFD17E006ED2B0 /* CustomObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB4EE24DFD17E006ED2B0 /* CustomObjects.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		6B628FD324DF359B008E496E /* ToDoTaskInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTaskInfoView.swift; sourceTree = "<group>"; };
 		6B628FD624DF35E0008E496E /* GradientColorRoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColorRoll.swift; sourceTree = "<group>"; };
 		6B7EB4EC24DFCF2E006ED2B0 /* BiometricsAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsAuthentication.swift; sourceTree = "<group>"; };
+		6B7EB4EE24DFD17E006ED2B0 /* CustomObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomObjects.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				6B628FAF24DF2FE1008E496E /* Data.swift */,
 				6B628FB224DF300A008E496E /* ToDoList.swift */,
 				6B628FB524DF3065008E496E /* ToDoTask.swift */,
+				6B7EB4EE24DFD17E006ED2B0 /* CustomObjects.swift */,
 				6B628FB824DF311F008E496E /* UserData.swift */,
 			);
 			path = Models;
@@ -272,6 +275,7 @@
 				6B628FCB24DF3468008E496E /* ToDoListInfoView.swift in Sources */,
 				6B628FD124DF354A008E496E /* ToDoTaskCellView.swift in Sources */,
 				6B7EB4ED24DFCF2E006ED2B0 /* BiometricsAuthentication.swift in Sources */,
+				6B7EB4EF24DFD17E006ED2B0 /* CustomObjects.swift in Sources */,
 				6B628FC224DF327B008E496E /* ToDoListsMasterView.swift in Sources */,
 				6B628FB924DF311F008E496E /* UserData.swift in Sources */,
 				6B628FD724DF35E0008E496E /* GradientColorRoll.swift in Sources */,

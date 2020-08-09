@@ -74,34 +74,3 @@ var customMiniDateFormatter: DateFormatter {
     formatter.dateFormat = "E, MMM d B"
     return formatter
 }
-
-
-enum BaseColors: String, CaseIterable, Identifiable, Codable {
-    
-    case pink, yellow, orange, green, blue, purple
-    var id: String { rawValue }
-    
-    var color: Color {
-        
-        switch self {
-        
-        case .pink: return .pink
-        case .yellow: return .yellow
-        case .orange: return .orange
-        case .green: return .green
-        case .blue: return .blue
-        case .purple: return .purple
-            
-        }
-    }
-}
-
-enum BaseShapes: String, CaseIterable, Identifiable, Codable {
-    
-    case triangle, square, rectangle, hexagon, circle, capsule, shield
-    var id: String { rawValue }
-    
-    var unfilled:Image { return Image(systemName: "\(id)") }
-    var filled:Image { return Image(systemName: "\(id).fill") }
-}
-
