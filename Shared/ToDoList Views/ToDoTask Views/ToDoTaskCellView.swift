@@ -47,25 +47,24 @@ struct ToDoTaskCellView: View {
                 withAnimation(.interactiveSpring(response: 0.40, dampingFraction: 0.86, blendDuration: 0.25)) { moreInfoTapped.toggle() }
             }
             
-            // MARK: TODO Context Menu for ToDo Cell
+            // MARK: Context Menu for ToDo Cell
             .contextMenu {
                 
-                Text("Name: \(task.todoName)").lineLimit(4)
-                Text("Shape: \(task.todoShape.rawValue)")
-                Text("Due on: \( customDateFormatter.string(from: task.dueDateTime) )")
+                Button(action: {} )
+                    { Text("\(task.todoName)"); Image(systemName: "\(task.todoShape.id)") }
                 
-                Button(action: {
-                    
-                    withAnimation { task.isCompleted.toggle() }
-                }) {
-                    
-                    HStack {
-                        
-                        Text( task.isCompleted ? "Reset Task" : "Complete Task" )
-                        Image(systemName: task.isCompleted ? "minus.circle.fill" : "checkmark.circle.fill")
-                        
-                    }
-                }
+                Button(action: {} )
+                { Text(" Due on \( customDateFormatter.string(from: task.dueDateTime)) ")
+                    Image(systemName: "calendar") }
+                
+                Button(action: { withAnimation { task.isCompleted.toggle() } })
+                { Text( task.isCompleted ? "Reset Task" : "Complete Task" )
+                    Image(systemName: task.isCompleted ? "minus.circle.fill" : "checkmark.circle.fill") }
+                
+                Button(action: { withAnimation { task.isMyFavorite.toggle() } })
+                { Text( task.isMyFavorite ? "Remove to Favorites" : "Add to Favorites" )
+                    Image(systemName:  task.isMyFavorite ? "star.slash.fill" : "star.fill" ) }
+                
             }
             
         }

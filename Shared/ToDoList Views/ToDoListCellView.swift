@@ -44,8 +44,6 @@ struct ToDoListCellView: View {
                         
                         // MARK: Call ToDoListCellRowItem
                         ToDoListCellRowItem(list: list)
-                        //                            .frame(width: 240, alignment: .leading)
-                        //                            .fixedSize(horizontal: true, vertical: false)
                         
                         Spacer()
                         
@@ -66,45 +64,40 @@ struct ToDoListCellView: View {
                         
                     }
                     
+                    // MARK: Context Menu for ToDoList Cell
                     .contextMenu {
-                        // MARK: TODO Context Menu for ToDoList Cell
                         
-                        Text("Name: \(list.todoListIcon) \(list.todoListName)").lineLimit(4)
-                        Text("Progress: \(String(format: "%.1f", list.progress))%")
+                        Button(action: {})
+                        { Text("\(list.todoListIcon) \(list.todoListName)")
+                            Image(systemName: "list.star") }
+                        
+                        
+                        Button(action: {})
+                        { Text("Progress \(String(format: "%.1f", list.progress))%")
+                            Image(systemName: "circle") }
                         
                         // MARK: Complete/Reset All Tasks in the List
                         if !list.todoTasks.isEmpty {
                             
                             Button(action: {
                                 
-                                if list.isAllComplete() {
-                                    list.completeTasks()
-                                } else {
-                                    list.incompleteTasks()
-                                }
-                                
-                                withAnimation(.easeOut(duration: 0.4)) {
-                                    list.updateProgress()
-                                }
+                                if list.isAllComplete() { list.completeTasks() }
+                                else { list.incompleteTasks() }
+                                withAnimation(.easeOut(duration: 0.5)) { list.updateProgress() }
                                 
                             }) {
-                                
-                                HStack {
-                                    
-                                    Text(list.isAllComplete() ? "Complete all tasks" : "Reset all tasks")
-                                    Image(systemName: list.isAllComplete() ? "checkmark.circle.fill" : "minus.circle.fill" )
-                                    
-                                }
+                                Text(list.isAllComplete() ? "Complete all tasks" : "Reset all tasks")
+                                Image(systemName: list.isAllComplete() ? "checkmark" : "xmark")
                             }
                             
                         }
                         
+                        Button(action: { list.todoTasks.append(ToDoTask()) })
+                            { Text("Add New Task"); Image(systemName: "plus") }
                         
-                        Button(action: {
-                            list.todoTasks.append(ToDoTask())
-                        }) {
-                            Text("Add New Task")
-                        }
+                        Button(action: { withAnimation { list.isMyFavorite.toggle() } })
+                        { Text( list.isMyFavorite ? "Remove to Favorites" : "Add to Favorites" )
+                            Image(systemName: list.isMyFavorite ? "star.slash.fill" : "star.fill" ) }
                     }
                     
                 }
