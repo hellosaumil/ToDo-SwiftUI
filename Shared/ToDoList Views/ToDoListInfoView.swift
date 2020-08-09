@@ -12,6 +12,8 @@ struct ToDoListInfoView: View {
     @ObservedObject var list: ToDoList
     @Binding var showModal: Bool
     
+    @State var selectedIcon: iconPresets = iconPresets.allCases.randomElement()!
+    
     var body: some View {
         
         VStack {
@@ -92,7 +94,7 @@ struct ToDoListInfoView: View {
                     
                     HStack {
                         
-                        Text("Emoji")
+                        Text("Emoji Icon")
                         
                         Spacer()
                         
@@ -156,6 +158,7 @@ struct ToDoListInfoView: View {
                         
                         Text("Add to Favorites")
                     }
+                    .padding(-14)
                     .onTapGesture { list.isMyFavorite.toggle() }
                     
                 }

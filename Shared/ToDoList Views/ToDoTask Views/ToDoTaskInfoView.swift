@@ -179,6 +179,7 @@ struct ToDoTaskInfoView: View {
                             
                             Spacer()
                         }
+                        .padding(-12)
                         .onTapGesture { task.isMyFavorite.toggle() }
                         
                     }
