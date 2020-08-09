@@ -117,7 +117,7 @@ struct ToDoListCellView: View {
                             Image(systemName: list.isMyFavorite ? "star.slash.fill" : "star.fill" ) }
                         
                         // MARK: Call authUser
-                        Button(action: {list.isLocked.toggle()}) {
+                        Button(action: {  authUser() }) {
                             Text( !list.isLocked ? "Lock" : "Authenticate" )
                             Image(systemName: !list.isLocked ? "lock.fill" : "ellipsis.rectangle.fill" )
                         }
