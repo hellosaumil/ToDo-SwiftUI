@@ -22,7 +22,7 @@ struct ToDoTaskCellView: View {
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .foregroundOverlay(myGradient(type: task.todoGradientScheme,
                                                       colors: [task.todoGradientStartColor.color,
-                                                               task.todoGradientEndColor.color])).opacity(0.025)
+                                                               task.todoGradientEndColor.color])).opacity(0.03)
                         .frame(height: 20).offset(y: 8)
                     
                     // MARK: Call TaskEditBarView
