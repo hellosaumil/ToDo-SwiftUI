@@ -31,9 +31,12 @@ enum BaseShapes: String, CaseIterable, Identifiable, Codable {
     
     case triangle, rhombus, diamond, square, rectangle, hexagon,
          octagon, circle, capsule, shield
-    var id: String { rawValue }
     
-    var unfilled:Image { return Image(systemName: "\(id)") }
-    var filled:Image { return Image(systemName: "\(id).fill") }
+    var id: String { name }
+    
+    var name: String { rawValue.lowercased() }
+    
+    var unfilled:Image { return Image(systemName: "\(name)") }
+    var filled:Image { return Image(systemName: "\(name).fill") }
 }
 
