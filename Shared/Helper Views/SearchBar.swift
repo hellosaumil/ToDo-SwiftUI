@@ -30,7 +30,6 @@ struct SearchBar: View {
                         .keyboardType(.twitter)
                         .padding(.horizontal, 10)
                     
-                    
                     ZStack {
                         
                         HStack {
