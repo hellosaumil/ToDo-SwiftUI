@@ -40,6 +40,10 @@ enum iconPresets: String, CaseIterable, Codable {
     var name: String { rawValue.lowercased() }
 }
 
+func getRandomEmoji() -> String {
+    return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
+}
+
 class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     static func == (lhs: ToDoList, rhs: ToDoList) -> Bool {
@@ -67,7 +71,7 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     @Published var isLocked: Bool
     
-    init(icon: String = iconPresets.allCases.randomElement()!.rawValue, name: String = "New ToDo List",
+    init(icon: String = getRandomEmoji(), name: String = "New ToDo List",
          
          tasks: [ToDoTask] = [ToDoTask](),
          
