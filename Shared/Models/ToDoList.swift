@@ -36,7 +36,8 @@ class AllLists: ObservableObject {
 
 enum iconPresets: String, CaseIterable, Codable {
     case 👨🏻‍💻, 🍩, 📱, 🍕, 🌊, 🏀, 📚, 🏔, 🥂, 🍟
-    var id: String { rawValue }
+    var id: String { name }
+    var name: String { rawValue.lowercased() }
 }
 
 class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
