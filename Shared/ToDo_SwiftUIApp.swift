@@ -7,13 +7,16 @@
 
 import SwiftUI
 import UIKit
+
 @main
 struct ToDo_SwiftUIApp: App {
+    
+    @StateObject var appUserData: UserData = UserData()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(UserData())
+                .environmentObject(appUserData)
         }
     }
 }

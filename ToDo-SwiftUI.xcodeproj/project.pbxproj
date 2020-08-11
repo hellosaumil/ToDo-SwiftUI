@@ -12,6 +12,23 @@
 		6B21366324DF2D500078E7EA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B21363924DF2D4E0078E7EA /* ContentView.swift */; };
 		6B21366524DF2D500078E7EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B21363A24DF2D500078E7EA /* Assets.xcassets */; };
 		6B28A8BA24E347B9006921C8 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A8B924E347B9006921C8 /* AppLogoView.swift */; };
+		6B28A8DA24E3498D006921C8 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28A8D924E3498D006921C8 /* WidgetKit.framework */; };
+		6B28A8DC24E3498D006921C8 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28A8DB24E3498D006921C8 /* SwiftUI.framework */; };
+		6B28A8DF24E3498D006921C8 /* QuickInfoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A8DE24E3498D006921C8 /* QuickInfoWidget.swift */; };
+		6B28A8E124E3498F006921C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B28A8E024E3498F006921C8 /* Assets.xcassets */; };
+		6B28A8E524E3498F006921C8 /* QuickInfoWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6B28A8D724E3498D006921C8 /* QuickInfoWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6B28A8EB24E34A00006921C8 /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FB224DF300A008E496E /* ToDoList.swift */; };
+		6B28A8EC24E34A00006921C8 /* CustomObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB4EE24DFD17E006ED2B0 /* CustomObjects.swift */; };
+		6B28A8ED24E34A00006921C8 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FB824DF311F008E496E /* UserData.swift */; };
+		6B28A8EE24E34A00006921C8 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FAF24DF2FE1008E496E /* Data.swift */; };
+		6B28A8EF24E34A00006921C8 /* ToDoTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FB524DF3065008E496E /* ToDoTask.swift */; };
+		6B28A8F224E34A6C006921C8 /* QuickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A8F124E34A6C006921C8 /* QuickListView.swift */; };
+		6B28A8F324E34A6C006921C8 /* QuickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A8F124E34A6C006921C8 /* QuickListView.swift */; };
+		6B28A8F424E34AB6006921C8 /* HelperViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FBC24DF3147008E496E /* HelperViews.swift */; };
+		6B28A8F524E34AB6006921C8 /* BiometricsAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB4EC24DFCF2E006ED2B0 /* BiometricsAuthentication.swift */; };
+		6B28A8F624E34AB6006921C8 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A8B924E347B9006921C8 /* AppLogoView.swift */; };
+		6B28A8F724E34AB6006921C8 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B03EFA624E219A600D70A03 /* SearchBar.swift */; };
+		6B28A8F824E34AB6006921C8 /* GradientColorRoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FD624DF35E0008E496E /* GradientColorRoll.swift */; };
 		6B628FB024DF2FE1008E496E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FAF24DF2FE1008E496E /* Data.swift */; };
 		6B628FB324DF300A008E496E /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FB224DF300A008E496E /* ToDoList.swift */; };
 		6B628FB624DF3065008E496E /* ToDoTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FB524DF3065008E496E /* ToDoTask.swift */; };
@@ -28,6 +45,30 @@
 		6B7EB4EF24DFD17E006ED2B0 /* CustomObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB4EE24DFD17E006ED2B0 /* CustomObjects.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6B28A8E324E3498F006921C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B21363324DF2D4E0078E7EA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6B28A8D624E3498D006921C8;
+			remoteInfo = QuickInfoWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6B28A8E724E3498F006921C8 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6B28A8E524E3498F006921C8 /* QuickInfoWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		6B03EFA624E219A600D70A03 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		6B21363824DF2D4E0078E7EA /* ToDo_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo_SwiftUIApp.swift; sourceTree = "<group>"; };
@@ -36,6 +77,14 @@
 		6B21363F24DF2D500078E7EA /* ToDo-SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo-SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B21364224DF2D500078E7EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B28A8B924E347B9006921C8 /* AppLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogoView.swift; sourceTree = "<group>"; };
+		6B28A8D724E3498D006921C8 /* QuickInfoWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickInfoWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B28A8D924E3498D006921C8 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		6B28A8DB24E3498D006921C8 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		6B28A8DE24E3498D006921C8 /* QuickInfoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickInfoWidget.swift; sourceTree = "<group>"; };
+		6B28A8E024E3498F006921C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6B28A8E224E3498F006921C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B28A8E624E3498F006921C8 /* QuickInfoWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickInfoWidgetExtension.entitlements; sourceTree = "<group>"; };
+		6B28A8F124E34A6C006921C8 /* QuickListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListView.swift; sourceTree = "<group>"; };
 		6B628FAD24DF2E52008E496E /* ToDo-SwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ToDo-SwiftUI.entitlements"; sourceTree = "<group>"; };
 		6B628FAF24DF2FE1008E496E /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		6B628FB224DF300A008E496E /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
@@ -61,28 +110,41 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6B28A8D424E3498D006921C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B28A8DC24E3498D006921C8 /* SwiftUI.framework in Frameworks */,
+				6B28A8DA24E3498D006921C8 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		6B21363224DF2D4E0078E7EA = {
 			isa = PBXGroup;
 			children = (
+				6B28A8E624E3498F006921C8 /* QuickInfoWidgetExtension.entitlements */,
 				6B628FAD24DF2E52008E496E /* ToDo-SwiftUI.entitlements */,
 				6B21363724DF2D4E0078E7EA /* Shared */,
-				6B21364124DF2D500078E7EA /* iOS */,
+				6B28A8DD24E3498D006921C8 /* QuickInfoWidget */,
+				6B28A8D824E3498D006921C8 /* Frameworks */,
 				6B21364024DF2D500078E7EA /* Products */,
+				6B21364124DF2D500078E7EA /* iOS */,
 			);
 			sourceTree = "<group>";
 		};
 		6B21363724DF2D4E0078E7EA /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				6B21363A24DF2D500078E7EA /* Assets.xcassets */,
 				6B21363824DF2D4E0078E7EA /* ToDo_SwiftUIApp.swift */,
 				6B21363924DF2D4E0078E7EA /* ContentView.swift */,
 				6B628FBF24DF3240008E496E /* ToDoList Views */,
 				6B628FBB24DF3131008E496E /* Helper Views */,
 				6B628FAE24DF2F64008E496E /* Models */,
-				6B21363A24DF2D500078E7EA /* Assets.xcassets */,
+				6B28A8F024E34A32006921C8 /* WidgetViews */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -91,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				6B21363F24DF2D500078E7EA /* ToDo-SwiftUI.app */,
+				6B28A8D724E3498D006921C8 /* QuickInfoWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,6 +164,33 @@
 				6B21364224DF2D500078E7EA /* Info.plist */,
 			);
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		6B28A8D824E3498D006921C8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6B28A8D924E3498D006921C8 /* WidgetKit.framework */,
+				6B28A8DB24E3498D006921C8 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6B28A8DD24E3498D006921C8 /* QuickInfoWidget */ = {
+			isa = PBXGroup;
+			children = (
+				6B28A8DE24E3498D006921C8 /* QuickInfoWidget.swift */,
+				6B28A8E024E3498F006921C8 /* Assets.xcassets */,
+				6B28A8E224E3498F006921C8 /* Info.plist */,
+			);
+			path = QuickInfoWidget;
+			sourceTree = "<group>";
+		};
+		6B28A8F024E34A32006921C8 /* WidgetViews */ = {
+			isa = PBXGroup;
+			children = (
+				6B28A8F124E34A6C006921C8 /* QuickListView.swift */,
+			);
+			path = WidgetViews;
 			sourceTree = "<group>";
 		};
 		6B628FAE24DF2F64008E496E /* Models */ = {
@@ -158,15 +248,34 @@
 				6B21363B24DF2D500078E7EA /* Sources */,
 				6B21363C24DF2D500078E7EA /* Frameworks */,
 				6B21363D24DF2D500078E7EA /* Resources */,
+				6B28A8E724E3498F006921C8 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6B28A8E424E3498F006921C8 /* PBXTargetDependency */,
 			);
 			name = "ToDo-SwiftUI (iOS)";
 			productName = "ToDo-SwiftUI (iOS)";
 			productReference = 6B21363F24DF2D500078E7EA /* ToDo-SwiftUI.app */;
 			productType = "com.apple.product-type.application";
+		};
+		6B28A8D624E3498D006921C8 /* QuickInfoWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B28A8EA24E3498F006921C8 /* Build configuration list for PBXNativeTarget "QuickInfoWidgetExtension" */;
+			buildPhases = (
+				6B28A8D324E3498D006921C8 /* Sources */,
+				6B28A8D424E3498D006921C8 /* Frameworks */,
+				6B28A8D524E3498D006921C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuickInfoWidgetExtension;
+			productName = QuickInfoWidgetExtension;
+			productReference = 6B28A8D724E3498D006921C8 /* QuickInfoWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -178,6 +287,9 @@
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
 					6B21363E24DF2D500078E7EA = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					6B28A8D624E3498D006921C8 = {
 						CreatedOnToolsVersion = 12.0;
 					};
 				};
@@ -196,6 +308,7 @@
 			projectRoot = "";
 			targets = (
 				6B21363E24DF2D500078E7EA /* ToDo-SwiftUI (iOS) */,
+				6B28A8D624E3498D006921C8 /* QuickInfoWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -206,6 +319,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B21366524DF2D500078E7EA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B28A8D524E3498D006921C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B28A8E124E3498F006921C8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,6 +350,7 @@
 				6B628FCE24DF3518008E496E /* ToDoTasksDetailView.swift in Sources */,
 				6B628FB624DF3065008E496E /* ToDoTask.swift in Sources */,
 				6B628FBD24DF3147008E496E /* HelperViews.swift in Sources */,
+				6B28A8F224E34A6C006921C8 /* QuickListView.swift in Sources */,
 				6B21366124DF2D500078E7EA /* ToDo_SwiftUIApp.swift in Sources */,
 				6B628FB324DF300A008E496E /* ToDoList.swift in Sources */,
 				6B03EFA724E219A600D70A03 /* SearchBar.swift in Sources */,
@@ -237,7 +359,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6B28A8D324E3498D006921C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B28A8EF24E34A00006921C8 /* ToDoTask.swift in Sources */,
+				6B28A8F624E34AB6006921C8 /* AppLogoView.swift in Sources */,
+				6B28A8DF24E3498D006921C8 /* QuickInfoWidget.swift in Sources */,
+				6B28A8F424E34AB6006921C8 /* HelperViews.swift in Sources */,
+				6B28A8F824E34AB6006921C8 /* GradientColorRoll.swift in Sources */,
+				6B28A8EE24E34A00006921C8 /* Data.swift in Sources */,
+				6B28A8EB24E34A00006921C8 /* ToDoList.swift in Sources */,
+				6B28A8F524E34AB6006921C8 /* BiometricsAuthentication.swift in Sources */,
+				6B28A8ED24E34A00006921C8 /* UserData.swift in Sources */,
+				6B28A8EC24E34A00006921C8 /* CustomObjects.swift in Sources */,
+				6B28A8F724E34AB6006921C8 /* SearchBar.swift in Sources */,
+				6B28A8F324E34A6C006921C8 /* QuickListView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6B28A8E424E3498F006921C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6B28A8D624E3498D006921C8 /* QuickInfoWidgetExtension */;
+			targetProxy = 6B28A8E324E3498F006921C8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6B21366724DF2D500078E7EA /* Debug */ = {
@@ -354,6 +503,7 @@
 		6B21366A24DF2D500078E7EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ToDo-SwiftUI.entitlements";
@@ -380,6 +530,7 @@
 		6B21366B24DF2D500078E7EA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ToDo-SwiftUI.entitlements";
@@ -404,6 +555,57 @@
 			};
 			name = Release;
 		};
+		6B28A8E824E3498F006921C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = QuickInfoWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S3UZ2L9UP8;
+				INFOPLIST_FILE = QuickInfoWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.hellosaumil.ToDo-SwiftUI.QuickInfoWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6B28A8E924E3498F006921C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = QuickInfoWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S3UZ2L9UP8;
+				INFOPLIST_FILE = QuickInfoWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "io.hellosaumil.ToDo-SwiftUI.QuickInfoWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -421,6 +623,15 @@
 			buildConfigurations = (
 				6B21366A24DF2D500078E7EA /* Debug */,
 				6B21366B24DF2D500078E7EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B28A8EA24E3498F006921C8 /* Build configuration list for PBXNativeTarget "QuickInfoWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B28A8E824E3498F006921C8 /* Debug */,
+				6B28A8E924E3498F006921C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
