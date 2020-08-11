@@ -22,13 +22,13 @@ struct SearchBar: View {
                     
                     RoundedRectangle(cornerRadius: 8)
                         .frame(height: 40)
-                        .foregroundColor(Color.secondary.opacity(0.10))
+                        .foregroundColor(Color.secondary.opacity(0.06))
                     
                     TextField(message, text: $query)
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .font(.system(size: 18, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                         .keyboardType(.twitter)
-                        .padding(.horizontal)
+                        .padding(.horizontal, 10)
                     
                     
                     ZStack {
@@ -39,10 +39,10 @@ struct SearchBar: View {
                             
                             Button(action: { withAnimation{query = ""} }) {
                                 
-                                getSystemImage(name: "xmark.circle.fill", color: .secondary, fontSize: 18, weight: .semibold, design: .default, scale: .medium)
+                                getSystemImage(name: "xmark.circle.fill", color: .secondary, fontSize: 18, weight: .medium, design: .default, scale: .medium)
                                     .padding(.horizontal, -6)
                                     .padding(.vertical, -12)
-                                    .opacity(0.30)
+                                    .opacity(0.20)
                                 
                             }
                             
