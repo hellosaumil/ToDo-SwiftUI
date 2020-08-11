@@ -23,6 +23,15 @@ class AllLists: ObservableObject {
     init(  lists: [ToDoList] ) {
         todoLists = lists
     }
+    
+    func filterLists(query: String) -> [ToDoList] {
+        
+        return todoLists.filter { list in
+            list.todoListName.lowercased().contains( query.lowercased() )
+                || list.todoListIcon.lowercased().contains( query.lowercased() )
+                || query == ""
+        }
+    }
 }
 
 enum iconPresets: String, CaseIterable, Codable {
@@ -116,4 +125,14 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
         }
     }
     
+    
+    // MARK: Filter Tasks
+    func filterTasks(query: String) -> [ToDoTask] {
+        
+        return todoTasks.filter { task in
+            task.todoName.lowercased().contains( query.lowercased() )
+                || task.todoShape.name.contains( query.lowercased() )
+                || query == ""
+        }
+    }
 }

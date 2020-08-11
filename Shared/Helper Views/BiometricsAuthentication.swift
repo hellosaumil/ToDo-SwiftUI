@@ -13,8 +13,8 @@ func authenticate(completion: @escaping ( (Bool) -> () )) {
     let context = LAContext()
     var error: NSError?
     
-    //        let ourLAPolicy: LAPolicy = .deviceOwnerAuthenticationWith
-    let ourLAPolicy: LAPolicy = .deviceOwnerAuthenticationWithBiometrics
+    let ourLAPolicy: LAPolicy = .deviceOwnerAuthentication
+//    let ourLAPolicy: LAPolicy = .deviceOwnerAuthenticationWithBiometrics
     
     
     guard context.canEvaluatePolicy(ourLAPolicy, error: &error) else {

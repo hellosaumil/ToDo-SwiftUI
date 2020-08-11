@@ -22,7 +22,7 @@ struct ToDoTaskCellView: View {
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .foregroundOverlay(myGradient(type: task.todoGradientScheme,
                                                       colors: [task.todoGradientStartColor.color,
-                                                               task.todoGradientEndColor.color])).opacity(0.03)
+                                                               task.todoGradientEndColor.color])).opacity(0.05)
                         .frame(height: 20).offset(y: 8)
                     
                     // MARK: Call TaskEditBarView
@@ -53,7 +53,7 @@ struct ToDoTaskCellView: View {
             .contextMenu {
                 
                 Button(action: {} )
-                    { Text("\(task.todoName)"); Image(systemName: "\(task.todoShape.id)") }
+                    { Text("\(task.todoName)"); Image(systemName: "\(task.todoShape.name)") }
                 
                 Button(action: {} )
                 { Text("Due on \( customDateFormatter.string(from: task.dueDateTime)) ")
@@ -95,7 +95,7 @@ struct ToDoCellRowItem: View {
         HStack {
             
             // MARK: Complete Task
-            getSystemImage(name: "\(task.todoShape)" +
+            getSystemImage(name: "\(task.todoShape.name)" +
                             ((task.isCompleted) ? ".fill" : ""), color: .primary,
                            fontSize: 20, weight: .medium)
                 .foregroundOverlay(myGradient(type: task.todoGradientScheme,

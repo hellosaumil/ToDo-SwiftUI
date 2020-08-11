@@ -14,9 +14,13 @@ struct ToDoTasksDetailView: View {
     @State private var showingModal: Bool = false
     @State private var showingDelete: Bool = false
     
+    @State private var searchText: String = ""
+    @State private var showingSearch: Bool = false
+    
     var body: some View {
         
         ZStack {
+            
             VStack {
                 
                 if toDoList.todoTasks.isEmpty {
@@ -33,10 +37,10 @@ struct ToDoTasksDetailView: View {
                     
                     List {
                         
-                        ForEach(toDoList.todoTasks, id: \.self) { tasks in
+                        ForEach( toDoList.filterTasks(query: searchText), id: \.self) { task in
                             
                             // MARK: Call ToDoTaskCellView
-                            ToDoTaskCellView(task: tasks)
+                            ToDoTaskCellView(task: task)
                                 .padding(.trailing, -16)
                         }
                         .onDelete { (IndexSet) in
@@ -45,32 +49,56 @@ struct ToDoTasksDetailView: View {
                     }
                     .padding(.trailing)
                     .listStyle(PlainListStyle())
+                    .padding(.top, showingSearch ? 40 : 0 )
                 }
             }
+            
+            if showingSearch && !toDoList.todoTasks.isEmpty  {
+                
+                SearchBar(message: "Search a task by name or shape...", query: $searchText)
+            }
         }
-        .navigationBarTitle(Text("\(toDoList.todoListIcon) \(toDoList.todoListName)"),
-                            displayMode: .automatic)
+        .navigationBarTitle(Text("\(toDoList.todoListIcon) \(toDoList.todoListName)"))
         
-        .navigationBarItems(trailing:
-                                
+        .navigationBarItems(leading:
                                 Button(action: {
+                                    
                                     withAnimation(.easeInOut) {
                                         toDoList.todoTasks.append(ToDoTask())
-                                        // showingModal = true
                                     }
                                     
-                                }, label: {
-                                    Text("+ New Task")
-                                        .font(.headline)
-                                        .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
-                                })
+                                }) {
+                                    
+                                    HStack {
+                                        Image(systemName: "plus")
+                                        Text("Add").font(.headline)
+                                    }
+                                    .padding(0)
+                                    .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
+                                },
+                            
+                            trailing:
+                                Button(action: {
+                                    
+                                    withAnimation(.easeInOut) { showingSearch.toggle() }
+                                    
+                                }) {
+                                    
+                                    HStack {
+                                        Text("Search").font(.headline)
+                                        Image(systemName: "text.magnifyingglass")
+                                    }
+                                    .padding(0)
+                                    .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
+                                    
+                                }
         )
         
         .sheet(isPresented: $showingModal, onDismiss: {showingModal = false}) {
             
             // MARK: Call ToDoTaskInfoView
             ToDoTaskInfoView(task: toDoList.todoTasks[toDoList.todoTasks.underestimatedCount-1],
-                           showModal: $showingModal)
+                             showModal: $showingModal)
         }
     }
 }

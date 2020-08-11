@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
-
+import UIKit
 @main
 struct ToDo_SwiftUIApp: App {
     
-    @StateObject var lists = AllLists()
+    @StateObject var lists = AllLists(lists: randomLists)
     
     var body: some Scene {
         WindowGroup {

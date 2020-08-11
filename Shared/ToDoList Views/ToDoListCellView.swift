@@ -25,7 +25,7 @@ struct ToDoListCellView: View {
                         RoundedRectangle(cornerRadius: 6, style: .continuous)
                             .foregroundOverlay(myGradient(type: list.todoGradientScheme,
                                                           colors: [list.todoGradientStartColor.color,
-                                                                   list.todoGradientEndColor.color])).opacity(0.03)
+                                                                   list.todoGradientEndColor.color])).opacity(0.05)
                             .frame(height: 20).offset(y: 8)
                         
                         ProgressBarView(list: list)

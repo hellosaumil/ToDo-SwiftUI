@@ -14,55 +14,87 @@ struct ToDoListsMasterView: View {
     @State private var showingModal: Bool = false
     @State private var showingDelete: Bool = false
     
+    @State private var searchText: String = ""
+    @State private var showingSearch: Bool = true
+    
     var body: some View {
         
-        VStack {
+        ZStack {
             
-            if allLists.todoLists.isEmpty {
+            VStack {
                 
-                Spacer()
-                
-                Text("No Lists Found")
-                    .font(.system(size: 20))
-                    .foregroundColor(.gray)
-                
-                Spacer()
-                
-            } else {
-                
-                List  {
+                if allLists.todoLists.isEmpty {
                     
-                    ForEach(allLists.todoLists, id: \.self) { list in
+                    Spacer()
+                    
+                    Text("No Lists Found")
+                        .font(.system(size: 20))
+                        .foregroundColor(.gray)
+                    
+                    Spacer()
+                    
+                } else {
+                    
+                    List  {
                         
-                        // MARK: Call ToDoListCellView
-                        ToDoListCellView(list: list)
-                        
+                        ForEach( allLists.filterLists(query: searchText), id: \.self) { list in
+                            
+                            // MARK: Call ToDoListCellView
+                            ToDoListCellView(list: list)
+                                .padding(.trailing, -16)
+                            
+                        }
+                        .onDelete { (IndexSet) in
+                            allLists.todoLists.remove(atOffsets: IndexSet)
+                        }
                     }
-                    .onDelete { (IndexSet) in
-                        allLists.todoLists.remove(atOffsets: IndexSet)
-                    }
+                    .padding(.trailing)
+                    .listStyle(PlainListStyle())
+                    .padding(.top, showingSearch ? 40 : 0 )
                 }
-                .padding(.trailing)
-                .listStyle(PlainListStyle())
             }
+            
+            if showingSearch && !allLists.todoLists.isEmpty  {
+                
+                SearchBar(message: "Search a list by name or icon...", query: $searchText)
+            }
+            
         }
         
-        .navigationBarTitle(Text("ToDo Lists"),
-                            displayMode: .automatic)
+        .navigationBarTitle(Text("ToDo Lists"))
         
-        .navigationBarItems(trailing:
-                                
+        .navigationBarItems(leading:
                                 Button(action: {
+                                    
                                     withAnimation(.easeInOut) {
                                         allLists.todoLists.append(ToDoList())
-                                        // showingModal = true
                                     }
                                     
-                                }, label: {
-                                    Text("+ New List")
-                                        .font(.headline)
-                                        .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
-                                })
+                                }) {
+                                    
+                                    HStack {
+                                        Image(systemName: "plus")
+                                        Text("Add").font(.headline)
+                                    }
+                                    .padding(0)
+                                    .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
+                                },
+                            
+                            trailing:
+                                Button(action: {
+                                    
+                                    withAnimation(.easeInOut) { showingSearch.toggle() }
+                                    
+                                }) {
+                                    
+                                    HStack {
+                                        Text("Search").font(.headline)
+                                        Image(systemName: "text.magnifyingglass")
+                                    }
+                                    .padding(0)
+                                    .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
+                                    
+                                }
         )
         
         .sheet(isPresented: $showingModal, onDismiss: {showingModal = false}) {

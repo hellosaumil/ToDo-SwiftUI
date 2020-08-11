@@ -29,3 +29,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(lists: AllLists(lists: randomLists))
     }
 }
+
+enum ListType: String {
+    case hashtags, comments, nicknames, other
+}

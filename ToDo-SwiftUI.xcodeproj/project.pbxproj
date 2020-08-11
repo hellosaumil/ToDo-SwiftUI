@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B03EFA724E219A600D70A03 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B03EFA624E219A600D70A03 /* SearchBar.swift */; };
 		6B21365424DF2D500078E7EA /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B21365324DF2D500078E7EA /* Tests_iOS.swift */; };
 		6B21366124DF2D500078E7EA /* ToDo_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B21363824DF2D4E0078E7EA /* ToDo_SwiftUIApp.swift */; };
 		6B21366324DF2D500078E7EA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B21363924DF2D4E0078E7EA /* ContentView.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B03EFA624E219A600D70A03 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		6B21363824DF2D4E0078E7EA /* ToDo_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo_SwiftUIApp.swift; sourceTree = "<group>"; };
 		6B21363924DF2D4E0078E7EA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6B21363A24DF2D500078E7EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			children = (
 				6B628FBC24DF3147008E496E /* HelperViews.swift */,
 				6B628FD624DF35E0008E496E /* GradientColorRoll.swift */,
+				6B03EFA624E219A600D70A03 /* SearchBar.swift */,
 				6B7EB4EC24DFCF2E006ED2B0 /* BiometricsAuthentication.swift */,
 			);
 			path = "Helper Views";
@@ -287,6 +290,7 @@
 				6B628FBD24DF3147008E496E /* HelperViews.swift in Sources */,
 				6B21366124DF2D500078E7EA /* ToDo_SwiftUIApp.swift in Sources */,
 				6B628FB324DF300A008E496E /* ToDoList.swift in Sources */,
+				6B03EFA724E219A600D70A03 /* SearchBar.swift in Sources */,
 				6B628FC824DF33FB008E496E /* ToDoListCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
