@@ -40,9 +40,33 @@ enum iconPresets: String, CaseIterable, Codable {
     var name: String { rawValue.lowercased() }
 }
 
-func getRandomEmoji() -> String {
-    return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
+struct RandomEmoji {
+    
+    var emoji: String = ""
+    var name: String = ""
+    
+    init(default defaultName: String = "random emoji", suffix: String = "") {
+        
+        self.emoji = getRandomEmoji()
+        self.name = getEmojiName(default: defaultName, suffix: suffix)
+    }
+    
+    private func getRandomEmoji() -> String {
+        return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
+    }
+    
+    private func getEmojiName(default defaultName: String = "NoName", suffix: String = "") -> String {
+        
+        var emojiName: String?
+        
+        for scalar in self.emoji.unicodeScalars {
+            emojiName = (scalar.properties.name?.capitalized ?? defaultName)
+        }
+        
+        return (emojiName ?? defaultName) + (suffix == "" ? suffix : " "+suffix )
+    }
 }
+
 
 class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
@@ -71,7 +95,7 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     @Published var isLocked: Bool
     
-    init(icon: String = getRandomEmoji(), name: String = "New ToDo List",
+    init(icon: String = "", name: String = "",
          
          tasks: [ToDoTask] = [ToDoTask](),
          
@@ -81,8 +105,12 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
          
          isFav: Bool = false) {
         
-        self.todoListIcon = icon
-        self.todoListName = name
+        let emojiObj = RandomEmoji(default: "ToDo", suffix: "List")
+        
+        
+        self.todoListIcon = (icon == "") ? emojiObj.emoji : icon
+        self.todoListName = (name == "") ? emojiObj.name : name
+        
         self.todoTasks = tasks
         
         self.todoGradientScheme = gradientScheme

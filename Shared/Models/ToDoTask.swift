@@ -36,7 +36,7 @@ class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     
     @Published var isCompleted: Bool = false
     
-    init(name: String = "New ToDo", dueDateTime: Date = Date(),
+    init(name: String = "", dueDateTime: Date = Date(),
          
          shape: BaseShapes = BaseShapes.allCases.randomElement()!,
          
@@ -46,7 +46,7 @@ class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
          
          notes: String = "", isFav: Bool = false) {
         
-        self.todoName = name
+        self.todoName = (name == "") ? shape.name + " ToDo" : name
         
         self.dueDateTime = dueDateTime
         

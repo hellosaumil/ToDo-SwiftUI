@@ -9,13 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @ObservedObject var lists: AllLists
+    @EnvironmentObject var userData: UserData
     
     var body: some View {
         
         NavigationView {
             
-            ToDoListsMasterView(allLists: lists)
+            ToDoListsMasterView(allLists: userData.currentUserLists)
             
             Text("Choose a List to see its tasks")
                 .foregroundColor(.secondary)
@@ -26,7 +26,11 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(lists: AllLists(lists: randomLists))
+        
+        NightAndDay {
+            ContentView()
+                .environmentObject(UserData())
+        }
     }
 }
 

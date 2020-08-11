@@ -13,7 +13,7 @@ final class UserData: ObservableObject {
     let willChange = PassthroughSubject<Void, Never>()
     
     // MARK: user items
-    @Published var currentUserList: [ToDoList] = [ToDoList]() {
+    @Published var currentUserLists: AllLists = AllLists() {
         willSet {
             willChange.send()
         }

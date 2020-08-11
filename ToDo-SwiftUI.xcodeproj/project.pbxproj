@@ -104,11 +104,11 @@
 		6B628FAE24DF2F64008E496E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6B628FB824DF311F008E496E /* UserData.swift */,
 				6B628FAF24DF2FE1008E496E /* Data.swift */,
 				6B628FB224DF300A008E496E /* ToDoList.swift */,
 				6B628FB524DF3065008E496E /* ToDoTask.swift */,
 				6B7EB4EE24DFD17E006ED2B0 /* CustomObjects.swift */,
-				6B628FB824DF311F008E496E /* UserData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
