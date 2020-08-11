@@ -15,7 +15,7 @@ struct ToDoListsMasterView: View {
     @State private var showingDelete: Bool = false
     
     @State private var searchText: String = ""
-    @State private var showingSearch: Bool = true
+    @State private var showingSearch: Bool = false
     
     var body: some View {
         
