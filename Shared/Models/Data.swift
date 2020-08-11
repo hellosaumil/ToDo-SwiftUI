@@ -35,7 +35,8 @@ let sampleTasksLite: [ToDoTask] = [
 
 
 let toDoListLite: ToDoList = ToDoList(icon: "☕️", name: "New Watchlist", tasks: [])
-var toDoListRandom: ToDoList = ToDoList(icon: "👨🏻‍💻", name: "WWDC Watchlist", tasks: randomTasks)
+var toDoListRandom: ToDoList = ToDoList(icon: "👨🏻‍💻", name: "WWDC Watchlist", tasks: randomTasks,
+                                        gradientScheme: .linear, gradientStartColor: .pink, gradientEndColor: .purple)
 
 
 let listIcons: [String] = ["🍕", "💼", "🐛"]
