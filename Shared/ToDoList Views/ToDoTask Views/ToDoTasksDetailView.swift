@@ -109,7 +109,7 @@ struct ToDoTasksDetailView_Previews: PreviewProvider {
         
         Group {
             
-            ForEach( [toDoListLite, toDoListLite2, toDoListRandom], id: \.id ) { list in
+            ForEach( [toDoListLite, toDoListRandom], id: \.id ) { list in
                 
                 NightAndDay {
                     

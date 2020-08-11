@@ -21,11 +21,6 @@ final class UserData: ObservableObject {
     
     
     // MARK: todo items
-    @Published var someTasks:[ToDoTask] = sampleTasks {
-        willSet {
-            willChange.send()
-        }
-    }
     
     @Published var someTasksLite:[ToDoTask] = sampleTasksLite {
         willSet {
@@ -42,18 +37,6 @@ final class UserData: ObservableObject {
     
     //MARK: todo lists
     @Published var someListLite:ToDoList = toDoListLite {
-        willSet {
-            willChange.send()
-        }
-    }
-    
-    @Published var someListLite2:ToDoList = toDoListLite2 {
-        willSet {
-            willChange.send()
-        }
-    }
-    
-    @Published var someLists:[ToDoList] = sampleLists {
         willSet {
             willChange.send()
         }

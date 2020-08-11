@@ -168,7 +168,7 @@ struct ToDoListCellView_Previews: PreviewProvider {
         
         Group {
             
-            ForEach([sampleLists[0]], id: \.id) { list in
+            ForEach([randomLists[0]], id: \.id) { list in
                 
                 NightAndDay {
                     

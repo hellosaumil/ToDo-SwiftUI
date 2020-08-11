@@ -17,15 +17,7 @@ let taskItems: [String] = ["Swift Deep Dive", "What's new in SwiftUI",
                            "Widets Code-along", "Swan's Quest"]
 
 
-let sampleTasks: [ToDoTask] = taskItems.map { ToDoTask(name: $0) }
-
-
-let randomTasks: [ToDoTask] = taskItems.map { ToDoTask(name: $0,
-                                                       shape: BaseShapes.allCases.randomElement()!,
-                                                       gradientScheme: GradientTypes.allCases.randomElement()!,
-                                                       gradientStartColor: BaseColors.allCases.randomElement()!,
-                                                       gradientEndColor: BaseColors.allCases.randomElement()!)
-}
+let randomTasks: [ToDoTask] = taskItems.map { ToDoTask(name: $0) }
 
 let sampleTasksLite: [ToDoTask] = [
     ToDoTask(),
@@ -43,8 +35,6 @@ let sampleTasksLite: [ToDoTask] = [
 
 
 let toDoListLite: ToDoList = ToDoList(icon: "☕️", name: "New Watchlist", tasks: [])
-let toDoListLite2: ToDoList = ToDoList(icon: "👨🏻‍💻", name: "WWDC Watchlist", tasks: sampleTasks)
-
 var toDoListRandom: ToDoList = ToDoList(icon: "👨🏻‍💻", name: "WWDC Watchlist", tasks: randomTasks)
 
 
@@ -52,13 +42,7 @@ let listIcons: [String] = ["🍕", "💼", "🐛"]
 let listItems: [String] = ["Favorite Pizza Places",
                            "Target Companies", "Books to Read"]
 
-let sampleLists: [ToDoList] = [toDoListLite2] + zip(listIcons, listItems).map { ToDoList(icon: $0, name: $1) }
-
-let randomLists: [ToDoList] = [toDoListRandom] + zip(listIcons, listItems).map { ToDoList(icon: $0, name: $1,
-                                                                                          gradientScheme: GradientTypes.allCases.randomElement()!,
-                                                                                          gradientStartColor: BaseColors.allCases.randomElement()!,
-                                                                                          gradientEndColor: BaseColors.allCases.randomElement()!
-                                                                                          ) }
+let randomLists: [ToDoList] = [toDoListRandom] + zip(listIcons, listItems).map { ToDoList(icon: $0, name: $1) }
 
 // MARK: User Data from Database
 let userLists: [ToDoList] = [toDoListRandom] + listItems.map { ToDoList(name: $0) }
