@@ -50,7 +50,7 @@ struct QuickListView: View {
                                 .foregroundColor(.secondary)
                                 .fixedSize(horizontal: true, vertical: false)
                             
-                            ProgressView(value: 40, total: 100.0)
+                            ProgressView(value: list.progress, total: 100.0)
                                 .foregroundOverlay(myGradient(type: list.todoGradientScheme,
                                                               colors: [list.todoGradientStartColor.color,
                                                                        list.todoGradientEndColor.color]))
@@ -85,7 +85,7 @@ struct QuickListView: View {
 
 struct QuickListView_Previews: PreviewProvider {
     static var previews: some View {
-        QuickListView(list: randomLists[0])
+        QuickListView(list: ToDoList(icon: "🎑"))
             .previewLayout(.sizeThatFits)
     }
 }

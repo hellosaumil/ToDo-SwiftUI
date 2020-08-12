@@ -29,6 +29,8 @@
 		6B28A8F624E34AB6006921C8 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A8B924E347B9006921C8 /* AppLogoView.swift */; };
 		6B28A8F724E34AB6006921C8 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B03EFA624E219A600D70A03 /* SearchBar.swift */; };
 		6B28A8F824E34AB6006921C8 /* GradientColorRoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FD624DF35E0008E496E /* GradientColorRoll.swift */; };
+		6B28A8FC24E36584006921C8 /* localLists.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B28A8FB24E36584006921C8 /* localLists.json */; };
+		6B28A8FD24E37EBA006921C8 /* localLists.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B28A8FB24E36584006921C8 /* localLists.json */; };
 		6B628FB024DF2FE1008E496E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FAF24DF2FE1008E496E /* Data.swift */; };
 		6B628FB324DF300A008E496E /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FB224DF300A008E496E /* ToDoList.swift */; };
 		6B628FB624DF3065008E496E /* ToDoTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FB524DF3065008E496E /* ToDoTask.swift */; };
@@ -85,6 +87,7 @@
 		6B28A8E224E3498F006921C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B28A8E624E3498F006921C8 /* QuickInfoWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickInfoWidgetExtension.entitlements; sourceTree = "<group>"; };
 		6B28A8F124E34A6C006921C8 /* QuickListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListView.swift; sourceTree = "<group>"; };
+		6B28A8FB24E36584006921C8 /* localLists.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = localLists.json; sourceTree = "<group>"; };
 		6B628FAD24DF2E52008E496E /* ToDo-SwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ToDo-SwiftUI.entitlements"; sourceTree = "<group>"; };
 		6B628FAF24DF2FE1008E496E /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		6B628FB224DF300A008E496E /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
@@ -138,6 +141,7 @@
 		6B21363724DF2D4E0078E7EA /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				6B28A8F924E36549006921C8 /* Resources */,
 				6B21363A24DF2D500078E7EA /* Assets.xcassets */,
 				6B21363824DF2D4E0078E7EA /* ToDo_SwiftUIApp.swift */,
 				6B21363924DF2D4E0078E7EA /* ContentView.swift */,
@@ -191,6 +195,14 @@
 				6B28A8F124E34A6C006921C8 /* QuickListView.swift */,
 			);
 			path = WidgetViews;
+			sourceTree = "<group>";
+		};
+		6B28A8F924E36549006921C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6B28A8FB24E36584006921C8 /* localLists.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		6B628FAE24DF2F64008E496E /* Models */ = {
@@ -319,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B21366524DF2D500078E7EA /* Assets.xcassets in Resources */,
+				6B28A8FC24E36584006921C8 /* localLists.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B28A8E124E3498F006921C8 /* Assets.xcassets in Resources */,
+				6B28A8FD24E37EBA006921C8 /* localLists.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,7 +531,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.hellosaumil.ToDo-SwiftUI";
 				PRODUCT_NAME = "ToDo-SwiftUI";
 				SDKROOT = iphoneos;
@@ -544,7 +558,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.hellosaumil.ToDo-SwiftUI";
 				PRODUCT_NAME = "ToDo-SwiftUI";
 				SDKROOT = iphoneos;

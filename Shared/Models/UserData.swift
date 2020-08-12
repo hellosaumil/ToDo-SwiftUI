@@ -10,10 +10,13 @@ import Foundation
 
 final class UserData: ObservableObject {
     
+    // MARK: Init Data Store for the App
+    init() { userLists.update(from: loadListsData(usersListsDataFileName)) }
+    
     let willChange = PassthroughSubject<Void, Never>()
     
     // MARK: user items
-    @Published var currentUserLists: AllLists = AllLists() {
+    @Published var currentUserLists: AllLists = userLists {
         willSet {
             willChange.send()
         }
@@ -21,7 +24,6 @@ final class UserData: ObservableObject {
     
     
     // MARK: todo items
-    
     @Published var someTasksLite:[ToDoTask] = sampleTasksLite {
         willSet {
             willChange.send()

@@ -16,6 +16,8 @@ struct ContentView: View {
         NavigationView {
             
             ToDoListsMasterView(allLists: userData.currentUserLists)
+                .onAppear( perform: { _ = storeUpdatedUser(userData, debug: "onAppear") } )
+                .onDisappear( perform: { _ = storeUpdatedUser(userData, debug: "onDisappear") } )
             
             Text("Choose a List to see its tasks")
                 .foregroundColor(.secondary)
@@ -32,8 +34,4 @@ struct ContentView_Previews: PreviewProvider {
                 .environmentObject(UserData())
         }
     }
-}
-
-enum ListType: String {
-    case hashtags, comments, nicknames, other
 }

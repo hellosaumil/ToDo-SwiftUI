@@ -31,7 +31,7 @@ enum BaseShapes: String, CaseIterable, Identifiable, Codable {
     
     case triangle, rhombus, diamond, square, rectangle, hexagon,
          octagon, circle, capsule, shield
-    
+
     var id: String { name }
     
     var name: String { rawValue.lowercased() }

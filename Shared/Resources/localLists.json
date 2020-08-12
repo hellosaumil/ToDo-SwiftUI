@@ -1,0 +1,35 @@
+[
+    {
+        "icon": "📚",
+        "name": "Local List",
+        "tasks": [
+            
+            {
+                
+                "name" : "Local ToDo1",
+                "dueDateTime" : "01:20 PM",
+                "notes" : "Random notetaking...",
+                
+                "isFav" : true,
+                "isCompleted" : false,
+                
+                "shape" : "rhombus",
+                
+                "scheme" : "angular",
+                "startColor": "pink",
+                "endColor": "purple",
+                
+            }
+            
+        ],
+        
+        "progress": 0,
+        
+        "scheme": "linear",
+        "startColor": "pink",
+        "endColor": "green",
+        
+        "isFav": true,
+        "isLocked": false
+    }
+]
