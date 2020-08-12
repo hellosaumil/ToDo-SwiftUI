@@ -116,7 +116,7 @@ struct QuickListView: View {
                         // MARK: Progress Bar
                         VStack(alignment: .leading) {
                             
-                            Text("\(String(format: (list.progress > 0) ? "%.1f" : "%d", list.progress))% complete")
+                            Text("\(String(format: "%d%%", list.progress)) complete")
                                 .font(.caption2)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.secondary)
