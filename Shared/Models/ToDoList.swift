@@ -20,7 +20,7 @@ class AllLists: ObservableObject {
         self.init(lists: [ToDoList]() )
     }
     
-    init(  lists: [ToDoList] ) {
+    init( lists: [ToDoList] ) {
         todoLists = lists
     }
     
@@ -31,6 +31,10 @@ class AllLists: ObservableObject {
                 || list.todoListIcon.lowercased().contains( query.lowercased() )
                 || query == ""
         }
+    }
+    
+    func update(from newLists: [ToDoList]) {
+        self.todoLists = newLists
     }
 }
 
@@ -68,7 +72,7 @@ struct RandomEmoji {
 }
 
 
-class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
+final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     static func == (lhs: ToDoList, rhs: ToDoList) -> Bool {
         return lhs.id == rhs.id
@@ -123,6 +127,7 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
         self.isLocked = false
     }
     
+    
     // MARK: Update Progress
     func updateProgress() {
         
@@ -168,4 +173,80 @@ class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
                 || query == ""
         }
     }
+}
+
+extension ToDoList: Decodable {
+    
+    // MARK: Conforming to Codable
+    enum CodingKeys: String, CodingKey {
+        
+        case todoListIcon="icon", todoListName="name"
+        case todoTasks="tasks"
+        
+        case progress, isMyFavorite="isFav", isLocked
+        
+        case gradientScheme="scheme"
+        case gradientStartColor="startColor", gradientEndColor="endColor"
+    }
+    
+    
+    convenience init(from decoder: Decoder) throws {
+        
+        self.init()
+        
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        todoListIcon = try values.decode(String.self, forKey: .todoListIcon)
+        todoListName = try values.decode(String.self, forKey: .todoListName)
+        
+        todoTasks = try values.decode([ToDoTask].self, forKey: .todoTasks)
+        
+        todoGradientScheme = try values.decode(GradientTypes.self, forKey: .gradientScheme)
+        todoGradientStartColor = try values.decode(BaseColors.self, forKey: .gradientStartColor)
+        todoGradientEndColor = try values.decode(BaseColors.self, forKey: .gradientEndColor)
+        
+        progress = try values.decode(CGFloat.self, forKey: .progress)
+        isMyFavorite = try values.decode(Bool.self, forKey: .isMyFavorite)
+        isLocked = try values.decode(Bool.self, forKey: .isLocked)
+
+    }
+    
+}
+
+extension ToDoList: Encodable {
+    func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(todoListIcon, forKey: .todoListIcon)
+        try container.encode(todoListName, forKey: .todoListName)
+        
+        try container.encode(todoTasks, forKey: .todoTasks)
+        
+        try container.encode(todoGradientScheme, forKey: .gradientScheme)
+        
+        try container.encode(todoGradientStartColor, forKey: .gradientStartColor)
+        try container.encode(todoGradientEndColor, forKey: .gradientEndColor)
+        
+        try container.encode(progress, forKey: .progress)
+        try container.encode(isMyFavorite, forKey: .isMyFavorite)
+        try container.encode(isLocked, forKey: .isLocked)
+    }
+}
+
+
+extension AllLists {
+ 
+    func saveLists() {
+        
+        do {
+            
+            try saveListsData(self.todoLists)
+            
+        } catch {
+            
+            print("\n*****Failed: saveLists()*******\n")
+        }
+    }
+    
 }

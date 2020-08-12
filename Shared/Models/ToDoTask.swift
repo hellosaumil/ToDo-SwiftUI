@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
+final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     
     static func == (lhs: ToDoTask, rhs: ToDoTask) -> Bool {
         return lhs.id == rhs.id
@@ -60,6 +60,67 @@ class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
         self.isMyFavorite = isFav
     }
 }
+
+extension ToDoTask: Decodable {
+    
+    // MARK: Conforming to Codable
+    enum CodingKeys: String, CodingKey {
+        
+        case todoName="name", todoShape="shape"
+        
+        case dueDateTime, notes, isMyFavorite="isFav", isCompleted
+        
+        case gradientScheme="scheme"
+        case gradientStartColor="startColor", gradientEndColor="endColor"
+    }
+    
+    convenience init(from decoder: Decoder) throws {
+        
+        self.init()
+        
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        todoName = try values.decode(String.self, forKey: .todoName)
+        
+        // MARK: TODO Reading/Writing Date Failing
+        dueDateTime = try DateFormatter().date(from: values.decode(String.self, forKey: .dueDateTime)) ?? Date()
+        
+        todoShape = try values.decode(BaseShapes.self, forKey: .todoShape)
+        todoGradientScheme = try values.decode(GradientTypes.self, forKey: .gradientScheme)
+        
+        todoGradientStartColor = try values.decode(BaseColors.self, forKey: .gradientStartColor)
+        todoGradientEndColor = try values.decode(BaseColors.self, forKey: .gradientEndColor)
+        
+        notes = try values.decode(String.self, forKey: .notes)
+        isMyFavorite = try values.decode(Bool.self, forKey: .isMyFavorite)
+        isCompleted = try values.decode(Bool.self, forKey: .isCompleted)
+        
+    }
+}
+
+extension ToDoTask: Encodable {
+    func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(todoName, forKey: .todoName)
+        
+        // MARK: TODO Reading/Writing Date Failing
+        try container.encode( customDateFormatter.string(from: dueDateTime) , forKey: .dueDateTime)
+        
+        try container.encode(todoShape, forKey: .todoShape)
+        
+        try container.encode(todoGradientScheme, forKey: .gradientScheme)
+        
+        try container.encode(todoGradientStartColor, forKey: .gradientStartColor)
+        try container.encode(todoGradientEndColor, forKey: .gradientEndColor)
+        
+        try container.encode(notes, forKey: .notes)
+        try container.encode(isMyFavorite, forKey: .isMyFavorite)
+        try container.encode(isCompleted, forKey: .isCompleted)
+    }
+}
+
 
 var customDateFormatter: DateFormatter {
     let formatter = DateFormatter()
