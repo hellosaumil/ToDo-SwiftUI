@@ -51,60 +51,7 @@ struct QuickListView: View {
                             
                             Spacer()
                             
-                            VStack(alignment: .leading, spacing: 5) {
-                                
-                                HStack(alignment: .top, spacing: 5) {
-                                    
-                                    Image(systemName: "bolt.fill").foregroundColor(.yellow)
-                                        .font(.body)
-                                        .imageScale(.large)
-                                        .padding(.top, 4)
-                                        .shadow(radius: 10)
-                                    
-                                    Text("Tasks\nSummary")
-                                        .font(.footnote)
-                                        .fontWeight(.bold)
-                                        .opacity(0.80)
-                                    
-                                    
-                                }
-                                
-                                if list.todoTasks.count == 0 {
-                                    
-                                    Text("No Tasks")
-                                        .fontWeight(.bold)
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                        .opacity(0.60)
-                                        .padding(.leading, 20)
-                                    
-                                } else {
-                                    
-                                    VStack(alignment: .leading) {
-                                        
-                                        Text("Total \(list.todoTasks.count) Tasks")
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.pink)
-                                            .opacity(0.80)
-                                        
-                                        
-                                        Text("✓ \(list.todoTasks.filter({ $0.isCompleted }).count)" +
-                                                "\t\tx \(list.todoTasks.filter({ !$0.isCompleted }).count)")
-                                            .font(.caption2)
-                                            .fontWeight(.bold)
-                                            .foregroundOverlay(myGradient(type: list.todoGradientScheme,
-                                                                          colors: [list.todoGradientStartColor.color,
-                                                                                   list.todoGradientEndColor.color]))
-                                            .opacity(0.60)
-                                        
-                                    }
-                                    
-                                }
-                                
-                                Spacer()
-                            }
-                            .padding(.top, 4)
+                            TaskSummaryViewLite(ofList: list)
                         }
                         
                     }
@@ -188,3 +135,89 @@ struct QuickListView: View {
 //            .previewLayout(.sizeThatFits)
 //    }
 //}
+
+struct TaskInfoLite: View {
+    
+    @State var imageName: String
+    @State var count: Int
+    @State var color: Color = .secondary
+    
+    var body: some View {
+        
+        HStack(alignment: .center, spacing: 4) {
+            
+            Image(systemName: imageName)
+            
+            Text("\(count)")
+                .fontWeight(.bold)
+                
+        }.font(.caption2)
+        .foregroundColor( color )
+    }
+}
+
+struct TaskSummaryViewLite: View {
+    
+    @ObservedObject var ofList: ToDoList
+    
+    var body: some View {
+        
+        VStack(alignment: .leading, spacing: 5) {
+            
+            HStack(alignment: .top, spacing: 5) {
+                
+                Image(systemName: "bolt.fill").foregroundColor(.yellow)
+                    .font(.body)
+                    .imageScale(.large)
+                    .padding(.top, 4)
+                    .shadow(radius: 10)
+                
+                Text("Tasks\nSummary")
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .opacity(0.80)
+                
+                
+            }
+            
+            if ofList.todoTasks.count != 0 {
+                
+                Text("No Tasks")
+                    .fontWeight(.bold)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .opacity(0.60)
+                    .padding(.leading, 20)
+                
+            } else {
+                
+                VStack {
+                    
+                    Text("Total \(ofList.todoTasks.count) Tasks")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.pink)
+                        .opacity(0.80)
+                    
+                    
+                    HStack(alignment: .center, spacing: 36) {
+                        
+                        TaskInfoLite(imageName: "checkmark",
+                                     count: ofList.todoTasks.filter({ $0.isCompleted }).count,
+                                     color: ofList.todoGradientStartColor.color)
+                        
+                        TaskInfoLite(imageName: "hourglass",
+                                     count: ofList.todoTasks.filter({ !$0.isCompleted }).count,
+                                     color: ofList.todoGradientEndColor.color)
+                        
+                    }.opacity(0.60)
+                    
+                }
+                
+            }
+            
+            Spacer()
+        }
+        .padding(.top, 4)
+    }
+}
