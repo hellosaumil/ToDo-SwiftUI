@@ -199,6 +199,28 @@ func storeUpdatedUser(_ updatedUser: UserData, debug: String = "") -> Bool {
 }
 
 
+// MARK: TODO Figure out a way to use this
+func storeListData(_ lists: [ToDoList], debug: String = "") -> Bool {
+    
+    // MARK: Store Updated UserData Object
+
+    if debug != "" {
+        print("\n\nDebug: \(debug) 💭")
+    }
+    
+    do {
+        try saveListsData(lists)
+        print("\nLists Data Updated! 🎉\n\n")
+        return true
+        
+    } catch {
+        
+        print("\nError while saving updated lists data\(error.localizedDescription)...⚠️\n")
+        return false
+    }
+}
+
+
 func loadListsData(_ filename: String) -> [ToDoList] {
     
     let loadedListData: [ToDoList]

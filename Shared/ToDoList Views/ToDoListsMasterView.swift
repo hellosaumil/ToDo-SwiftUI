@@ -46,6 +46,9 @@ struct ToDoListsMasterView: View {
                         }
                         .onDelete { (IndexSet) in
                             allLists.todoLists.remove(atOffsets: IndexSet)
+                            
+                            // MARK: Update Stored Lists onDelete
+                            DispatchQueue.main.async { _ = storeListData(allLists.todoLists) }
                         }
                     }
                     .padding(.trailing)
@@ -68,6 +71,9 @@ struct ToDoListsMasterView: View {
                                     
                                     withAnimation(.easeInOut) {
                                         allLists.todoLists.append(ToDoList())
+                                        
+                                        // MARK: Update Stored Lists onDelete
+                                        DispatchQueue.main.async { _ = storeListData(allLists.todoLists) }
                                     }
                                     
                                 }) {
