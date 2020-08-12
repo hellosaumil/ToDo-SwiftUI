@@ -36,14 +36,14 @@ func authenticate(completion: @escaping ( (Bool) -> () )) {
             if success {
                 
                 // MARK: Auth Successful
-                print("Authenticated Successful. 🎉")
+                print("Authentication Successful. 🎉")
                 
                 completion(false)
                 
             } else {
                 
                 // MARK: Auth Failed
-                print("Authenticated FAILED with \(error?.localizedDescription ?? "user cancelled action"). ⚠️")
+                print("Authentication FAILED with \(error?.localizedDescription ?? "user cancelled action"). ⚠️")
                 
                 completion(true)
             }
