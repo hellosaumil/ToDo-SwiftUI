@@ -152,7 +152,7 @@ struct TaskInfoLite: View {
                 .fontWeight(.bold)
                 
         }.font(.caption2)
-        .foregroundColor( color )
+        .foregroundColor( color ).brightness(-0.20)
     }
 }
 
@@ -162,7 +162,7 @@ struct TaskSummaryViewLite: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: 8) {
             
             HStack(alignment: .top, spacing: 5) {
                 
@@ -191,14 +191,12 @@ struct TaskSummaryViewLite: View {
                 
             } else {
                 
-                VStack {
+                VStack(spacing: 4) {
                     
                     Text("Total \(ofList.todoTasks.count) Tasks")
                         .font(.caption)
                         .fontWeight(.bold)
                         .foregroundColor(.pink)
-                        .opacity(0.80)
-                    
                     
                     HStack(alignment: .center, spacing: 36) {
                         
@@ -209,11 +207,10 @@ struct TaskSummaryViewLite: View {
                         TaskInfoLite(imageName: "hourglass",
                                      count: ofList.todoTasks.filter({ !$0.isCompleted }).count,
                                      color: ofList.todoGradientEndColor.color)
-                        
-                    }.opacity(0.60)
+                    }
                     
                 }
-                
+                .opacity(0.85)
             }
             
             Spacer()
