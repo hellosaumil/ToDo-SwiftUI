@@ -45,7 +45,7 @@ struct SearchBar: View {
                             Spacer(minLength: 4)
                             
                             Button(action: {
-                                withAnimation{
+                                withAnimation(.easeInOut) {
                                     query = ""
                                     isActive.toggle()
                                 }
@@ -70,7 +70,7 @@ struct SearchBar: View {
             }
             .background(Color.primary.colorInvert())
             
-            //            Spacer()
+            Spacer()
         }
         .padding(.top, 5)
     }
@@ -87,16 +87,17 @@ struct SearchBar_Previews: PreviewProvider {
             ForEach([true, false], id: \.self) { active in
                 
                 SearchBar(query: .constant(""), isActive: .constant(false))
+                    .frame(height: 40).padding(.top, 10)
                     .previewLayout(.sizeThatFits)
                 
                 SearchBar(query: .constant("Something to search"), isActive: .constant(active))
+                    .frame(height: 40).padding(.top, 10)
                     .previewLayout(.sizeThatFits)
                 
                 SearchBar(query: .constant("Something very very long thing to search if you can and fine if do not :("), isActive: .constant(active))
+                    .frame(height: 40).padding(.top, 10)
                     .previewLayout(.sizeThatFits)
-                
             }
-            
         }
     }
 }
