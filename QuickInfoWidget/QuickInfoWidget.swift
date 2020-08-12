@@ -35,9 +35,9 @@ struct Provider: TimelineProvider {
 
         let currentDate = Date()
 
-        let interval = 1
+        let interval = 2
         for index in 0 ..< entries.count {
-            entries[index].date = Calendar.current.date(byAdding: .minute,
+            entries[index].date = Calendar.current.date(byAdding: .second,
                                                         value: index * interval,
                                                         to: currentDate)!
         }
@@ -82,6 +82,7 @@ struct QuickInfoWidget: Widget {
         }
         .configurationDisplayName("Quick Info")
         .description("Quick glance about your ToDo Lists.")
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
 
@@ -92,10 +93,10 @@ struct QuickInfoWidget_Previews: PreviewProvider {
             
             ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium], id: \.self) { family in
                 
-                PlaceHolderView()
-                    .previewContext(WidgetPreviewContext(family: family))
+//                PlaceHolderView()
+//                    .previewContext(WidgetPreviewContext(family: family))
                 
-                QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), todoList: randomLists[0]))
+                QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), todoList: ToDoList(icon: "🥳")))
                     .previewContext(WidgetPreviewContext(family: family))
             }
         }
