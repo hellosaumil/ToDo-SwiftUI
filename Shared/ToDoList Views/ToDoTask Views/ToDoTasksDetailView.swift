@@ -55,7 +55,7 @@ struct ToDoTasksDetailView: View {
             
             if showingSearch && !toDoList.todoTasks.isEmpty  {
                 
-                SearchBar(message: "Search a task by name or shape...", query: $searchText)
+                SearchBar(message: "Search a task by name or shape...", query: $searchText, isActive: $showingSearch)
             }
         }
         .navigationBarTitle(Text("\(toDoList.todoListIcon) \(toDoList.todoListName)"))
@@ -86,7 +86,7 @@ struct ToDoTasksDetailView: View {
                                     
                                     HStack {
                                         Text("Search").font(.headline)
-                                        Image(systemName: "text.magnifyingglass")
+                                        Image(systemName: "magnifyingglass")
                                     }
                                     .padding(0)
                                     .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))

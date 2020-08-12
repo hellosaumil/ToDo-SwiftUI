@@ -59,7 +59,7 @@ struct ToDoListsMasterView: View {
             
             if showingSearch && !allLists.todoLists.isEmpty  {
                 
-                SearchBar(message: "Search a list by name or icon...", query: $searchText)
+                SearchBar(message: "Search a list by name or icon...", query: $searchText, isActive: $showingSearch)
             }
             
         }
@@ -95,7 +95,7 @@ struct ToDoListsMasterView: View {
                                     
                                     HStack {
                                         Text("Search").font(.headline)
-                                        Image(systemName: "text.magnifyingglass")
+                                        Image(systemName: "magnifyingglass")
                                     }
                                     .padding(0)
                                     .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))

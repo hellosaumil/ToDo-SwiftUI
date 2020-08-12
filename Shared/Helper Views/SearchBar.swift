@@ -11,6 +11,7 @@ struct SearchBar: View {
     
     @State var message: String = "Search here..."
     @Binding var query: String
+    @Binding var isActive: Bool
     
     var body: some View {
         
@@ -25,10 +26,17 @@ struct SearchBar: View {
                         .foregroundColor(Color.secondary.opacity(0.06))
                     
                     TextField(message, text: $query)
-                        .font(.system(size: 18, weight: .medium, design: .rounded))
+                        .font(.system(size: 16, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
                         .keyboardType(.twitter)
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal, 36)
+                    
+                    HStack {
+                        Image(systemName: "magnifyingglass").imageScale(.medium)
+                            .foregroundColor(Color.secondary.opacity(0.50))
+                        Spacer()
+                    }
+                    .padding(.horizontal, 10)
                     
                     ZStack {
                         
@@ -36,9 +44,14 @@ struct SearchBar: View {
                             
                             Spacer(minLength: 4)
                             
-                            Button(action: { withAnimation{query = ""} }) {
+                            Button(action: {
+                                withAnimation{
+                                    query = ""
+                                    isActive.toggle()
+                                }
+                            }) {
                                 
-                                getSystemImage(name: "xmark.circle.fill", color: .secondary, fontSize: 18, weight: .medium, design: .default, scale: .medium)
+                                getSystemImage(name: "xmark.circle.fill", color: .secondary, fontSize: 16, weight: .medium, design: .default, scale: .medium)
                                     .padding(.horizontal, -6)
                                     .padding(.vertical, -12)
                                     .opacity(0.20)
@@ -57,7 +70,7 @@ struct SearchBar: View {
             }
             .background(Color.primary.colorInvert())
             
-            Spacer()
+            //            Spacer()
         }
         .padding(.top, 5)
     }
@@ -66,7 +79,24 @@ struct SearchBar: View {
 
 
 struct SearchBar_Previews: PreviewProvider {
+    
     static var previews: some View {
-        SearchBar(query: .constant(""))
+        
+        Group {
+            
+            ForEach([true, false], id: \.self) { active in
+                
+                SearchBar(query: .constant(""), isActive: .constant(false))
+                    .previewLayout(.sizeThatFits)
+                
+                SearchBar(query: .constant("Something to search"), isActive: .constant(active))
+                    .previewLayout(.sizeThatFits)
+                
+                SearchBar(query: .constant("Something very very long thing to search if you can and fine if do not :("), isActive: .constant(active))
+                    .previewLayout(.sizeThatFits)
+                
+            }
+            
+        }
     }
 }
