@@ -165,6 +165,8 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
         self.isMyFavorite = isFav
         
         self.isLocked = false
+        
+        self.updateProgress()
     }
     
     
@@ -248,7 +250,8 @@ extension ToDoList: Decodable {
         progress = try values.decode(CGFloat.self, forKey: .progress)
         isMyFavorite = try values.decode(Bool.self, forKey: .isMyFavorite)
         isLocked = try values.decode(Bool.self, forKey: .isLocked)
-
+        
+        self.updateProgress()
     }
     
 }
