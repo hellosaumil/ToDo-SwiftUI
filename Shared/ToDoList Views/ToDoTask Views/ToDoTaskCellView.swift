@@ -64,7 +64,7 @@ struct ToDoTaskCellView: View {
                     Image(systemName: task.isCompleted ? "minus.circle.fill" : "checkmark.circle.fill") }
                 
                 Button(action: { withAnimation { task.isMyFavorite.toggle() } })
-                { Text( task.isMyFavorite ? "Remove to Favorites" : "Add to Favorites" )
+                { Text( task.isMyFavorite ? "Remove from Favorites" : "Add to Favorites" )
                     Image(systemName:  task.isMyFavorite ? "star.slash.fill" : "star.fill" ) }
                 
             }

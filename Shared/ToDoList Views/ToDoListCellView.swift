@@ -56,8 +56,9 @@ struct ToDoListCellView: View {
                                                               colors: [list.todoGradientStartColor.color, list.todoGradientEndColor.color]))
                                 .opacity( list.isLocked ? 0.75 : 0.50 )
                                 .shadow(color: .secondary, radius: 4, x: 2, y: 2)
-                                .onTapGesture(count: 1, perform: {
-                                    if !list.isLocked { withAnimation{ list.isLocked = true }}
+                                .onTapGesture(count: 2, perform: {
+                                    if !list.isLocked { withAnimation{ list.isLocked = true } }
+                                    else { authUser() }
                                 })
                             
                             if !list.isLocked {
@@ -94,7 +95,7 @@ struct ToDoListCellView: View {
                             Image(systemName: "arrow.triangle.2.circlepath") }
                         
                         // MARK: Complete/Reset All Tasks in the List
-                        if !list.todoTasks.isEmpty {
+                        if !list.todoTasks.isEmpty && !list.isLocked {
                             
                             Button(action: {
                                 
@@ -109,15 +110,21 @@ struct ToDoListCellView: View {
                             
                         }
                         
+                        if !list.isLocked {
+                            
                         Button(action: { list.todoTasks.append(ToDoTask()) })
                             { Text("Add New Task"); Image(systemName: "plus") }
                         
-                        Button(action: { withAnimation { if !list.isLocked { list.isMyFavorite.toggle() } } })
-                        { Text( list.isMyFavorite ? "Remove to Favorites" : "Add to Favorites" )
+                        Button(action: { withAnimation { list.isMyFavorite.toggle() } })
+                        { Text( list.isMyFavorite ? "Remove from Favorites" : "Add to Favorites" )
                             Image(systemName: list.isMyFavorite ? "star.slash.fill" : "star.fill" ) }
+                            
+                        }
                         
                         // MARK: Call authUser
-                        Button(action: {  authUser() }) {
+                        Button(action: {
+                            withAnimation { list.isLocked ? authUser() : list.isLocked.toggle() }
+                        }) {
                             Text( !list.isLocked ? "Lock" : "Authenticate" )
                             Image(systemName: !list.isLocked ? "lock.fill" : "ellipsis.rectangle.fill" )
                         }
@@ -168,13 +175,13 @@ struct ToDoListCellView_Previews: PreviewProvider {
         
         Group {
             
-            ForEach([randomLists[0]], id: \.id) { list in
+            ForEach([randomLists[0], ToDoList(icon:"🎑")], id: \.id) { list in
                 
-                NightAndDay {
+//                NightAndDay {
                     
                     ToDoListCellView(list: list)
                         .previewLayout(.sizeThatFits)
-                }
+//                }
             }
         }
     }
@@ -192,9 +199,11 @@ struct ToDoListCellRowItem: View {
                 .font(.system(size: 24))
                 .shadow(color: Color.secondary.opacity(0.40),
                         radius: 2, x: 2, y: 4)
+                .truncationMode(.head)
             
             Text(list.todoListName).strikethrough(list.progress == 100, color: list.todoGradientStartColor.color)
-                .lineLimit(1)
+                .lineLimit(2).truncationMode(.head)
+                .fixedSize(horizontal: false, vertical: true)
                 .font(.system(size: 22, weight: .bold, design: .default))
                 .foregroundOverlay(myGradient(type: list.todoGradientScheme,
                                               colors: [list.todoGradientStartColor.color,
