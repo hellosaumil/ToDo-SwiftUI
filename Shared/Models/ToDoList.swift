@@ -44,24 +44,46 @@ enum iconPresets: String, CaseIterable, Codable {
     var name: String { rawValue.lowercased() }
 }
 
+extension Character {
+    /// A simple emoji is one scalar and presented to the user as an Emoji
+    var isSimpleEmoji: Bool {
+        guard let firstScalar = unicodeScalars.first else { return false }
+        return firstScalar.properties.isEmoji && firstScalar.value > 0x238C
+    }
+    
+    /// Checks if the scalars will be merged into an emoji
+    var isCombinedIntoEmoji: Bool { unicodeScalars.count > 1 && unicodeScalars.first?.properties.isEmoji ?? false }
+    
+    var isEmoji: Bool { isSimpleEmoji || isCombinedIntoEmoji }
+}
+
+extension String {
+    var isSingleEmoji: Bool { count == 1 && containsEmoji }
+    
+    var containsEmoji: Bool { contains { $0.isEmoji } }
+    
+    var containsOnlyEmoji: Bool { !isEmpty && !contains { !$0.isEmoji } }
+
+}
+
 struct RandomEmoji {
     
     var emoji: String = ""
     var name: String = ""
     
-    init(default defaultName: String = "random emoji", suffix: String = "") {
+    init(from icon: String = "", default defaultName: String = "random emoji", suffix: String = "") {
         
-        self.emoji = getRandomEmoji()
-        self.name = getEmojiName(default: defaultName, suffix: suffix)
+        self.emoji = icon.containsOnlyEmoji ? icon : getRandomEmoji()
+        self.name = getEmojiName(of: emoji, default: defaultName, suffix: suffix)
     }
     
     private func getRandomEmoji() -> String {
         return String(UnicodeScalar(Array(0x1F300...0x1F3F0).randomElement()!)!)
     }
     
-    private func getEmojiName(default defaultName: String = "NoName", suffix: String = "") -> String {
+    private func getEmojiName(of icon: String, default defaultName: String = "NoName", suffix: String = "") -> String {
         
-        var emojiName: String?
+        var emojiName: String? = icon
         
         for scalar in self.emoji.unicodeScalars {
             emojiName = (scalar.properties.name?.capitalized ?? defaultName)
@@ -109,10 +131,9 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
          
          isFav: Bool = false) {
         
-        let emojiObj = RandomEmoji(default: "ToDo", suffix: "List")
+        let emojiObj = RandomEmoji(from: icon, default: "ToDo", suffix: "List")
         
-        
-        self.todoListIcon = (icon == "") ? emojiObj.emoji : icon
+        self.todoListIcon = emojiObj.emoji
         self.todoListName = (name == "") ? emojiObj.name : name
         
         self.todoTasks = tasks
