@@ -180,7 +180,7 @@ struct TaskSummaryViewLite: View {
                 
             }
             
-            if ofList.todoTasks.count != 0 {
+            if ofList.todoTasks.count == 0 {
                 
                 Text("No Tasks")
                     .fontWeight(.bold)
