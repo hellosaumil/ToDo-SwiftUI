@@ -58,6 +58,25 @@ extension Character {
 }
 
 extension String {
+    
+    func getFirst() -> String {
+        
+        guard self != "" else {
+            return self
+        }
+        
+        return String(self.strip[self.strip.index(before: startIndex)])
+    }
+    
+    func getLast() -> String {
+        
+        guard self.strip != "" else {
+            return ""
+        }
+        
+        return String(self.strip[self.strip.index(before: endIndex)])
+    }
+    
     var isSingleEmoji: Bool { count == 1 && containsEmoji }
     
     var containsEmoji: Bool { contains { $0.isEmoji } }
@@ -131,7 +150,7 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
          
          isFav: Bool = false) {
         
-        let emojiObj = RandomEmoji(from: icon, default: "ToDo", suffix: "List")
+        let emojiObj = RandomEmoji(from: icon.getLast(), default: "ToDo", suffix: "List")
         
         self.todoListIcon = emojiObj.emoji
         self.todoListName = (name == "") ? emojiObj.name : name

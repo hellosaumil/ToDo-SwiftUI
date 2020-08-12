@@ -203,7 +203,7 @@ func iconUserInput(keyboard keyboardDataType: UIKeyboardType = .default, placeho
     
     TextField(tf_msg, text: tfTextBinding, onEditingChanged: { _ in
         
-        tfTextBinding.wrappedValue = String(tfTextBinding.wrappedValue.strip[tfTextBinding.wrappedValue.strip.startIndex])
+        tfTextBinding.wrappedValue = tfTextBinding.wrappedValue.getLast()
         
     })
     // MARK: TODO UISCreen Mishap, keyboardDataType

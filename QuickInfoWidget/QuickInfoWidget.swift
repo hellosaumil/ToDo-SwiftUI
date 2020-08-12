@@ -35,9 +35,9 @@ struct Provider: TimelineProvider {
 
         let currentDate = Date()
 
-        let interval = 2
+        let interval = 1
         for index in 0 ..< entries.count {
-            entries[index].date = Calendar.current.date(byAdding: .second,
+            entries[index].date = Calendar.current.date(byAdding: .minute,
                                                         value: index * interval,
                                                         to: currentDate)!
         }

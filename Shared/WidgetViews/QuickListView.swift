@@ -31,7 +31,7 @@ struct QuickListView: View {
                         
                         Text(list.todoListName).strikethrough(list.progress == 100, color: list.todoGradientStartColor.color)
                             .font(.system(size: 22, weight: .bold, design: .default))
-                            .lineLimit(nil)
+                            .lineLimit(2)
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundOverlay(myGradient(type: list.todoGradientScheme,
                                                           colors: [list.todoGradientStartColor.color,
@@ -85,7 +85,7 @@ struct QuickListView: View {
 
 struct QuickListView_Previews: PreviewProvider {
     static var previews: some View {
-        QuickListView(list: ToDoList(icon: "🎑"))
+        QuickListView(list: ToDoList(icon: "📚🧐⚠️"))
             .previewLayout(.sizeThatFits)
     }
 }
