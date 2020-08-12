@@ -96,7 +96,7 @@ struct QuickInfoWidget_Previews: PreviewProvider {
 //                PlaceHolderView()
 //                    .previewContext(WidgetPreviewContext(family: family))
                 
-                QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), todoList: ToDoList(icon: "🥳")))
+                QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), todoList: ToDoList(icon: "")))
                     .previewContext(WidgetPreviewContext(family: family))
             }
         }

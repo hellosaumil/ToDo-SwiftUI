@@ -41,6 +41,8 @@ struct QuickListView: View {
                                 .foregroundOverlay(myGradient(type: list.todoGradientScheme,
                                                               colors: [list.todoGradientStartColor.color,
                                                                        list.todoGradientEndColor.color]))
+                            
+                            Spacer(minLength: 0)
                         }
                         
                         
@@ -67,20 +69,14 @@ struct QuickListView: View {
                                     
                                 }
                                 
-                                if list.todoTasks.count != 0 {
+                                if list.todoTasks.count == 0 {
                                     
-                                    HStack(spacing: 10) {
-                                        
-                                        Image(systemName: "0.circle.fill")
-                                            .imageScale(.medium)
-                                        
-                                        Text("No Tasks")
-                                            .fontWeight(.medium)
-                                        
-                                    }
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .opacity(0.50)
+                                    Text("No Tasks")
+                                        .fontWeight(.bold)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .opacity(0.60)
+                                        .padding(.leading, 20)
                                     
                                 } else {
                                     
