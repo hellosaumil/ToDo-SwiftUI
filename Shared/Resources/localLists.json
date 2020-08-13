@@ -2,6 +2,7 @@
     {
         "icon": "📚",
         "name": "Local List",
+        "url": "todo:///local-list",
         "tasks": [
             
             {

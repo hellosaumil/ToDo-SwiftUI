@@ -12,6 +12,8 @@ struct ToDoListCellView: View {
     @ObservedObject var list: ToDoList
     @State private var moreInfoTapped: Bool = false
     
+    @State private var navLinkActive: Bool = false
+    
     var body: some View {
         
         HStack {
@@ -66,7 +68,7 @@ struct ToDoListCellView: View {
                                 // MARK: Call ListMasterView
                                 ScrollView {
                                     
-                                    NavigationLink(destination: ToDoTasksDetailView(toDoList: list)) {
+                                    NavigationLink(destination: ToDoTasksDetailView(toDoList: list), isActive: $navLinkActive) {
                                         
                                         getSystemImage(name: "chevron.right",
                                                        color: Color.secondary.opacity(0.35), fontSize: 12,
@@ -75,6 +77,9 @@ struct ToDoListCellView: View {
                                             
                                             .rotationEffect(Angle(degrees: (moreInfoTapped) ? 90 : 0))
                                     }
+                                    .onOpenURL(perform: { (url) in
+                                        self.navLinkActive = url == list.getURL()
+                                    })
                                     
                                 }.offset(y: 18)
                                 

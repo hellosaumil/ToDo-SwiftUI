@@ -140,6 +140,8 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     @Published var isLocked: Bool
     
+    @Published var todoListURL: URL
+    
     init(icon: String = "", name: String = "",
          
          tasks: [ToDoTask] = [ToDoTask](),
@@ -166,8 +168,25 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
         
         self.isLocked = false
         
+        self.todoListURL = URL(string: "todo:///init")!
+        
         self.updateProgress()
+        self.updateURL()
     }
+    
+    // MARK: Generate and Update List URL
+    func generateURL() -> URL {
+        
+        let baseURL = "todo:///"
+        
+        let nameURL = self.todoListName.lowercased().strip.replacingOccurrences(of: " ", with: "-")
+        let urlString = baseURL + ((nameURL == "") ? "init-none" : nameURL )
+        
+        return URL(string: urlString)!
+    }
+    
+    func updateURL() { self.todoListURL = generateURL() }
+    func getURL() -> URL { return self.todoListURL }
     
     
     // MARK: Update Progress
@@ -222,7 +241,7 @@ extension ToDoList: Decodable {
     // MARK: Conforming to Codable
     enum CodingKeys: String, CodingKey {
         
-        case todoListIcon="icon", todoListName="name"
+        case todoListIcon="icon", todoListName="name", todoListURL="url"
         case todoTasks="tasks"
         
         case progress, isMyFavorite="isFav", isLocked
@@ -240,6 +259,8 @@ extension ToDoList: Decodable {
         
         todoListIcon = try values.decode(String.self, forKey: .todoListIcon)
         todoListName = try values.decode(String.self, forKey: .todoListName)
+        
+        todoListURL = try values.decode(URL.self, forKey: .todoListURL)
         
         todoTasks = try values.decode([ToDoTask].self, forKey: .todoTasks)
         
@@ -263,6 +284,8 @@ extension ToDoList: Encodable {
         
         try container.encode(todoListIcon, forKey: .todoListIcon)
         try container.encode(todoListName, forKey: .todoListName)
+        
+        try container.encode(todoListURL, forKey: .todoListURL)
         
         try container.encode(todoTasks, forKey: .todoTasks)
         

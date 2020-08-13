@@ -116,7 +116,7 @@ struct QuickListView: View {
                                 .padding(-16)
                             
                         }
-                        .offset(y: (family == .systemSmall) ? 2 : 2)
+                        .offset(x: -4, y: (family == .systemSmall) ? 2 : 2)
                         
                     }
                     
@@ -129,12 +129,19 @@ struct QuickListView: View {
     }
 }
 
-//struct QuickListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        QuickListView(list: ToDoList(icon: "📚🧐⚠️"))
-//            .previewLayout(.sizeThatFits)
-//    }
-//}
+struct QuickListView_Previews: PreviewProvider {
+    static var previews: some View {
+        
+        Group {
+            
+            ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium], id: \.self) { family in
+                
+                QuickListView(list: ToDoList(icon: "📚🧐⚠️"))
+                    .previewContext(WidgetPreviewContext(family: family))
+            }
+        }
+    }
+}
 
 struct TaskInfoLite: View {
     
@@ -150,7 +157,7 @@ struct TaskInfoLite: View {
             
             Text("\(count)")
                 .fontWeight(.bold)
-                
+            
         }.font(.caption2)
         .foregroundColor( color ).brightness(-0.20)
     }
@@ -162,59 +169,88 @@ struct TaskSummaryViewLite: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 8) {
+        ZStack {
             
-            HStack(alignment: .top, spacing: 5) {
+            VStack(alignment: .leading, spacing: 8) {
                 
-                Image(systemName: "bolt.fill").foregroundColor(.yellow)
-                    .font(.body)
-                    .imageScale(.large)
-                    .padding(.top, 4)
-                    .shadow(radius: 10)
-                
-                Text("Tasks\nSummary")
-                    .font(.footnote)
-                    .fontWeight(.bold)
-                    .opacity(0.80)
-                
-                
-            }
-            
-            if ofList.todoTasks.count == 0 {
-                
-                Text("No Tasks")
-                    .fontWeight(.bold)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .opacity(0.60)
-                    .padding(.leading, 20)
-                
-            } else {
-                
-                VStack(spacing: 4) {
+                HStack(alignment: .top, spacing: 5) {
                     
-                    Text("Total \(ofList.todoTasks.count) Tasks")
-                        .font(.caption)
+                    Image(systemName: "bolt.fill").foregroundColor(.yellow)
+                        .font(.body)
+                        .imageScale(.large)
+                        .padding(.top, 4)
+                        .shadow(radius: 10)
+                    
+                    Text("Tasks\nSummary")
+                        .font(.footnote)
                         .fontWeight(.bold)
-                        .foregroundColor(.pink)
+                        .opacity(0.80)
                     
-                    HStack(alignment: .center, spacing: 36) {
-                        
-                        TaskInfoLite(imageName: "checkmark",
-                                     count: ofList.todoTasks.filter({ $0.isCompleted }).count,
-                                     color: ofList.todoGradientStartColor.color)
-                        
-                        TaskInfoLite(imageName: "hourglass",
-                                     count: ofList.todoTasks.filter({ !$0.isCompleted }).count,
-                                     color: ofList.todoGradientEndColor.color)
-                    }
                     
                 }
-                .opacity(0.85)
+                
+                if ofList.todoTasks.count != 0 {
+                    
+                    Text("No Tasks")
+                        .fontWeight(.bold)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .opacity(0.60)
+                        .padding(.leading, 20)
+                    
+                } else {
+                    
+                    VStack(spacing: 4) {
+                        
+                        Text("Total \(ofList.todoTasks.count) Tasks")
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(.pink)
+                        
+                        HStack(alignment: .center, spacing: 36) {
+                            
+                            TaskInfoLite(imageName: "checkmark",
+                                         count: ofList.todoTasks.filter({ $0.isCompleted }).count,
+                                         color: ofList.todoGradientStartColor.color)
+                            
+                            TaskInfoLite(imageName: "hourglass",
+                                         count: ofList.todoTasks.filter({ !$0.isCompleted }).count,
+                                         color: ofList.todoGradientEndColor.color)
+                        }
+                        
+                    }
+                    .opacity(0.85)
+                }
+                
+                Spacer()
             }
+            .padding(.top, 4)
             
-            Spacer()
+            VStack {
+                
+                Spacer()
+                
+                // MARK: Go-to list widgetURL Caller
+                HStack(alignment: .bottom, spacing: 5) {
+                    
+                    Text("Go to list")
+                        .fontWeight(.bold)
+                        .foregroundOverlay(myGradient(type: ofList.todoGradientScheme,
+                                                      colors: [ofList.todoGradientStartColor.color,
+                                                               ofList.todoGradientEndColor.color]))
+                    
+                    getSystemImage(name: "arrow.up.forward.app.fill", color: .secondary,
+                                   fontSize: 15, weight: .medium, design: .rounded,
+                                   scale: .medium).padding(-16)
+                        .foregroundOverlay(myGradient(type: ofList.todoGradientScheme,
+                                                      colors: [ofList.todoGradientStartColor.color,
+                                                               ofList.todoGradientEndColor.color]))
+                }
+                .font(.caption2)
+                .padding(.leading, 5)
+                .widgetURL( ofList.getURL() )
+                
+            }.offset(y: 10)
         }
-        .padding(.top, 4)
     }
 }
