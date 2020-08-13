@@ -8,33 +8,56 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: TimelineProvider {
+struct Provider: IntentTimelineProvider {
+    
+    typealias Entry = SimpleEntry
+    typealias Intent = ListSelectorIntent
+    
+    
+    private func readContents() -> [ToDoList] {
+        
+        var contents: [ToDoList] = []
+        contents = loadListsData(usersListsDataFileName)
+        return contents
+    }
+    
+    private func readFavContents(onlyFav: Bool? = false, onlyLocked: Bool? = false) -> [SimpleEntry] {
+        
+        var contents: [Entry] = []
+        
+        contents = readContents()
+            .filter { (onlyFav ?? false) ? $0.isMyFavorite : true  }
+            .filter { (onlyLocked ?? false) ? $0.isLocked : true  }
+            .map { SimpleEntry(date: Date(), todoList: $0) }
+        
+        return contents
+    }
     
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), todoList: ToDoList())
     }
     
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    
+    // MARK: Updated based on Intent
+    
+    
+    func getSnapshot(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Entry) -> Void) {
+        
         let entry = SimpleEntry(date: Date(), todoList: ToDoList())
         completion(entry)
     }
     
-    private func readContents() -> [SimpleEntry] {
+    
+    func getTimeline(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         
-        var contents: [SimpleEntry] = []
-        
-        contents = loadListsData(usersListsDataFileName).map { SimpleEntry(date: Date(), todoList: $0) }
-        
-        return contents
-    }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        
+        // MARK: Get Config Params
+        let favsOnly: Bool? = configuration.showFavorites?.boolValue
+        let lockedOnly: Bool? = configuration.showLocked?.boolValue
+    
         var entries: [SimpleEntry] = []
-        entries = readContents()
-
+        entries = readFavContents(onlyFav: favsOnly, onlyLocked: lockedOnly)
+        
         let currentDate = Date()
-
         let interval = 2
         for index in 0 ..< entries.count {
             entries[index].date = Calendar.current.date(byAdding: .second,
@@ -77,7 +100,9 @@ struct QuickInfoWidget: Widget {
     let kind: String = "QuickInfoWidget"
     
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        
+        IntentConfiguration(kind: kind, intent: ListSelectorIntent.self,
+                            provider: Provider()) { entry in
             QuickInfoWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Quick Info")
@@ -93,8 +118,8 @@ struct QuickInfoWidget_Previews: PreviewProvider {
             
             ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium], id: \.self) { family in
                 
-//                PlaceHolderView()
-//                    .previewContext(WidgetPreviewContext(family: family))
+                PlaceHolderView()
+                    .previewContext(WidgetPreviewContext(family: family))
                 
                 QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), todoList: ToDoList(icon: "")))
                     .previewContext(WidgetPreviewContext(family: family))

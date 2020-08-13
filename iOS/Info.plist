@@ -24,6 +24,10 @@
 	<true/>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Protect your important ToDo Lists and Tasks</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>ListSelectorIntent</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
