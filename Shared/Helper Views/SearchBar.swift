@@ -28,7 +28,6 @@ struct SearchBar: View {
                     TextField(message, text: $query)
                         .font(.system(size: 16, weight: .medium, design: .rounded))
                         .foregroundColor(.secondary)
-                        .keyboardType(.twitter)
                         .padding(.horizontal, 36)
                     
                     HStack {
@@ -38,29 +37,26 @@ struct SearchBar: View {
                     }
                     .padding(.horizontal, 10)
                     
-                    ZStack {
+                    HStack {
                         
-                        HStack {
-                            
-                            Spacer(minLength: 4)
-                            
-                            Button(action: {
-                                withAnimation(.easeInOut) {
-                                    query = ""
-                                    isActive.toggle()
-                                }
-                            }) {
-                                
-                                getSystemImage(name: "xmark.circle.fill", color: .secondary, fontSize: 16, weight: .medium, design: .default, scale: .medium)
-                                    .padding(.horizontal, -6)
-                                    .padding(.vertical, -12)
-                                    .opacity(0.20)
-                                
+                        Spacer(minLength: 4)
+                        
+                        Button(action: {
+                            withAnimation(.easeInOut) {
+                                query = ""
+//                                isActive.toggle()
                             }
+                        }) {
+                            
+                            getSystemImage(name: "xmark.circle.fill", color: .secondary, fontSize: 16, weight: .medium, design: .default, scale: .medium)
+                                .padding(.horizontal, -6)
+                                .padding(.vertical, -12)
+                                .opacity(0.20)
                             
                         }
-                        
                     }
+                    .opacity( (query == "") ? 0 : 1)
+                    
                     
                 }
                 .padding(.horizontal, 20)

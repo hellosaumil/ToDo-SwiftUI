@@ -80,7 +80,9 @@ struct ToDoTasksDetailView: View {
                             trailing:
                                 Button(action: {
                                     
-                                    withAnimation(.easeInOut) { showingSearch.toggle() }
+                                    withAnimation(.easeInOut) {
+                                        searchText = ""
+                                        showingSearch.toggle() }
                                     
                                 }) {
                                     
