@@ -34,13 +34,11 @@ struct Provider: IntentTimelineProvider {
     }
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), todoList: ToDoList())
+        SimpleEntry(date: Date(), todoList: ToDoList(name: "Placeholder Function List", gradientStartColor: .orange))
     }
     
     
     // MARK: Updated based on Intent
-    
-    
     func getSnapshot(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Entry) -> Void) {
         
         let entry = SimpleEntry(date: Date(), todoList: ToDoList())
@@ -53,7 +51,7 @@ struct Provider: IntentTimelineProvider {
         // MARK: Get Config Params
         let favsOnly: Bool? = configuration.showFavorites?.boolValue
         let lockedOnly: Bool? = configuration.showLocked?.boolValue
-    
+        
         var entries: [SimpleEntry] = []
         entries = readFavContents(onlyFav: favsOnly, onlyLocked: lockedOnly)
         
@@ -89,7 +87,7 @@ struct PlaceHolderView : View {
     
     var body: some View {
         
-        QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), todoList: randomLists[0]))
+        QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), todoList: ToDoList(name: "Placeholder List", gradientStartColor: .green)))
             .redacted(reason: .placeholder)
     }
 }
