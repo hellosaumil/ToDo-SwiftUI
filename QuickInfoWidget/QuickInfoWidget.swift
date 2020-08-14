@@ -21,30 +21,28 @@ struct Provider: IntentTimelineProvider {
     
     // MARK: filterToDoList
     private func filterToDoList(from data: inout [ToDoList],
-                                on filterKey: KeyPath<ToDoList, Bool>,
-                                target: Bool? ) {
+                                on filterKey: KeyPath<ToDoList, Bool>) {
         
-        guard let validTarget = target else { return }
-        
-        data = data.filter { $0[keyPath: filterKey] == validTarget }
+        data = data.filter { $0[keyPath: filterKey] }
     }
     
     private func createContents(from data: [ToDoList]) -> [SimpleEntry] {
         
-        return data.map { SimpleEntry(date: Date(), todoList: $0) }
+        return data.map { SimpleEntry(date: Date(), relevance: nil, todoList: $0) }
     }
     
     
     // MARK: Provider Functions
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), todoList: ToDoList(name: "Placeholder Function List", gradientStartColor: .orange))
+        SimpleEntry(date: Date(), relevance: nil,
+                    todoList: ToDoList(name: "Placeholder Function List", gradientStartColor: .orange, gradientEndColor: .blue))
     }
     
     
     // MARK: Updated based on Intent
     func getSnapshot(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Entry) -> Void) {
         
-        let entry = SimpleEntry(date: Date(), todoList: ToDoList())
+        let entry = SimpleEntry(date: Date(), relevance: nil, todoList: ToDoList())
         completion(entry)
     }
     
@@ -60,8 +58,15 @@ struct Provider: IntentTimelineProvider {
         // MARK: Filter Contents before displaying
         var localListContents = readContents()
         
-        filterToDoList(from: &localListContents, on: \.isMyFavorite, target: favsFlag)
-        filterToDoList(from: &localListContents, on: \.isLocked, target: lockedFlag)
+        
+        if favsFlag == true {
+            filterToDoList(from: &localListContents, on: \.isMyFavorite)
+        }
+        
+        if lockedFlag == true {
+            filterToDoList(from: &localListContents, on: \.isLocked)
+        }
+        
         
         entries = createContents(from: localListContents)
         
@@ -69,9 +74,13 @@ struct Provider: IntentTimelineProvider {
         let currentDate = Date()
         let interval = 2
         for index in 0 ..< entries.count {
+            
             entries[index].date = Calendar.current.date(byAdding: .second,
                                                         value: index * interval,
                                                         to: currentDate)!
+            
+            // MARK: Update Entry's Relevance
+            entries[index].relevance = TimelineEntryRelevance(score: 1.0)
         }
         
         let timeline = Timeline(entries: entries, policy: .atEnd)
@@ -81,6 +90,7 @@ struct Provider: IntentTimelineProvider {
 
 struct SimpleEntry: TimelineEntry {
     var date: Date
+    var relevance: TimelineEntryRelevance?
     let todoList: ToDoList
 }
 
@@ -99,7 +109,8 @@ struct PlaceHolderView : View {
     
     var body: some View {
         
-        QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), todoList: ToDoList(name: "Placeholder List", gradientStartColor: .green)))
+        QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
+                                                    todoList: ToDoList(name: "Placeholder List", gradientStartColor: .green)))
             .redacted(reason: .placeholder)
     }
 }
@@ -131,7 +142,8 @@ struct QuickInfoWidget_Previews: PreviewProvider {
                 PlaceHolderView()
                     .previewContext(WidgetPreviewContext(family: family))
                 
-                QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), todoList: ToDoList(icon: "")))
+                QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
+                                                            todoList: ToDoList(icon: "")))
                     .previewContext(WidgetPreviewContext(family: family))
             }
         }

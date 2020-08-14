@@ -108,7 +108,7 @@ func loadFromAppDirectory<T: Decodable>(_ filename: String, as type: T.Type = T.
                 
                 let decoder = JSONDecoder()
                 loadedData = try decoder.decode(T.self, from: data)
-                print("\nData Read successful from \(filename) 🧐")
+                print("\nData Read successful from \(filename) 🧐 \nat:\(fileURL)")
                 
             } catch {
                 

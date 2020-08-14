@@ -83,7 +83,7 @@ extension ToDoTask: Decodable {
         todoName = try values.decode(String.self, forKey: .todoName)
         
         // MARK: TODO Reading/Writing Date Failing
-        dueDateTime = try DateFormatter().date(from: values.decode(String.self, forKey: .dueDateTime)) ?? Date()
+        dueDateTime = try customDateFormatter.date(from: values.decode(String.self, forKey: .dueDateTime)) ?? Date(timeIntervalSince1970: TimeInterval(0))
         
         todoShape = try values.decode(BaseShapes.self, forKey: .todoShape)
         todoGradientScheme = try values.decode(GradientTypes.self, forKey: .gradientScheme)

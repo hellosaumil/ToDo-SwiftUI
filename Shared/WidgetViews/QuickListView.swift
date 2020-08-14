@@ -209,11 +209,11 @@ struct TaskSummaryViewLite: View {
                         HStack(alignment: .center, spacing: 36) {
                             
                             TaskInfoLite(imageName: "checkmark",
-                                         count: ofList.todoTasks.filter({ $0.isCompleted }).count,
+                                         count: ofList.todoTasks.filter { $0.isCompleted }.count,
                                          color: ofList.todoGradientStartColor.color)
                             
                             TaskInfoLite(imageName: "hourglass",
-                                         count: ofList.todoTasks.filter({ !$0.isCompleted }).count,
+                                         count: ofList.todoTasks.filter { !$0.isCompleted }.count,
                                          color: ofList.todoGradientEndColor.color)
                         }
                         
