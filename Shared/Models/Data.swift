@@ -191,11 +191,9 @@ func storeUpdatedUser(_ updatedUser: UserData, debug: String = "") -> Bool {
         try saveListsData(updatedUserData)
         print("\nUser Data Updated! 🎉\n\n")
         
-        
         // MARK: Call reloadWidgets
         DispatchQueue.main.async { reloadWidgets() }
         
-
         return true
         
     } catch {
