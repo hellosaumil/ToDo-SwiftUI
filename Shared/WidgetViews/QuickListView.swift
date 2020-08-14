@@ -142,26 +142,6 @@ struct QuickListView_Previews: PreviewProvider {
     }
 }
 
-struct TaskInfoLite: View {
-    
-    @State var imageName: String
-    @State var count: Int
-    @State var color: Color = .secondary
-    
-    var body: some View {
-        
-        HStack(alignment: .center, spacing: 4) {
-            
-            Image(systemName: imageName)
-            
-            Text("\(count)")
-                .fontWeight(.bold)
-            
-        }.font(.caption2)
-        .foregroundColor( color ).brightness(-0.20)
-    }
-}
-
 struct TaskSummaryViewLite: View {
     
     @ObservedObject var ofList: ToDoList
@@ -208,13 +188,20 @@ struct TaskSummaryViewLite: View {
                         
                         HStack(alignment: .center, spacing: 36) {
                             
-                            TaskInfoLite(imageName: "checkmark",
-                                         count: ofList.todoTasks.filter { $0.isCompleted }.count,
-                                         color: ofList.todoGradientStartColor.color)
-                            
-                            TaskInfoLite(imageName: "hourglass",
-                                         count: ofList.todoTasks.filter { !$0.isCompleted }.count,
-                                         color: ofList.todoGradientEndColor.color)
+                            ForEach(0..<2, id: \.self) { bad_countx in
+                                
+                                HStack(alignment: .center, spacing: 4) {
+                                    
+                                    Image(systemName: (bad_countx == 0) ? "checkmark" : "hourglass")
+                                    
+                                    Text( (bad_countx == 0) ? "\(ofList.tasksCompleted)" : "\(ofList.tasksPending)" )
+                                        .fontWeight(.bold)
+                                    
+                                }.font(.caption2)
+                                .foregroundColor( (bad_countx == 0) ? ofList.todoGradientEndColor.color : ofList.todoGradientStartColor.color)
+                                .brightness(-0.20)
+                                
+                            }
                         }
                         
                     }

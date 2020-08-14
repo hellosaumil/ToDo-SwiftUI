@@ -34,7 +34,7 @@ final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     @Published var notes: String
     @Published var isMyFavorite:Bool
     
-    @Published var isCompleted: Bool = false
+    @Published var isCompleted: Bool
     
     init(name: String = "", dueDateTime: Date = Date(),
          
@@ -58,6 +58,8 @@ final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
         
         self.notes = notes
         self.isMyFavorite = isFav
+        
+        self.isCompleted = false
     }
 }
 
@@ -133,5 +135,13 @@ var customDateFormatter: DateFormatter {
 var customMiniDateFormatter: DateFormatter {
     let formatter = DateFormatter()
     formatter.dateFormat = "E, MMM d B"
+    return formatter
+}
+
+var loggingDateFormatter: DateFormatter {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .long
+    formatter.timeStyle = .long
+    
     return formatter
 }

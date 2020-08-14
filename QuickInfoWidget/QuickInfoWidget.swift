@@ -1,4 +1,4 @@
-//
+//.
 //  QuickInfoWidget.swift
 //  QuickInfoWidget
 //
@@ -35,7 +35,7 @@ struct Provider: IntentTimelineProvider {
     // MARK: Provider Functions
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), relevance: nil,
-                    todoList: ToDoList(name: "Placeholder Function List", gradientStartColor: .orange, gradientEndColor: .blue))
+                    todoList: placeHolderList)
     }
     
     
@@ -72,7 +72,10 @@ struct Provider: IntentTimelineProvider {
         
         
         let currentDate = Date()
-        let interval = 2
+        
+        print("\nInside getTimeline at \(loggingDateFormatter.string(from: currentDate)) ⏰")
+        
+        let interval = 4
         for index in 0 ..< entries.count {
             
             entries[index].date = Calendar.current.date(byAdding: .second,
@@ -80,7 +83,7 @@ struct Provider: IntentTimelineProvider {
                                                         to: currentDate)!
             
             // MARK: Update Entry's Relevance
-            entries[index].relevance = TimelineEntryRelevance(score: 1.0)
+            entries[index].relevance = TimelineEntryRelevance(score: Float(1/entries.count) )
         }
         
         let timeline = Timeline(entries: entries, policy: .atEnd)
@@ -105,12 +108,16 @@ struct QuickInfoWidgetEntryView : View {
     }
 }
 
+let placeHolderList = ToDoList(name: "Placeholder List",
+                               gradientStartColor: .pink,
+                               gradientEndColor: .purple)
+
 struct PlaceHolderView : View {
     
     var body: some View {
         
         QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
-                                                    todoList: ToDoList(name: "Placeholder List", gradientStartColor: .green)))
+                                                    todoList: placeHolderList))
             .redacted(reason: .placeholder)
     }
 }

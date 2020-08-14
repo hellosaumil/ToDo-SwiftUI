@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import WidgetKit
 
 // MARK: Sample Data
 
@@ -189,6 +190,12 @@ func storeUpdatedUser(_ updatedUser: UserData, debug: String = "") -> Bool {
     do {
         try saveListsData(updatedUserData)
         print("\nUser Data Updated! 🎉\n\n")
+        
+        
+        // MARK: Call reloadWidgets
+        DispatchQueue.main.async { reloadWidgets() }
+        
+
         return true
         
     } catch {
@@ -198,8 +205,15 @@ func storeUpdatedUser(_ updatedUser: UserData, debug: String = "") -> Bool {
     }
 }
 
+// MARK: Reload All App Widgets' Timelines
+func reloadWidgets() {
+    
+    print("\nReloading Widgets...")
+    WidgetCenter.shared.reloadTimelines(ofKind: "QuickInfoWidget")
+    print("\nWidgets Reloaded.\n")
+}
 
-// MARK: TODO Figure out a way to use this
+
 func storeListData(_ lists: [ToDoList], debug: String = "") -> Bool {
     
     // MARK: Store Updated UserData Object

@@ -67,6 +67,15 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     @Published var todoListURL: URL
     
+    
+    var tasksCompleted: Int {
+        self.todoTasks.filter { $0.isCompleted }.count
+    }
+    
+    var tasksPending: Int {
+        self.todoTasks.filter { !$0.isCompleted }.count
+    }
+    
     init(icon: String = "", name: String = "",
          
          tasks: [ToDoTask] = [ToDoTask](),
@@ -118,7 +127,7 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     func updateProgress() {
         
         if !todoTasks.isEmpty {
-            self.progress = CGFloat(todoTasks.filter{ $0.isCompleted }.count) / CGFloat(todoTasks.count) * 100
+            self.progress = CGFloat(self.tasksCompleted) / CGFloat(todoTasks.count) * 100
         }
     }
     
@@ -132,7 +141,7 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
             return false
         }
         
-        return (todoTasks.filter{ ($0.isCompleted) }).count < todoTasks.count
+        return tasksCompleted < todoTasks.count
     }
     
     func completeTasks() {
