@@ -16,23 +16,26 @@ struct Provider: IntentTimelineProvider {
     
     private func readContents() -> [ToDoList] {
         
-        var contents: [ToDoList] = []
-        contents = loadListsData(usersListsDataFileName)
-        return contents
+        return loadListsData(usersListsDataFileName)
     }
     
-    private func readFavContents(onlyFav: Bool? = false, onlyLocked: Bool? = false) -> [SimpleEntry] {
+    // MARK: filterToDoList
+    private func filterToDoList(from data: inout [ToDoList],
+                                on filterKey: KeyPath<ToDoList, Bool>,
+                                target: Bool? ) {
         
-        var contents: [Entry] = []
+        guard let validTarget = target else { return }
         
-        contents = readContents()
-            .filter { (onlyFav ?? false) ? $0.isMyFavorite : true  }
-            .filter { (onlyLocked ?? false) ? $0.isLocked : true  }
-            .map { SimpleEntry(date: Date(), todoList: $0) }
-        
-        return contents
+        data = data.filter { $0[keyPath: filterKey] == validTarget }
     }
     
+    private func createContents(from data: [ToDoList]) -> [SimpleEntry] {
+        
+        return data.map { SimpleEntry(date: Date(), todoList: $0) }
+    }
+    
+    
+    // MARK: Provider Functions
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), todoList: ToDoList(name: "Placeholder Function List", gradientStartColor: .orange))
     }
@@ -45,15 +48,23 @@ struct Provider: IntentTimelineProvider {
         completion(entry)
     }
     
-    
     func getTimeline(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         
-        // MARK: Get Config Params
-        let favsOnly: Bool? = configuration.showFavorites?.boolValue
-        let lockedOnly: Bool? = configuration.showLocked?.boolValue
-        
         var entries: [SimpleEntry] = []
-        entries = readFavContents(onlyFav: favsOnly, onlyLocked: lockedOnly)
+        
+        // MARK: Get Config Params
+        let favsFlag: Bool? = configuration.showFavorites?.boolValue
+        let lockedFlag: Bool? = configuration.showLocked?.boolValue
+        
+        
+        // MARK: Filter Contents before displaying
+        var localListContents = readContents()
+        
+        filterToDoList(from: &localListContents, on: \.isMyFavorite, target: favsFlag)
+        filterToDoList(from: &localListContents, on: \.isLocked, target: lockedFlag)
+        
+        entries = createContents(from: localListContents)
+        
         
         let currentDate = Date()
         let interval = 2
@@ -80,6 +91,7 @@ struct QuickInfoWidgetEntryView : View {
         
         // MARK: Call QuickListView
         QuickListView(list: entry.todoList)
+            .clipShape(ContainerRelativeShape())
     }
 }
 

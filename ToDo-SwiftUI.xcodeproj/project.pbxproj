@@ -43,6 +43,8 @@
 		6B628FD124DF354A008E496E /* ToDoTaskCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FD024DF354A008E496E /* ToDoTaskCellView.swift */; };
 		6B628FD424DF359B008E496E /* ToDoTaskInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FD324DF359B008E496E /* ToDoTaskInfoView.swift */; };
 		6B628FD724DF35E0008E496E /* GradientColorRoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B628FD624DF35E0008E496E /* GradientColorRoll.swift */; };
+		6B747FDB24E607180062F5C8 /* EmojiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B747FDA24E607180062F5C8 /* EmojiHelper.swift */; };
+		6B747FDC24E607180062F5C8 /* EmojiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B747FDA24E607180062F5C8 /* EmojiHelper.swift */; };
 		6B78A31E24E4C22F000C15D5 /* ListSelection.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 6B78A31D24E4C22F000C15D5 /* ListSelection.intentdefinition */; };
 		6B78A31F24E4C22F000C15D5 /* ListSelection.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 6B78A31D24E4C22F000C15D5 /* ListSelection.intentdefinition */; };
 		6B7EB4ED24DFCF2E006ED2B0 /* BiometricsAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB4EC24DFCF2E006ED2B0 /* BiometricsAuthentication.swift */; };
@@ -103,6 +105,7 @@
 		6B628FD024DF354A008E496E /* ToDoTaskCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTaskCellView.swift; sourceTree = "<group>"; };
 		6B628FD324DF359B008E496E /* ToDoTaskInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTaskInfoView.swift; sourceTree = "<group>"; };
 		6B628FD624DF35E0008E496E /* GradientColorRoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColorRoll.swift; sourceTree = "<group>"; };
+		6B747FDA24E607180062F5C8 /* EmojiHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiHelper.swift; sourceTree = "<group>"; };
 		6B78A31D24E4C22F000C15D5 /* ListSelection.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = ListSelection.intentdefinition; sourceTree = "<group>"; };
 		6B7EB4EC24DFCF2E006ED2B0 /* BiometricsAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsAuthentication.swift; sourceTree = "<group>"; };
 		6B7EB4EE24DFD17E006ED2B0 /* CustomObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomObjects.swift; sourceTree = "<group>"; };
@@ -225,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				6B628FBC24DF3147008E496E /* HelperViews.swift */,
+				6B747FDA24E607180062F5C8 /* EmojiHelper.swift */,
 				6B628FD624DF35E0008E496E /* GradientColorRoll.swift */,
 				6B03EFA624E219A600D70A03 /* SearchBar.swift */,
 				6B7EB4EC24DFCF2E006ED2B0 /* BiometricsAuthentication.swift */,
@@ -364,6 +368,7 @@
 				6B628FD724DF35E0008E496E /* GradientColorRoll.swift in Sources */,
 				6B21366324DF2D500078E7EA /* ContentView.swift in Sources */,
 				6B628FB024DF2FE1008E496E /* Data.swift in Sources */,
+				6B747FDB24E607180062F5C8 /* EmojiHelper.swift in Sources */,
 				6B628FD424DF359B008E496E /* ToDoTaskInfoView.swift in Sources */,
 				6B628FCE24DF3518008E496E /* ToDoTasksDetailView.swift in Sources */,
 				6B628FB624DF3065008E496E /* ToDoTask.swift in Sources */,
@@ -384,6 +389,7 @@
 			files = (
 				6B28A8EF24E34A00006921C8 /* ToDoTask.swift in Sources */,
 				6B28A8F624E34AB6006921C8 /* AppLogoView.swift in Sources */,
+				6B747FDC24E607180062F5C8 /* EmojiHelper.swift in Sources */,
 				6B28A8DF24E3498D006921C8 /* QuickInfoWidget.swift in Sources */,
 				6B28A8F424E34AB6006921C8 /* HelperViews.swift in Sources */,
 				6B28A8F824E34AB6006921C8 /* GradientColorRoll.swift in Sources */,

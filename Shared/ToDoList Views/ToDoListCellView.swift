@@ -99,6 +99,13 @@ struct ToDoListCellView: View {
                         { Text("\(String(format: "%.1f", list.progress))% Progress")
                             Image(systemName: "arrow.triangle.2.circlepath") }
                         
+                        if !list.todoTasks.isEmpty {
+                            Button(action: {})
+                            { Text("Total \(list.todoTasks.count) Tasks")
+                                Image(systemName: "list.dash") }
+                        }
+                        
+                        
                         // MARK: Complete/Reset All Tasks in the List
                         if !list.todoTasks.isEmpty && !list.isLocked {
                             
@@ -117,12 +124,12 @@ struct ToDoListCellView: View {
                         
                         if !list.isLocked {
                             
-                        Button(action: { list.todoTasks.append(ToDoTask()) })
-                            { Text("Add New Task"); Image(systemName: "plus") }
-                        
-                        Button(action: { withAnimation { list.isMyFavorite.toggle() } })
-                        { Text( list.isMyFavorite ? "Remove from Favorites" : "Add to Favorites" )
-                            Image(systemName: list.isMyFavorite ? "star.slash.fill" : "star.fill" ) }
+                            Button(action: { list.todoTasks.append(ToDoTask()) })
+                                { Text("Add New Task"); Image(systemName: "plus") }
+                            
+                            Button(action: { withAnimation { list.isMyFavorite.toggle() } })
+                            { Text( list.isMyFavorite ? "Remove from Favorites" : "Add to Favorites" )
+                                Image(systemName: list.isMyFavorite ? "star.slash.fill" : "star.fill" ) }
                             
                         }
                         
@@ -182,11 +189,11 @@ struct ToDoListCellView_Previews: PreviewProvider {
             
             ForEach([randomLists[0], ToDoList(icon:"🎑")], id: \.id) { list in
                 
-//                NightAndDay {
-                    
-                    ToDoListCellView(list: list)
-                        .previewLayout(.sizeThatFits)
-//                }
+                //                NightAndDay {
+                
+                ToDoListCellView(list: list)
+                    .previewLayout(.sizeThatFits)
+                //                }
             }
         }
     }
