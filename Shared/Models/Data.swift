@@ -207,7 +207,8 @@ func storeUpdatedUser(_ updatedUser: UserData, debug: String = "") -> Bool {
 func reloadWidgets() {
     
     print("\nReloading Widgets...")
-    WidgetCenter.shared.reloadTimelines(ofKind: "QuickInfoWidget")
+//    WidgetCenter.shared.reloadTimelines(ofKind: "QuickInfoWidget")
+    WidgetCenter.shared.reloadAllTimelines()
     print("\nWidgets Reloaded.\n")
 }
 
