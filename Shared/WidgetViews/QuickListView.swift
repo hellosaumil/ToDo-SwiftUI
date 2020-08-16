@@ -17,111 +17,93 @@ struct QuickListView: View {
     var body: some View {
         
         switch family {
-            
+
             case .systemSmall, .systemMedium:
-                
+
                 VStack(alignment: .leading) {
-                    
+
                     HStack {
-                        
+
                         // MARK: Icon and Name
-                        VStack(alignment: .leading) {
-                            
-                            Text(list.todoListIcon)
-                                .font( (family == .systemSmall) ? .title : .largeTitle )
-                                .shadow(color: Color.secondary.opacity(0.40),
-                                        radius: 2, x: 2, y: 4)
-                            
-                            
-                            Text(list.todoListName).strikethrough(list.progress == 100, color: list.todoGradientStartColor.color)
-                                .font(.system(size: (family == .systemSmall) ? 20 : 28, weight: .bold, design: .default))
-                                .truncationMode( (family == .systemSmall) ? .head : .middle)
-                                .lineLimit( (family == .systemSmall) ? 3 : 2)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .foregroundOverlay(myGradient(type: list.todoGradientScheme,
-                                                              colors: [list.todoGradientStartColor.color,
-                                                                       list.todoGradientEndColor.color]))
-                            
-                            Spacer(minLength: 0)
-                        }
-                        
+                        ListHeroLite(ofList: list)
+
                         // MARK: Task Summary
                         if family != .systemSmall {
-                            
+
                             Spacer()
-                            
+
                             TaskSummaryViewLite(ofList: list)
                         }
-                        
+
                     }
-                    
+
                     Spacer()
-                    
+
                     HStack(alignment: .bottom) {
-                        
+
                         // MARK: Progress Bar
                         VStack(alignment: .leading) {
-                            
+
                             Text("\(String(format: "%d", Int(list.progress)))% complete")
                                 .font(.caption2)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.secondary)
                                 .fixedSize(horizontal: true, vertical: false)
                                 .padding(.bottom, -4)
-                            
+
                             ZStack(alignment: Alignment(horizontal: .leading, vertical: .center))
                             {
-                                
+
                                 HStack {
-                                    
+
                                     Capsule(style: .continuous)
                                         .foregroundColor(Color.secondary.opacity(0.20))
                                         .frame(width: (family == .systemSmall) ? 100 : 240,
                                                height: (family == .systemSmall) ? 2 : 4)
-                                    
+
                                     Spacer()
                                 }
-                                
+
                                 HStack {
-                                    
+
                                     Capsule(style: .continuous)
                                         .foregroundOverlay(myGradient(type: list.todoGradientScheme,
                                                                       colors: [list.todoGradientStartColor.color,
                                                                                list.todoGradientEndColor.color]))
                                         .frame(width: list.progress * 0.01 * ((family == .systemSmall) ? 100 : 240) ,
                                                height: (family == .systemSmall) ? 2 : 4)
-                                    
+
                                     Spacer()
-                                    
+
                                 }
                             }
                         }
-                        
+
                         Spacer()
-                        
+
                         // MARK: Flags Status
                         HStack(spacing: (family == .systemSmall) ? 8 : 16 ) {
-                            
+
                             getSystemImage(name: (list.isMyFavorite) ? "star.fill" : "star",
                                            color: (list.isMyFavorite) ? Color.yellow.opacity(0.80) : Color.secondary.opacity(0.80),
                                            fontSize: (family == .systemSmall) ? 9 : 11,
                                            scale: (family == .systemSmall) ? .small : .medium)
                                 .padding(-16)
-                            
+
                             getSystemImage(name: (list.isLocked) ? "lock.fill" : "lock.open",
                                            color: Color.secondary.opacity(0.80),
                                            fontSize: (family == .systemSmall) ? 10 : 12,
                                            scale: (family == .systemSmall) ? .small : .medium)
                                 .padding(-16)
-                            
+
                         }
                         .offset(x: -4, y: (family == .systemSmall) ? 2 : 2)
-                        
+
                     }
-                    
+
                 }
                 .padding()
-                
+
             default:
                 Text("Family not supported: \(family.description)")
         }
@@ -138,6 +120,36 @@ struct QuickListView_Previews: PreviewProvider {
                 QuickListView(list: ToDoList(icon: "📚🧐⚠️"))
                     .previewContext(WidgetPreviewContext(family: family))
             }
+        }
+    }
+}
+
+struct ListHeroLite: View {
+    
+    @Environment(\.widgetFamily) var family
+    
+    @ObservedObject var ofList: ToDoList
+    
+    var body: some View {
+        
+        VStack(alignment: .leading) {
+            
+            Text(ofList.todoListIcon)
+                .font( (family == .systemSmall) ? .title : .largeTitle )
+                .shadow(color: Color.secondary.opacity(0.40),
+                        radius: 2, x: 2, y: 4)
+            
+            
+            Text(ofList.todoListName).strikethrough(ofList.progress == 100, color: ofList.todoGradientStartColor.color)
+                .font(.system(size: (family == .systemSmall) ? 20 : 28, weight: .bold, design: .default))
+                .truncationMode( (family == .systemSmall) ? .head : .middle)
+                .lineLimit( (family == .systemSmall) ? 3 : 2)
+                .fixedSize(horizontal: false, vertical: true)
+                .foregroundOverlay(myGradient(type: ofList.todoGradientScheme,
+                                              colors: [ofList.todoGradientStartColor.color,
+                                                       ofList.todoGradientEndColor.color]))
+            
+            Spacer(minLength: 0)
         }
     }
 }

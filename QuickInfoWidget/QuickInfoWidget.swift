@@ -108,7 +108,7 @@ struct QuickInfoWidgetEntryView : View {
     }
 }
 
-let placeHolderList = ToDoList(name: "Placeholder List",
+let placeHolderList = ToDoList(name: "Placeholder \nList",
                                gradientStartColor: .pink,
                                gradientEndColor: .purple)
 
