@@ -260,3 +260,15 @@ func saveListsData(_ allLists:[ToDoList]) throws {
     
 }
 
+// MARK: Functions used in Widgets
+func readContents() -> [ToDoList] {
+    
+    return loadListsData(usersListsDataFileName)
+}
+
+// MARK: filterToDoList
+func filterToDoList(from data: inout [ToDoList],
+                            on filterKey: KeyPath<ToDoList, Bool>) {
+    
+    data = data.filter { $0[keyPath: filterKey] }
+}

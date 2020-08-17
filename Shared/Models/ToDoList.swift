@@ -113,10 +113,13 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
         
         let baseURL = "todo:///"
         
-        let nameURL = self.todoListName.lowercased().strip.replacingOccurrences(of: " ", with: "-")
+        let nameURL = self.todoListName.lowercased().strip
+            .removeWhitespaces()
+            .replacingOccurrences(of: " ", with: "-")
+        
         let urlString = baseURL + ((nameURL == "") ? "init-none" : nameURL )
         
-        return URL(string: urlString)!
+        return URL(string: urlString) ?? URL(string: baseURL + "init-none")!
     }
     
     func updateURL() { self.todoListURL = generateURL() }

@@ -1,8 +1,8 @@
-//.
-//  QuickInfoWidget.swift
-//  QuickInfoWidget
 //
-//  Created by Saumil Shah on 8/11/20.
+//  QuickTasksInfoWidget.swift
+//  QuickTasksInfoWidget
+//
+//  Created by Saumil Shah on 8/16/20.
 //
 
 import WidgetKit
@@ -24,15 +24,14 @@ struct Provider: IntentTimelineProvider {
         SimpleEntry(date: Date(), relevance: nil,
                     todoList: placeHolderList)
     }
-    
-    
+
     // MARK: Updated based on Intent
     func getSnapshot(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Entry) -> Void) {
         
         let entry = SimpleEntry(date: Date(), relevance: nil, todoList: ToDoList())
         completion(entry)
     }
-    
+
     func getTimeline(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         
         var entries: [SimpleEntry] = []
@@ -84,13 +83,13 @@ struct SimpleEntry: TimelineEntry {
     let todoList: ToDoList
 }
 
-struct QuickInfoWidgetEntryView : View {
+struct QuickTasksInfoWidgetEntryView : View {
     var entry: Provider.Entry
-    
+
     var body: some View {
         
-        // MARK: Call QuickListView
-        QuickListView(list: entry.todoList)
+        // MARK: Call QuickTasksView
+        QuickTasksView(list: entry.todoList)
     }
 }
 
@@ -102,30 +101,30 @@ struct PlaceHolderView : View {
     
     var body: some View {
         
-        QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
+        QuickTasksInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
                                                     todoList: placeHolderList))
             .redacted(reason: .placeholder)
     }
 }
 
-
 @main
-struct QuickInfoWidget: Widget {
-    let kind: String = "QuickInfoWidget"
-    
+struct QuickTasksInfoWidget: Widget {
+    let kind: String = "QuickTasksInfoWidget"
+
     var body: some WidgetConfiguration {
         
         IntentConfiguration(kind: kind, intent: ListSelectorIntent.self,
-                            provider: Provider()) { entry in
-            QuickInfoWidgetEntryView(entry: entry)
+         provider: Provider()) { entry in
+        
+            QuickTasksInfoWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("Quick Info of Lists")
-        .description("Quick glance about your ToDo Lists.")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .configurationDisplayName("Quick Info of Tasks")
+        .description("Quick glance about your ToDo Tasks.")
+        .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 
-struct QuickInfoWidget_Previews: PreviewProvider {
+struct QuickTasksInfoWidget_Previews: PreviewProvider {
     static var previews: some View {
         
         Group {
@@ -135,11 +134,11 @@ struct QuickInfoWidget_Previews: PreviewProvider {
                 PlaceHolderView()
                     .previewContext(WidgetPreviewContext(family: family))
                 
-                QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
+                QuickTasksInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
                                                             todoList: ToDoList(icon: "")))
                     .previewContext(WidgetPreviewContext(family: family))
             }
         }
-        
+
     }
 }

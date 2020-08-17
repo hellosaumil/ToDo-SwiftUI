@@ -24,7 +24,7 @@ struct QuickTasksView: View {
             ListHeroTasksLite(ofList: list)
                 .padding(.horizontal)
                 .padding(.vertical, (family == .systemLarge) ? 4 : -4)
-                .padding(.top, (family == .systemLarge) ? 0 : 24)
+                .padding(.top, (family == .systemLarge) ? 0 : 16)
                 
             Divider()
                 .padding(.bottom, 8)
@@ -56,6 +56,8 @@ struct ListHeroTasksLite: View {
     var body: some View {
         
         HStack {
+        
+            HStack {
             
             Text(ofList.todoListIcon)
                 .font(.title )
@@ -71,6 +73,30 @@ struct ListHeroTasksLite: View {
                                                        ofList.todoGradientEndColor.color]))
             
             Spacer(minLength: 0)
+        }
+
+            // MARK: Go-to list widgetURL Caller
+            Link(destination: ofList.getURL()) {
+                    
+                    HStack(alignment: .bottom, spacing: 5) {
+                        
+                        Text("Go to list")
+                            .fontWeight(.bold)
+                            .foregroundOverlay(myGradient(type: ofList.todoGradientScheme,
+                                                          colors: [ofList.todoGradientStartColor.color,
+                                                                   ofList.todoGradientEndColor.color]))
+                        
+                        getSystemImage(name: "arrow.up.forward.app.fill", color: .secondary,
+                                       fontSize: 15, weight: .medium, design: .rounded,
+                                       scale: .medium).padding(-16)
+                            .foregroundOverlay(myGradient(type: ofList.todoGradientScheme,
+                                                          colors: [ofList.todoGradientStartColor.color,
+                                                                   ofList.todoGradientEndColor.color]))
+                    }
+                    .font(.caption2)
+                    .padding(.leading, 5)
+                    
+                }
         }
     }
 }

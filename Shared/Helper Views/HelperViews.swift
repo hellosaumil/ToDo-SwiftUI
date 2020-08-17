@@ -20,6 +20,10 @@ extension String {
     var strip: String {
         return trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    func removeWhitespaces() -> String {
+        return replacingOccurrences(of: "\\s", with: "", options: NSString.CompareOptions.regularExpression, range: nil)
+    }
 }
 
 extension View {
