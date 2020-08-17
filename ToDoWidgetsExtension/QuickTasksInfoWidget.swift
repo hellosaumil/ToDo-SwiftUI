@@ -8,33 +8,33 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: IntentTimelineProvider {
+struct QuickTasksInfoProvider: IntentTimelineProvider {
     
-    typealias Entry = SimpleEntry
+    typealias Entry = QuickTasksInfoEntry
     typealias Intent = ListSelectorIntent
     
-    func createContents(from data: [ToDoList]) -> [SimpleEntry] {
+    func createContents(from data: [ToDoList]) -> [Entry] {
         
-        return data.map { SimpleEntry(date: Date(), relevance: nil, todoList: $0) }
+        return data.map { Entry(date: Date(), relevance: nil, todoList: $0) }
     }
     
     
     // MARK: Provider Functions
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), relevance: nil,
+    func placeholder(in context: Context) -> Entry {
+        Entry(date: Date(), relevance: nil,
                     todoList: placeHolderList)
     }
 
     // MARK: Updated based on Intent
     func getSnapshot(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Entry) -> Void) {
         
-        let entry = SimpleEntry(date: Date(), relevance: nil, todoList: ToDoList())
+        let entry = Entry(date: Date(), relevance: nil, todoList: ToDoList())
         completion(entry)
     }
 
     func getTimeline(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         
-        var entries: [SimpleEntry] = []
+        var entries: [Entry] = []
         
         // MARK: Get Config Params
         let favsFlag: Bool? = configuration.showFavorites?.boolValue
@@ -77,14 +77,15 @@ struct Provider: IntentTimelineProvider {
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct QuickTasksInfoEntry: TimelineEntry {
     var date: Date
     var relevance: TimelineEntryRelevance?
     let todoList: ToDoList
 }
 
 struct QuickTasksInfoWidgetEntryView : View {
-    var entry: Provider.Entry
+    
+    var entry: QuickTasksInfoProvider.Entry
 
     var body: some View {
         
@@ -93,34 +94,33 @@ struct QuickTasksInfoWidgetEntryView : View {
     }
 }
 
-let placeHolderList = ToDoList(name: "Placeholder \nList",
-                               gradientStartColor: .pink,
-                               gradientEndColor: .purple)
-
-struct PlaceHolderView : View {
+struct QuickTasksInfoPlaceHolderView : View {
+    
+    typealias Entry = QuickTasksInfoProvider.Entry
     
     var body: some View {
         
-        QuickTasksInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
+        QuickTasksInfoWidgetEntryView(entry: Entry(date: Date(), relevance: nil,
                                                     todoList: placeHolderList))
             .redacted(reason: .placeholder)
     }
 }
 
-@main
-struct QuickTasksInfoWidget: Widget {
-    let kind: String = "QuickTasksInfoWidget"
 
+struct QuickTasksInfoWidget: Widget {
+    
+    let kind: String = "QuickTasksInfoWidget"
+    
     var body: some WidgetConfiguration {
         
         IntentConfiguration(kind: kind, intent: ListSelectorIntent.self,
-         provider: Provider()) { entry in
+         provider: QuickTasksInfoProvider()) { entry in
         
             QuickTasksInfoWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Quick Info of Tasks")
         .description("Quick glance about your ToDo Tasks.")
-        .supportedFamilies([.systemMedium, .systemLarge])
+        .supportedFamilies([.systemLarge, .systemMedium])
     }
 }
 
@@ -131,10 +131,10 @@ struct QuickTasksInfoWidget_Previews: PreviewProvider {
             
             ForEach([WidgetFamily.systemMedium, WidgetFamily.systemLarge], id: \.self) { family in
                 
-                PlaceHolderView()
+                QuickTasksInfoPlaceHolderView()
                     .previewContext(WidgetPreviewContext(family: family))
                 
-                QuickTasksInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
+                QuickTasksInfoWidgetEntryView(entry: QuickTasksInfoEntry(date: Date(), relevance: nil,
                                                             todoList: ToDoList(icon: "")))
                     .previewContext(WidgetPreviewContext(family: family))
             }

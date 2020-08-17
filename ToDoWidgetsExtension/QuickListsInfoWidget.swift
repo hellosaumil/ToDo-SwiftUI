@@ -1,6 +1,6 @@
-//.
-//  QuickInfoWidget.swift
-//  QuickInfoWidget
+//
+//  QuickListsInfoWidget.swift
+//  QuickListsInfoWidget
 //
 //  Created by Saumil Shah on 8/11/20.
 //
@@ -8,20 +8,20 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: IntentTimelineProvider {
+struct QuickListsInfoProvider: IntentTimelineProvider {
     
-    typealias Entry = SimpleEntry
+    typealias Entry = QuickListsInfoEntry
     typealias Intent = ListSelectorIntent
     
-    func createContents(from data: [ToDoList]) -> [SimpleEntry] {
+    func createContents(from data: [ToDoList]) -> [Entry] {
         
-        return data.map { SimpleEntry(date: Date(), relevance: nil, todoList: $0) }
+        return data.map { Entry(date: Date(), relevance: nil, todoList: $0) }
     }
     
     
     // MARK: Provider Functions
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), relevance: nil,
+    func placeholder(in context: Context) -> Entry {
+        Entry(date: Date(), relevance: nil,
                     todoList: placeHolderList)
     }
     
@@ -29,13 +29,13 @@ struct Provider: IntentTimelineProvider {
     // MARK: Updated based on Intent
     func getSnapshot(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Entry) -> Void) {
         
-        let entry = SimpleEntry(date: Date(), relevance: nil, todoList: ToDoList())
+        let entry = Entry(date: Date(), relevance: nil, todoList: ToDoList())
         completion(entry)
     }
     
     func getTimeline(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         
-        var entries: [SimpleEntry] = []
+        var entries: [Entry] = []
         
         // MARK: Get Config Params
         let favsFlag: Bool? = configuration.showFavorites?.boolValue
@@ -78,14 +78,15 @@ struct Provider: IntentTimelineProvider {
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct QuickListsInfoEntry: TimelineEntry {
     var date: Date
     var relevance: TimelineEntryRelevance?
     let todoList: ToDoList
 }
 
-struct QuickInfoWidgetEntryView : View {
-    var entry: Provider.Entry
+struct QuickListsInfoWidgetEntryView : View {
+    
+    var entry: QuickListsInfoProvider.Entry
     
     var body: some View {
         
@@ -94,30 +95,28 @@ struct QuickInfoWidgetEntryView : View {
     }
 }
 
-let placeHolderList = ToDoList(name: "Placeholder \nList",
-                               gradientStartColor: .pink,
-                               gradientEndColor: .purple)
-
-struct PlaceHolderView : View {
+struct QuickListsInfoPlaceHolderView : View {
+    
+    typealias Entry = QuickListsInfoProvider.Entry
     
     var body: some View {
         
-        QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
+        QuickListsInfoWidgetEntryView(entry: Entry(date: Date(), relevance: nil,
                                                     todoList: placeHolderList))
             .redacted(reason: .placeholder)
     }
 }
 
 
-@main
-struct QuickInfoWidget: Widget {
-    let kind: String = "QuickInfoWidget"
+struct QuickListsInfoWidget: Widget {
+    
+    let kind: String = "QuickListsInfoWidget"
     
     var body: some WidgetConfiguration {
         
         IntentConfiguration(kind: kind, intent: ListSelectorIntent.self,
-                            provider: Provider()) { entry in
-            QuickInfoWidgetEntryView(entry: entry)
+                            provider: QuickListsInfoProvider()) { entry in
+            QuickListsInfoWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Quick Info of Lists")
         .description("Quick glance about your ToDo Lists.")
@@ -125,17 +124,18 @@ struct QuickInfoWidget: Widget {
     }
 }
 
-struct QuickInfoWidget_Previews: PreviewProvider {
+struct QuickListsInfoWidget_Previews: PreviewProvider {
+    
     static var previews: some View {
         
         Group {
             
             ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium], id: \.self) { family in
                 
-                PlaceHolderView()
+                QuickListsInfoPlaceHolderView()
                     .previewContext(WidgetPreviewContext(family: family))
                 
-                QuickInfoWidgetEntryView(entry: SimpleEntry(date: Date(), relevance: nil,
+                QuickListsInfoWidgetEntryView(entry: QuickListsInfoEntry(date: Date(), relevance: nil,
                                                             todoList: ToDoList(icon: "")))
                     .previewContext(WidgetPreviewContext(family: family))
             }
@@ -143,3 +143,9 @@ struct QuickInfoWidget_Previews: PreviewProvider {
         
     }
 }
+
+
+let placeHolderList = ToDoList(name: "Placeholder \nList",
+                               gradientStartColor: .pink,
+                               gradientEndColor: .purple)
+
