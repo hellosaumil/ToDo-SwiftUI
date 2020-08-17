@@ -129,7 +129,7 @@ struct QuickTasksInfoWidget_Previews: PreviewProvider {
         
         Group {
             
-            ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium], id: \.self) { family in
+            ForEach([WidgetFamily.systemMedium, WidgetFamily.systemLarge], id: \.self) { family in
                 
                 PlaceHolderView()
                     .previewContext(WidgetPreviewContext(family: family))
