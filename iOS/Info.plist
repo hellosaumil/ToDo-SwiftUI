@@ -26,6 +26,7 @@
 	<string>Protect your important ToDo Lists and Tasks</string>
 	<key>NSUserActivityTypes</key>
 	<array>
+		<string>DynamicListSelectorIntent</string>
 		<string>ListSelectorIntent</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>

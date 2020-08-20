@@ -36,6 +36,21 @@ class AllLists: ObservableObject {
     func update(from newLists: [ToDoList]) {
         self.todoLists = newLists
     }
+    
+    func listFromName(name: String?) -> ToDoList? {
+        return self.todoLists.first(where: { $0.todoListName == name })
+    }
+    
+    func listFromURL(url: URL?) -> ToDoList? {
+        return self.todoLists.first(where: { $0.getURL() == url })
+    }
+    
+    func listFromURL(name: String?) -> ToDoList? {
+        
+        guard let validName = name else { return nil }
+        
+        return self.todoLists.first(where: { $0.getURL() == URL(string: validName) })
+    }
 }
 
 final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {

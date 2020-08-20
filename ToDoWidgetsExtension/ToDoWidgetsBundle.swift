@@ -15,7 +15,7 @@ struct ToDoWidgetsBundle: WidgetBundle {
     @WidgetBundleBuilder
     var body: some Widget {
         
-        QuickListsInfoWidget()
+//        QuickListsInfoWidget()
         QuickTasksInfoWidget()
     }
 }

@@ -13,7 +13,7 @@ struct QuickListsInfoProvider: IntentTimelineProvider {
     typealias Entry = QuickListsInfoEntry
     typealias Intent = ListSelectorIntent
     
-    func createContents(from data: [ToDoList]) -> [Entry] {
+    fileprivate func createContents(from data: [ToDoList]) -> [Entry] {
         
         return data.map { Entry(date: Date(), relevance: nil, todoList: $0) }
     }
@@ -27,13 +27,13 @@ struct QuickListsInfoProvider: IntentTimelineProvider {
     
     
     // MARK: Updated based on Intent
-    func getSnapshot(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Entry) -> Void) {
+    func getSnapshot(for configuration: Intent, in context: Context, completion: @escaping (Entry) -> Void) {
         
         let entry = Entry(date: Date(), relevance: nil, todoList: ToDoList())
         completion(entry)
     }
     
-    func getTimeline(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+    func getTimeline(for configuration: Intent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         
         var entries: [Entry] = []
         
@@ -70,7 +70,7 @@ struct QuickListsInfoProvider: IntentTimelineProvider {
                                                         to: currentDate)!
             
             // MARK: Update Entry's Relevance
-            entries[index].relevance = TimelineEntryRelevance(score: Float(1/entries.count) )
+            entries[index].relevance = TimelineEntryRelevance(score: Float(1/entries.count), duration: .zero )
         }
         
         let timeline = Timeline(entries: entries, policy: .atEnd)

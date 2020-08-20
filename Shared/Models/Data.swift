@@ -109,7 +109,8 @@ func loadFromAppDirectory<T: Decodable>(_ filename: String, as type: T.Type = T.
                 
                 let decoder = JSONDecoder()
                 loadedData = try decoder.decode(T.self, from: data)
-                print("\nData Read successful from \(filename) 🧐 \nat:\(fileURL)")
+                print("\nData Read successful from \(filename) 🧐")
+//                print("\nat:\(fileURL)")
                 
             } catch {
                 
@@ -224,6 +225,10 @@ func storeListData(_ lists: [ToDoList], debug: String = "") -> Bool {
     do {
         try saveListsData(lists)
         print("\nLists Data Updated! 🎉\n\n")
+        
+        // MARK: Call reloadWidgets
+        DispatchQueue.main.async { reloadWidgets() }
+        
         return true
         
     } catch {

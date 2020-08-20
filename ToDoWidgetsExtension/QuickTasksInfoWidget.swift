@@ -11,68 +11,77 @@ import SwiftUI
 struct QuickTasksInfoProvider: IntentTimelineProvider {
     
     typealias Entry = QuickTasksInfoEntry
-    typealias Intent = ListSelectorIntent
+    typealias Intent = DynamicListSelectorIntent
     
-    func createContents(from data: [ToDoList]) -> [Entry] {
+    
+    func getListToDisplay(for configuration: Intent, from allLists: AllLists) -> ToDoList? {
+
         
-        return data.map { Entry(date: Date(), relevance: nil, todoList: $0) }
+        guard let name = configuration.selectedList?.identifier,
+           let list = allLists.listFromURL(name: name) else { return nil }
+        
+        
+        // MARK: Save the last selected character to our App Group.
+        // HERE
+        print("👀 👀 👀 👀 \t\(name)")
+        return list
+    }
+    
+    
+    fileprivate func createContents(from data: ToDoList?) -> [Entry] {
+        
+        guard let validList = data else { return [] }
+        return [Entry(date: Date(), relevance: nil, todoList: validList)]
     }
     
     
     // MARK: Provider Functions
     func placeholder(in context: Context) -> Entry {
         Entry(date: Date(), relevance: nil,
-                    todoList: placeHolderList)
+              todoList: placeHolderList)
     }
-
+    
     // MARK: Updated based on Intent
-    func getSnapshot(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Entry) -> Void) {
+    func getSnapshot(for configuration: Intent, in context: Context, completion: @escaping (Entry) -> Void) {
         
         let entry = Entry(date: Date(), relevance: nil, todoList: ToDoList())
         completion(entry)
     }
-
-    func getTimeline(for configuration: ListSelectorIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+    
+    func getTimeline(for configuration: Intent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         
         var entries: [Entry] = []
+        let localLists = AllLists()
         
-        // MARK: Get Config Params
-        let favsFlag: Bool? = configuration.showFavorites?.boolValue
-        let lockedFlag: Bool? = configuration.showLocked?.boolValue
+        
+        let localListContents = readContents()
+        localLists.update(from: localListContents)
         
         
         // MARK: Filter Contents before displaying
-        var localListContents = readContents()
-        
-        
-        if favsFlag == true {
-            filterToDoList(from: &localListContents, on: \.isMyFavorite)
-        }
-        
-        if lockedFlag == true {
-            filterToDoList(from: &localListContents, on: \.isLocked)
-        }
-        
-        
-        entries = createContents(from: localListContents)
+        let displayList = getListToDisplay(for: configuration, from: localLists)
+        entries = createContents(from: displayList)
         
         
         let currentDate = Date()
-        
         print("\nInside getTimeline at \(loggingDateFormatter.string(from: currentDate)) ⏰")
         
-        let interval = 4
+        
         for index in 0 ..< entries.count {
             
-            entries[index].date = Calendar.current.date(byAdding: .second,
-                                                        value: index * interval,
-                                                        to: currentDate)!
+            entries[index].date = Date()
             
             // MARK: Update Entry's Relevance
-            entries[index].relevance = TimelineEntryRelevance(score: Float(1/entries.count) )
+            entries[index].relevance = TimelineEntryRelevance(score: 1.0, duration: .zero)
+            
         }
         
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let timeline = Timeline(entries: entries, policy: .after(
+            
+            Calendar.current.date(byAdding: .second,
+                                  value: 1,
+                                  to: currentDate)!
+        ))
         completion(timeline)
     }
 }
@@ -86,7 +95,7 @@ struct QuickTasksInfoEntry: TimelineEntry {
 struct QuickTasksInfoWidgetEntryView : View {
     
     var entry: QuickTasksInfoProvider.Entry
-
+    
     var body: some View {
         
         // MARK: Call QuickTasksView
@@ -101,7 +110,7 @@ struct QuickTasksInfoPlaceHolderView : View {
     var body: some View {
         
         QuickTasksInfoWidgetEntryView(entry: Entry(date: Date(), relevance: nil,
-                                                    todoList: placeHolderList))
+                                                   todoList: placeHolderList))
             .redacted(reason: .placeholder)
     }
 }
@@ -113,9 +122,9 @@ struct QuickTasksInfoWidget: Widget {
     
     var body: some WidgetConfiguration {
         
-        IntentConfiguration(kind: kind, intent: ListSelectorIntent.self,
-         provider: QuickTasksInfoProvider()) { entry in
-        
+        IntentConfiguration(kind: kind, intent: DynamicListSelectorIntent.self,
+                            provider: QuickTasksInfoProvider()) { entry in
+            
             QuickTasksInfoWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Quick Info of Tasks")
@@ -135,10 +144,10 @@ struct QuickTasksInfoWidget_Previews: PreviewProvider {
                     .previewContext(WidgetPreviewContext(family: family))
                 
                 QuickTasksInfoWidgetEntryView(entry: QuickTasksInfoEntry(date: Date(), relevance: nil,
-                                                            todoList: ToDoList(icon: "")))
+                                                                         todoList: ToDoList(icon: "")))
                     .previewContext(WidgetPreviewContext(family: family))
             }
         }
-
+        
     }
 }
