@@ -27,8 +27,13 @@ class AllLists: ObservableObject {
     func filterLists(query: String) -> [ToDoList] {
         
         return todoLists.filter { list in
+            
             list.todoListName.lowercased().contains( query.lowercased() )
+                
                 || list.todoListIcon.lowercased().contains( query.lowercased() )
+                
+                || RandomEmoji(from: list.todoListIcon).name.lowercased().contains( query.lowercased() )
+                
                 || query == ""
         }
     }
@@ -181,8 +186,11 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     func filterTasks(query: String) -> [ToDoTask] {
         
         return todoTasks.filter { task in
+            
             task.todoName.lowercased().contains( query.lowercased() )
+                
                 || task.todoShape.name.contains( query.lowercased() )
+                
                 || query == ""
         }
     }
@@ -254,7 +262,7 @@ extension ToDoList: Encodable {
 
 
 extension AllLists {
- 
+    
     func saveLists() {
         
         do {
