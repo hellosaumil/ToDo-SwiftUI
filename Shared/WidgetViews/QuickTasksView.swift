@@ -27,7 +27,7 @@ struct QuickTasksView: View {
                 .padding(.top, (family == .systemLarge) ? 0 : 16)
                 
             Divider()
-                .padding(.bottom, 8)
+                .padding(.bottom, (family == .systemLarge) ? 8 : 16)
             
             LazyVGrid(columns: columns) {
                 
@@ -40,7 +40,7 @@ struct QuickTasksView: View {
                         .padding(.horizontal, 2)
                 }
                 .padding(.horizontal, 6)
-                .padding(.vertical, 2)
+                .padding(.vertical, (family == .systemLarge) ? 2 : 0)
             }
             
         }
@@ -146,6 +146,10 @@ struct QuickTasksView_Previews: PreviewProvider {
                 
                 QuickTasksView(list: randomLists[0])
                     .previewContext(WidgetPreviewContext(family: family))
+                
+                QuickTasksView(list: ToDoList(icon: "🌖"))
+                    .previewContext(WidgetPreviewContext(family: family))
+                
             }
         }
     }
