@@ -100,6 +100,7 @@ struct QuickTasksInfoWidgetEntryView : View {
         
         // MARK: Call QuickTasksView
         QuickTasksView(list: entry.todoList)
+            .background(entry.todoList.todoGradientStartColor.color.opacity(0.025))
     }
 }
 

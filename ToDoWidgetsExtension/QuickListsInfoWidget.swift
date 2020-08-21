@@ -92,6 +92,8 @@ struct QuickListsInfoWidgetEntryView : View {
         
         // MARK: Call QuickListView
         QuickListView(list: entry.todoList)
+            .background(entry.todoList.todoGradientStartColor.color.opacity(0.025))
+            
     }
 }
 
@@ -136,7 +138,10 @@ struct QuickListsInfoWidget_Previews: PreviewProvider {
                     .previewContext(WidgetPreviewContext(family: family))
                 
                 QuickListsInfoWidgetEntryView(entry: QuickListsInfoEntry(date: Date(), relevance: nil,
-                                                            todoList: ToDoList(icon: "")))
+                                                            todoList: ToDoList(icon: "",
+                                                                               gradientStartColor: .green,
+                                                                               gradientEndColor: .blue
+                                                                               )))
                     .previewContext(WidgetPreviewContext(family: family))
             }
         }

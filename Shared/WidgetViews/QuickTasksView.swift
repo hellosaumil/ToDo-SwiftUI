@@ -22,12 +22,10 @@ struct QuickTasksView: View {
         VStack {
             
             ListHeroTasksLite(ofList: list)
-                .padding(.horizontal)
-                .padding(.vertical, (family == .systemLarge) ? 4 : -4)
-                .padding(.top, (family == .systemLarge) ? 0 : 16)
+                .padding(.vertical, 4)
                 
             Divider()
-                .padding(.bottom, (family == .systemLarge) ? 8 : 16)
+                .padding(.bottom, (family == .systemLarge) ? 4 : 8)
             
             LazyVGrid(columns: columns) {
                 
@@ -44,6 +42,7 @@ struct QuickTasksView: View {
             }
             
         }
+        .padding()
     }
 }
 
