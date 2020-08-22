@@ -100,7 +100,7 @@ struct QuickTasksInfoWidgetEntryView : View {
         
         // MARK: Call QuickTasksView
         QuickTasksView(list: entry.todoList)
-            .background(entry.todoList.todoGradientStartColor.color.opacity(0.025))
+            .background(entry.todoList.todoGradientStartColor.color.opacity(0.02))
     }
 }
 
@@ -130,7 +130,7 @@ struct QuickTasksInfoWidget: Widget {
         }
         .configurationDisplayName("Quick Info of Tasks")
         .description("Quick glance about your ToDo Tasks.")
-        .supportedFamilies([.systemLarge, .systemMedium])
+        .supportedFamilies([.systemLarge])
     }
 }
 
@@ -139,7 +139,7 @@ struct QuickTasksInfoWidget_Previews: PreviewProvider {
         
         Group {
             
-            ForEach([WidgetFamily.systemMedium, WidgetFamily.systemLarge], id: \.self) { family in
+            ForEach([WidgetFamily.systemLarge], id: \.self) { family in
                 
                 QuickTasksInfoPlaceHolderView()
                     .previewContext(WidgetPreviewContext(family: family))
