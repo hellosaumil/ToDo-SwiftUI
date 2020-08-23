@@ -92,7 +92,6 @@ struct QuickListsInfoWidgetEntryView : View {
         
         // MARK: Call QuickListView
         QuickListView(list: entry.todoList)
-            .background(entry.todoList.todoGradientStartColor.color.opacity(0.02))
             
     }
 }

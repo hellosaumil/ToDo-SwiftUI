@@ -18,11 +18,17 @@ struct QuickTasksInfoProvider: IntentTimelineProvider {
 
         
         guard let name = configuration.selectedList?.identifier,
-           let list = allLists.listFromURL(name: name) else { return nil }
+           let list = allLists.listFromURL(name: name) else {
+                
+            AllLists.removeLastSelectedList()
+            return nil
+        }
         
         
-        // MARK: Save the last selected character to our App Group.
+        // MARK: Save the last selected ToDoList to our App Group.
         // HERE
+        AllLists.setLastSelectedList(listName: list.todoListName)
+        
         print("👀 👀 👀 👀 \t\(name)")
         return list
     }
@@ -97,10 +103,9 @@ struct QuickTasksInfoWidgetEntryView : View {
     var entry: QuickTasksInfoProvider.Entry
     
     var body: some View {
-        
+            
         // MARK: Call QuickTasksView
         QuickTasksView(list: entry.todoList)
-            .background(entry.todoList.todoGradientStartColor.color.opacity(0.02))
     }
 }
 

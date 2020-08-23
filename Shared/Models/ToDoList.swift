@@ -276,3 +276,25 @@ extension AllLists {
     }
     
 }
+
+extension AllLists {
+    
+    static let toDoAppGroup = "group.io.hellosaumil.ToDo-SwiftUI.contents"
+
+    static func setLastSelectedList(listName: String) {
+        UserDefaults(suiteName: toDoAppGroup)?.setValue(listName, forKey: "list")
+    }
+    
+    static func removeLastSelectedList() {
+        UserDefaults(suiteName: toDoAppGroup)?.removeObject(forKey: "list")
+    }
+
+    static func getLastSelectedList() -> ToDoList? {
+        
+        guard let listName = UserDefaults(suiteName: toDoAppGroup)?.value(forKey: "list") as? String else {
+            return nil
+        }
+        return userLists.listFromName(name: listName)
+    }
+
+}

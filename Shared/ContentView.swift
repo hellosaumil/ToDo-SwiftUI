@@ -22,6 +22,12 @@ struct ContentView: View {
             Text("Choose a List to see its tasks")
                 .foregroundColor(.secondary)
         }
+        .onAppear {
+            // Check for the last selected ToDoList.
+            if let list = AllLists.getLastSelectedList() {
+                print("Last list selection: \(list.todoListName)")
+            }
+        }
         
     }
 }
