@@ -61,12 +61,14 @@ class AllLists: ObservableObject {
 final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     static func == (lhs: ToDoList, rhs: ToDoList) -> Bool {
-        return lhs.id == rhs.id
+        return (lhs.id == rhs.id) || (lhs.getURL() == rhs.getURL())
     }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine( id  )
     }
+    
+    static let baseURL = "toDoList:///"
     
     @Published var id = UUID()
     
@@ -122,7 +124,7 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
         
         self.isLocked = false
         
-        self.todoListURL = URL(string: "todo:///init")!
+        self.todoListURL = URL(string: ToDoList.baseURL+"init")!
         
         self.updateProgress()
         self.updateURL()
@@ -131,15 +133,13 @@ final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     // MARK: Generate and Update List URL
     func generateURL() -> URL {
         
-        let baseURL = "todo:///"
-        
         let nameURL = self.todoListName.lowercased().strip
             .removeWhitespaces()
             .replacingOccurrences(of: " ", with: "-")
         
-        let urlString = baseURL + ((nameURL == "") ? "init-none" : nameURL )
+        let urlString = ToDoList.baseURL + ((nameURL == "") ? "init-none" : nameURL )
         
-        return URL(string: urlString) ?? URL(string: baseURL + "init-none")!
+        return URL(string: urlString) ?? URL(string: ToDoList.baseURL + "init-none")!
     }
     
     func updateURL() { self.todoListURL = generateURL() }
@@ -297,4 +297,33 @@ extension AllLists {
         return userLists.listFromName(name: listName)
     }
 
+}
+
+// MARK: Check for Duplicates when Adding New ToDoList/ToDoTask
+extension AllLists {
+    
+    func addNewList(from list: ToDoList = ToDoList()) -> Bool {
+        
+        // Check for duplicate ToDoList Entry
+        guard self.todoLists.filter({ $0 == list }).count == 0 else {
+            return false
+        }
+       
+        self.todoLists.append(list)
+        return true
+    }
+}
+
+extension ToDoList {
+    
+    func addNewTask(from task: ToDoTask = ToDoTask()) -> Bool {
+        
+        // Check for duplicate ToDoTask Entry
+        guard self.todoTasks.filter({ $0 == task }).count == 0 else {
+            return false
+        }
+        
+        self.todoTasks.append(task)
+        return true
+    }
 }

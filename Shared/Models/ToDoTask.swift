@@ -12,12 +12,14 @@ import Combine
 final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     
     static func == (lhs: ToDoTask, rhs: ToDoTask) -> Bool {
-        return lhs.id == rhs.id
+        return (lhs.id == rhs.id) || (lhs.getURL() == rhs.getURL())
     }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine( id  )
     }
+    
+    static let baseURL = "toDoTask:///"
     
     @Published var id = UUID()
     
@@ -35,6 +37,8 @@ final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     @Published var isMyFavorite:Bool
     
     @Published var isCompleted: Bool
+    
+    @Published private var todoTaskURL: URL
     
     init(name: String = "", dueDateTime: Date = Date(),
          
@@ -60,7 +64,26 @@ final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
         self.isMyFavorite = isFav
         
         self.isCompleted = false
+        
+        self.todoTaskURL = URL(string: ToDoTask.baseURL+"init")!
+        self.updateURL()
     }
+
+    // MARK: Generate and Update List URL
+    func generateURL() -> URL {
+        
+        let nameURL = self.todoName.lowercased().strip
+            .removeWhitespaces()
+            .replacingOccurrences(of: " ", with: "-")
+        
+        let urlString = ToDoTask.baseURL + ((nameURL == "") ? "init-none" : nameURL )
+        
+        return URL(string: urlString) ?? URL(string: ToDoTask.baseURL + "init-none")!
+    }
+    
+    func updateURL() { self.todoTaskURL = generateURL() }
+    func getURL() -> URL { return self.todoTaskURL }
+
 }
 
 extension ToDoTask: Decodable {

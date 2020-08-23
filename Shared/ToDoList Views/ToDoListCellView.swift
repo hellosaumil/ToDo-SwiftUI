@@ -124,7 +124,10 @@ struct ToDoListCellView: View {
                         
                         if !list.isLocked {
                             
-                            Button(action: { list.todoTasks.append(ToDoTask()) })
+                            Button(action: {
+                                // MARK: Call addNewList
+                                _ = list.addNewTask()
+                            })
                                 { Text("Add New Task"); Image(systemName: "plus") }
                             
                             Button(action: { withAnimation { list.isMyFavorite.toggle() } })

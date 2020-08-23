@@ -64,7 +64,9 @@ struct ToDoTasksDetailView: View {
                                 Button(action: {
                                     
                                     withAnimation(.easeInOut) {
-                                        toDoList.todoTasks.append(ToDoTask())
+                                        
+                                        // MARK: Call addNewList
+                                        _ = toDoList.addNewTask()
                                     }
                                     
                                 }) {

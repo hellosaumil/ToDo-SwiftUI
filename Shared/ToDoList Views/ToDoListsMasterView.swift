@@ -70,7 +70,9 @@ struct ToDoListsMasterView: View {
                                 Button(action: {
                                     
                                     withAnimation(.easeInOut) {
-                                        allLists.todoLists.append(ToDoList())
+                                        
+                                        // MARK: Call addNewList
+                                        _ = allLists.addNewList()
                                         
                                         // MARK: Update Stored Lists onDelete
                                         DispatchQueue.main.async { _ = storeListData(allLists.todoLists) }
