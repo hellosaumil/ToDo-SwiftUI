@@ -12,7 +12,7 @@ import Combine
 final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     
     static func == (lhs: ToDoTask, rhs: ToDoTask) -> Bool {
-        return (lhs.id == rhs.id) || (lhs.getURL() == rhs.getURL())
+        return (lhs.id == rhs.id)
     }
     
     func hash(into hasher: inout Hasher) {

@@ -59,7 +59,13 @@ struct ToDoListCellView: View {
                                 .opacity( list.isLocked ? 0.75 : 0.50 )
                                 .shadow(color: .secondary, radius: 4, x: 2, y: 2)
                                 .onTapGesture(count: 2, perform: {
-                                    if !list.isLocked { withAnimation{ list.isLocked = true } }
+                                    if !list.isLocked {
+                                        
+                                        withAnimation{ list.isLocked = true
+                                            
+                                            // MARK: Update Stored Lists onDelete
+                                            DispatchQueue.main.async { userLists.saveLists() }
+                                        } }
                                     else { authUser() }
                                 })
                             
@@ -115,6 +121,9 @@ struct ToDoListCellView: View {
                                 else { list.incompleteTasks() }
                                 withAnimation(.easeOut(duration: 0.5)) { list.updateProgress() }
                                 
+                                // MARK: Update Stored Lists onDelete
+                                DispatchQueue.main.async { userLists.saveLists() }
+                                
                             }) {
                                 Text(list.isAllComplete() ? "Complete all tasks" : "Reset all tasks")
                                 Image(systemName: list.isAllComplete() ? "checkmark" : "xmark")
@@ -128,9 +137,14 @@ struct ToDoListCellView: View {
                                 // MARK: Call addNewList
                                 _ = list.addNewTask()
                             })
-                                { Text("Add New Task"); Image(systemName: "plus") }
+                            { Text("Add New Task"); Image(systemName: "plus") }
                             
-                            Button(action: { withAnimation { list.isMyFavorite.toggle() } })
+                            Button(action: { withAnimation {
+                                    list.isMyFavorite.toggle() }
+                                    
+                                // MARK: Update Stored Lists onDelete
+                                DispatchQueue.main.async { userLists.saveLists() }
+                            })
                             { Text( list.isMyFavorite ? "Remove from Favorites" : "Add to Favorites" )
                                 Image(systemName: list.isMyFavorite ? "star.slash.fill" : "star.fill" ) }
                             
@@ -139,6 +153,10 @@ struct ToDoListCellView: View {
                         // MARK: Call authUser
                         Button(action: {
                             withAnimation { list.isLocked ? authUser() : list.isLocked.toggle() }
+                            
+                            // MARK: Update Stored Lists onDelete
+                            DispatchQueue.main.async { userLists.saveLists() }
+                            
                         }) {
                             Text( !list.isLocked ? "Lock" : "Authenticate" )
                             Image(systemName: !list.isLocked ? "lock.fill" : "ellipsis.rectangle.fill" )
@@ -251,12 +269,22 @@ struct ProgressBarView: View {
                 getSystemImage(name: (list.isMyFavorite) ? "star.fill" : "star",
                                color: (list.isMyFavorite) ? Color.yellow.opacity(0.80) : Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .small).padding(0)
-                    .onTapGesture { if !list.isLocked { list.isMyFavorite.toggle() } }
+                    .onTapGesture { if !list.isLocked {
+                        list.isMyFavorite.toggle()
+                        
+                        // MARK: Update Stored Lists onDelete
+                        DispatchQueue.main.async { userLists.saveLists() }
+                    } }
                 
                 getSystemImage(name: "slider.horizontal.3",
                                color: Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .medium).padding(0)
-                    .onTapGesture { if !list.isLocked { showingModal.toggle() } }
+                    .onTapGesture { if !list.isLocked {
+                        showingModal.toggle()
+                        
+                        // MARK: Update Stored Lists onDelete
+                        DispatchQueue.main.async { userLists.saveLists() }
+                    } }
                 
             }
             .padding(.trailing, 4)

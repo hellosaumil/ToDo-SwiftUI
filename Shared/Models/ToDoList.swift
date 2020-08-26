@@ -13,6 +13,9 @@ import Combine
 import Foundation
 
 class AllLists: ObservableObject {
+    
+    static let toDoAppGroup = "group.io.hellosaumil.ToDo-SwiftUI.contents"
+    
     @Published var todoLists: [ToDoList]
     
     convenience init() {
@@ -61,7 +64,7 @@ class AllLists: ObservableObject {
 final class ToDoList: Identifiable, Equatable, Hashable, ObservableObject {
     
     static func == (lhs: ToDoList, rhs: ToDoList) -> Bool {
-        return (lhs.id == rhs.id) || (lhs.getURL() == rhs.getURL())
+        return (lhs.id == rhs.id)
     }
     
     func hash(into hasher: inout Hasher) {
@@ -268,6 +271,7 @@ extension AllLists {
         do {
             
             try saveListsData(self.todoLists)
+            reloadWidgets()
             
         } catch {
             
@@ -277,35 +281,17 @@ extension AllLists {
     
 }
 
-extension AllLists {
-    
-    static let toDoAppGroup = "group.io.hellosaumil.ToDo-SwiftUI.contents"
-
-    static func setLastSelectedList(listName: String) {
-        UserDefaults(suiteName: toDoAppGroup)?.setValue(listName, forKey: "list")
-    }
-    
-    static func removeLastSelectedList() {
-        UserDefaults(suiteName: toDoAppGroup)?.removeObject(forKey: "list")
-    }
-
-    static func getLastSelectedList() -> ToDoList? {
-        
-        guard let listName = UserDefaults(suiteName: toDoAppGroup)?.value(forKey: "list") as? String else {
-            return nil
-        }
-        return userLists.listFromName(name: listName)
-    }
-
-}
-
 // MARK: Check for Duplicates when Adding New ToDoList/ToDoTask
 extension AllLists {
     
     func addNewList(from list: ToDoList = ToDoList()) -> Bool {
         
         // Check for duplicate ToDoList Entry
-        guard self.todoLists.filter({ $0 == list }).count == 0 else {
+        guard self.todoLists.filter({
+            
+            $0.getURL() == list.getURL()
+            
+        }).count == 0 else {
             return false
         }
        
@@ -319,7 +305,11 @@ extension ToDoList {
     func addNewTask(from task: ToDoTask = ToDoTask()) -> Bool {
         
         // Check for duplicate ToDoTask Entry
-        guard self.todoTasks.filter({ $0 == task }).count == 0 else {
+        guard self.todoTasks.filter({
+
+            $0.getURL() == task.getURL()
+            
+        }).count == 0 else {
             return false
         }
         

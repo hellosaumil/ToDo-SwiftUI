@@ -190,7 +190,11 @@ struct ToDoTaskInfoView: View {
 //            .padding(.bottom, keyboard.currentHeight)
 //            .edgesIgnoringSafeArea(.bottom)
         }
-        
+        .onDisappear {
+            
+            // MARK: Update Stored Lists onDelete
+            DispatchQueue.main.async { userLists.saveLists() }
+        }
     }
     
 //    func endEditing(_ force: Bool) {

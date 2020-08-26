@@ -101,7 +101,12 @@ struct ToDoCellRowItem: View {
                 .foregroundOverlay(myGradient(type: task.todoGradientScheme,
                                               colors: [task.todoGradientStartColor.color,
                                                        task.todoGradientEndColor.color]))
-                .onTapGesture { task.isCompleted.toggle() }
+                .onTapGesture {
+                    task.isCompleted.toggle()
+                    
+                    // MARK: Update Stored Lists onDelete
+                    DispatchQueue.main.async { userLists.saveLists() }
+                }
             
             Text("\(task.todoName)").strikethrough(task.isCompleted, color: task.todoGradientStartColor.color)
                 .font(.system(size: 20, weight: .regular, design: .monospaced))
@@ -146,12 +151,22 @@ struct TaskEditBarView: View {
                 getSystemImage(name: (task.isMyFavorite) ? "star.fill" : "star",
                                color: (task.isMyFavorite) ? Color.yellow.opacity(0.80) : Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .small).padding(0)
-                    .onTapGesture { task.isMyFavorite.toggle() }
+                    .onTapGesture {
+                        task.isMyFavorite.toggle()
+                        
+                        // MARK: Update Stored Lists onDelete
+                        DispatchQueue.main.async { userLists.saveLists() }
+                    }
                 
                 getSystemImage(name: "slider.horizontal.3",
                                color: Color.secondary.opacity(0.30),
                                fontSize: 14, scale: .medium).padding(0)
-                    .onTapGesture { showingModal.toggle() }
+                    .onTapGesture {
+                        showingModal.toggle()
+                        
+                        // MARK: Update Stored Lists onDelete
+                        DispatchQueue.main.async { userLists.saveLists() }
+                    }
                 
             }
             .padding(.trailing, 4)

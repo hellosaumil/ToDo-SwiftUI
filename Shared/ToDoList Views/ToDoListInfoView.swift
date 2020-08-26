@@ -168,6 +168,10 @@ struct ToDoListInfoView: View {
 //            .edgesIgnoringSafeArea(.bottom)
             
         }
+        .onDisappear {
+            // MARK: Update Stored Lists onDelete
+            DispatchQueue.main.async { userLists.saveLists() }
+        }
     }
 }
 

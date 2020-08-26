@@ -18,16 +18,11 @@ struct QuickTasksInfoProvider: IntentTimelineProvider {
 
         
         guard let name = configuration.selectedList?.identifier,
-           let list = allLists.listFromURL(name: name) else {
-                
-            AllLists.removeLastSelectedList()
-            return nil
-        }
+           let list = allLists.listFromURL(name: name) else { return nil }
         
         
         // MARK: Save the last selected ToDoList to our App Group.
         // HERE
-        AllLists.setLastSelectedList(listName: list.todoListName)
         
         print("👀 👀 👀 👀 \t\(name)")
         return list

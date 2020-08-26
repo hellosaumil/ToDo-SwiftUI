@@ -45,6 +45,11 @@ struct ToDoTasksDetailView: View {
                         }
                         .onDelete { (IndexSet) in
                             toDoList.todoTasks.remove(atOffsets: IndexSet)
+                            
+                            // MARK: Reload All Widgets
+                            DispatchQueue.main.async {
+                                userLists.saveLists()
+                            }
                         }
                     }
                     .padding(.trailing)
@@ -58,6 +63,15 @@ struct ToDoTasksDetailView: View {
                 SearchBar(message: "Search a task by name or shape...", query: $searchText, isActive: $showingSearch)
             }
         }
+        .onDisappear(perform: {
+            
+            // MARK: Update List Progress on Disappear
+            toDoList.updateProgress()
+            
+            // MARK: Update Stored Lists onDelete
+            DispatchQueue.main.async { userLists.saveLists() }
+        })
+        
         .navigationBarTitle(Text("\(toDoList.todoListIcon) \(toDoList.todoListName)"))
         
         .navigationBarItems(leading:
@@ -67,6 +81,9 @@ struct ToDoTasksDetailView: View {
                                         
                                         // MARK: Call addNewList
                                         _ = toDoList.addNewTask()
+                                        
+                                        // MARK: Update Stored Lists onDelete
+                                        DispatchQueue.main.async { userLists.saveLists() }
                                     }
                                     
                                 }) {

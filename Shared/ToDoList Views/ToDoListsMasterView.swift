@@ -47,8 +47,10 @@ struct ToDoListsMasterView: View {
                         .onDelete { (IndexSet) in
                             allLists.todoLists.remove(atOffsets: IndexSet)
                             
-                            // MARK: Update Stored Lists onDelete
-                            DispatchQueue.main.async { _ = storeListData(allLists.todoLists) }
+                            // MARK: Reload All Widgets
+                            DispatchQueue.main.async {
+                                userLists.saveLists()
+                            }
                         }
                     }
                     .padding(.trailing)
@@ -63,7 +65,10 @@ struct ToDoListsMasterView: View {
             }
             
         }
-        
+        .onDisappear(perform: {
+            // MARK: Update Stored Lists onDelete
+            DispatchQueue.main.async { userLists.saveLists() }
+        })
         .navigationBarTitle(Text("ToDo Lists"))
         
         .navigationBarItems(leading:
@@ -75,7 +80,7 @@ struct ToDoListsMasterView: View {
                                         _ = allLists.addNewList()
                                         
                                         // MARK: Update Stored Lists onDelete
-                                        DispatchQueue.main.async { _ = storeListData(allLists.todoLists) }
+                                        DispatchQueue.main.async { userLists.saveLists() }
                                     }
                                     
                                 }) {
