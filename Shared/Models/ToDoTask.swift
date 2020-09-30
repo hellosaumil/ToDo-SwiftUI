@@ -211,6 +211,11 @@ extension ToDoTask: Notifiable {
         var dateComponents = DateComponents()
         dateComponents.hour = calendar.component(.hour, from: validDate)
         dateComponents.minute = calendar.component(.minute, from: validDate)
+
+        dateComponents.day = calendar.component(.day, from: validDate)
+        dateComponents.weekday = calendar.component(.weekday, from: validDate)
+        dateComponents.month = calendar.component(.month, from: validDate)
+        dateComponents.year = calendar.component(.year, from: validDate)
         
         print("""
             \n\t🔔 Notification Created on...\(notificationDateFormatter.string(from: Date()))
