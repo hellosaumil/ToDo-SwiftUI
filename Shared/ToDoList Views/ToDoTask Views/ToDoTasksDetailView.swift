@@ -68,7 +68,7 @@ struct ToDoTasksDetailView: View {
             // MARK: Update List Progress on Disappear
             toDoList.updateProgress()
             
-            // MARK: Update Stored Lists onDelete
+            // MARK: Update Stored Lists
             DispatchQueue.main.async { userLists.saveLists() }
         })
         
@@ -82,7 +82,7 @@ struct ToDoTasksDetailView: View {
                                         // MARK: Call addNewList
                                         _ = toDoList.addNewTask()
                                         
-                                        // MARK: Update Stored Lists onDelete
+                                        // MARK: Update Stored Lists
                                         DispatchQueue.main.async { userLists.saveLists() }
                                     }
                                     

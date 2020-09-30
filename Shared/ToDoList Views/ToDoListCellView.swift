@@ -10,7 +10,7 @@ import SwiftUI
 struct ToDoListCellView: View {
     
     @ObservedObject var list: ToDoList
-    @State private var moreInfoTapped: Bool = false
+    @State private var moreInfoTapped: Bool = true
     
     @State private var navLinkActive: Bool = false
     
@@ -63,7 +63,7 @@ struct ToDoListCellView: View {
                                         
                                         withAnimation{ list.isLocked = true
                                             
-                                            // MARK: Update Stored Lists onDelete
+                                            // MARK: Update Stored Lists
                                             DispatchQueue.main.async { userLists.saveLists() }
                                         } }
                                     else { authUser() }
@@ -121,7 +121,7 @@ struct ToDoListCellView: View {
                                 else { list.incompleteTasks() }
                                 withAnimation(.easeOut(duration: 0.5)) { list.updateProgress() }
                                 
-                                // MARK: Update Stored Lists onDelete
+                                // MARK: Update Stored Lists
                                 DispatchQueue.main.async { userLists.saveLists() }
                                 
                             }) {
@@ -142,7 +142,7 @@ struct ToDoListCellView: View {
                             Button(action: { withAnimation {
                                     list.isMyFavorite.toggle() }
                                     
-                                // MARK: Update Stored Lists onDelete
+                                // MARK: Update Stored Lists
                                 DispatchQueue.main.async { userLists.saveLists() }
                             })
                             { Text( list.isMyFavorite ? "Remove from Favorites" : "Add to Favorites" )
@@ -154,7 +154,7 @@ struct ToDoListCellView: View {
                         Button(action: {
                             withAnimation { list.isLocked ? authUser() : list.isLocked.toggle() }
                             
-                            // MARK: Update Stored Lists onDelete
+                            // MARK: Update Stored Lists
                             DispatchQueue.main.async { userLists.saveLists() }
                             
                         }) {
@@ -272,7 +272,7 @@ struct ProgressBarView: View {
                     .onTapGesture { if !list.isLocked {
                         list.isMyFavorite.toggle()
                         
-                        // MARK: Update Stored Lists onDelete
+                        // MARK: Update Stored Lists
                         DispatchQueue.main.async { userLists.saveLists() }
                     } }
                 
@@ -282,7 +282,7 @@ struct ProgressBarView: View {
                     .onTapGesture { if !list.isLocked {
                         showingModal.toggle()
                         
-                        // MARK: Update Stored Lists onDelete
+                        // MARK: Update Stored Lists
                         DispatchQueue.main.async { userLists.saveLists() }
                     } }
                 

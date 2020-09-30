@@ -23,7 +23,6 @@ let randomTasks: [ToDoTask] = taskItems.map { ToDoTask(name: $0) }
 let sampleTasksLite: [ToDoTask] = [
     ToDoTask(),
     ToDoTask(name: "Practice iOS Development",
-             dueDateTime: Date()+2,
              shape: .triangle,
              
              gradientScheme: .linear,
@@ -134,7 +133,7 @@ func loadFromAppDirectory<T: Decodable>(_ filename: String, as type: T.Type = T.
     return loadedData
 }
 
-func saveAnother<T: Encodable>(_ filename: String, data: T, as type: T.Type = T.self) throws {
+func saveAnother<T: Encodable>(_ filename: String, data: T, verbose: Bool = false, as type: T.Type = T.self) throws {
     
     let jsonData: Data
     let jsonString:String
@@ -148,7 +147,7 @@ func saveAnother<T: Encodable>(_ filename: String, data: T, as type: T.Type = T.
         jsonData = try encoder.encode(data)
         
         if let validJsonString = String(data: jsonData, encoding: .utf8) {
-            print("Save: jsonString: \n\(validJsonString)")
+            if verbose { print("Save: jsonString: \n\(validJsonString)") }
             print("Attempting to Save at: \(fileURL)...")
             
             jsonString = validJsonString
@@ -251,10 +250,10 @@ func loadListsData(_ filename: String) -> [ToDoList] {
     return loadedListData
 }
 
-func saveListsData(_ allLists:[ToDoList]) throws {
+func saveListsData(_ allLists:[ToDoList], verbose:Bool = false) throws {
     
     do {
-        try saveAnother(usersListsDataFileName, data: allLists)
+        try saveAnother(usersListsDataFileName, data: allLists, verbose: verbose)
         print("All Lists Data Saved.\n")
         
     } catch {

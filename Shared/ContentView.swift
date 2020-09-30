@@ -20,6 +20,9 @@ struct ContentView: View {
             Text("Choose a List to see its tasks")
                 .foregroundColor(.secondary)
         }
+        .onAppear {
+            NotificationManager.registerNotification()
+        }
     }
 }
 

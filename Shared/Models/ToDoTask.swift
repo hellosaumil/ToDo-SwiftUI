@@ -9,6 +9,12 @@ import Foundation
 import SwiftUI
 import Combine
 
+protocol Notifiable {
+    
+    func updateDateAndNotify(dueDate: Date?)
+    func notifyTask(dueDate: Date?)
+}
+
 final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     
     static func == (lhs: ToDoTask, rhs: ToDoTask) -> Bool {
@@ -24,8 +30,9 @@ final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     @Published var id = UUID()
     
     @Published var todoName: String
+    @Published var ofList: String?
     
-    @Published var dueDateTime: Date
+    @Published var dueDateTime: Date?
     
     @Published var todoShape:BaseShapes
     
@@ -40,7 +47,7 @@ final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     
     @Published private var todoTaskURL: URL
     
-    init(name: String = "", dueDateTime: Date = Date(),
+    init(name: String = "", dueDateTime: Date? = nil,
          
          shape: BaseShapes = BaseShapes.allCases.randomElement()!,
          
@@ -48,9 +55,11 @@ final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
          gradientStartColor: BaseColors = BaseColors.allCases.randomElement()!,
          gradientEndColor: BaseColors = BaseColors.allCases.randomElement()!,
          
-         notes: String = "", isFav: Bool = false) {
+         notes: String = "", isFav: Bool = false,
+         
+         ofList: String? = nil) {
         
-        self.todoName = (name == "") ? shape.name + " ToDo" : name
+        self.todoName = (name == "") ? shape.name.capitalized + " ToDo" : name
         
         self.dueDateTime = dueDateTime
         
@@ -67,8 +76,15 @@ final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
         
         self.todoTaskURL = URL(string: ToDoTask.baseURL+"init")!
         self.updateURL()
+        
+        self.ofList = ofList
+        self.updateParentListInfo(from: ofList ?? nil)
+        
+        // MARK: Call updateDateAndNotify()
+        self.updateDateAndNotify(dueDate: self.dueDateTime)
+        
     }
-
+    
     // MARK: Generate and Update List URL
     func generateURL() -> URL {
         
@@ -83,7 +99,7 @@ final class ToDoTask: Identifiable, Equatable, Hashable, ObservableObject {
     
     func updateURL() { self.todoTaskURL = generateURL() }
     func getURL() -> URL { return self.todoTaskURL }
-
+    
 }
 
 extension ToDoTask: Decodable {
@@ -92,6 +108,7 @@ extension ToDoTask: Decodable {
     enum CodingKeys: String, CodingKey {
         
         case todoName="name", todoShape="shape"
+        case ofList="ofList"
         
         case dueDateTime, notes, isMyFavorite="isFav", isCompleted
         
@@ -107,8 +124,17 @@ extension ToDoTask: Decodable {
         
         todoName = try values.decode(String.self, forKey: .todoName)
         
+        // MARK: Encode ofList
+        ofList = try values.decode(String?.self, forKey: .ofList)
+        
         // MARK: TODO Reading/Writing Date Failing
-        dueDateTime = try customDateFormatter.date(from: values.decode(String.self, forKey: .dueDateTime)) ?? Date(timeIntervalSince1970: TimeInterval(0))
+        // dueDateTime = try values.decode(Date?.self, forKey: .dueDateTime)
+        
+        if let validDateString = try? values.decode(String.self, forKey: .dueDateTime) {
+            dueDateTime = customDateFormatter.date(from: validDateString)
+        } else {
+            dueDateTime = nil
+        }
         
         todoShape = try values.decode(BaseShapes.self, forKey: .todoShape)
         todoGradientScheme = try values.decode(GradientTypes.self, forKey: .gradientScheme)
@@ -130,8 +156,19 @@ extension ToDoTask: Encodable {
         
         try container.encode(todoName, forKey: .todoName)
         
+        // MARK: Decode ofList
+        try container.encode(ofList, forKey: .ofList)
+        
         // MARK: TODO Reading/Writing Date Failing
-        try container.encode( customDateFormatter.string(from: dueDateTime) , forKey: .dueDateTime)
+        // try container.encode(dueDateTime, forKey: .dueDateTime)
+        
+        if let validDateTime: Date = dueDateTime {
+            //            print("\tValid date for \(todoName) - \(customDateFormatter.string(from: validDateTime))🦋")
+            try container.encode( customDateFormatter.string(from: validDateTime), forKey: .dueDateTime)
+        } else {
+            //            print("\tNil date for \(todoName)🐝")
+            try container.encode(dueDateTime, forKey: .dueDateTime)
+        }
         
         try container.encode(todoShape, forKey: .todoShape)
         
@@ -146,6 +183,51 @@ extension ToDoTask: Encodable {
     }
 }
 
+// MARK: ToDoTask Notifiable Support
+extension ToDoTask: Notifiable {
+    
+    func updateParentListInfo(from parentListName: String?) { self.ofList = parentListName }
+    
+    func updateDateAndNotify(dueDate: Date?) {
+        self.dueDateTime = dueDate
+        self.notifyTask(dueDate: dueDate)
+    }
+    
+    internal func notifyTask(dueDate: Date?) {
+        
+        guard let validDate = dueDate, validDate > Date() else { return }
+        
+        let content = UNMutableNotificationContent()
+        content.title = self.todoName
+        content.subtitle = self.ofList ?? "List not assigned! ⚠️"
+        content.body = "Due on \(notificationDateFormatter.string(from: validDate))" + ((self.notes.isEmpty) ? "" : "\n\(self.notes)")
+        
+        content.sound = UNNotificationSound.default
+        
+        content.userInfo = ["name": self.todoName]
+        content.categoryIdentifier = "taskNotif"
+        
+        let calendar = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.hour = calendar.component(.hour, from: validDate)
+        dateComponents.minute = calendar.component(.minute, from: validDate)
+        
+        print("""
+            \n\t🔔 Notification Created on...\(notificationDateFormatter.string(from: Date()))
+            \t for \(customDateFormatter.string(from: validDate)) - \(self.todoName)
+            """)
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        
+        // choose a random identifier
+        let request = UNNotificationRequest(identifier: self.getURL().absoluteString, content: content, trigger: trigger)
+        
+        // add our notification request
+        UNUserNotificationCenter.current().add(request)
+        
+    }
+}
 
 var customDateFormatter: DateFormatter {
     let formatter = DateFormatter()
@@ -165,6 +247,14 @@ var loggingDateFormatter: DateFormatter {
     let formatter = DateFormatter()
     formatter.dateStyle = .long
     formatter.timeStyle = .long
+    
+    return formatter
+}
+
+var notificationDateFormatter: DateFormatter {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
     
     return formatter
 }

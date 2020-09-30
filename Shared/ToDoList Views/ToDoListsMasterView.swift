@@ -66,32 +66,39 @@ struct ToDoListsMasterView: View {
             
         }
         .onDisappear(perform: {
-            // MARK: Update Stored Lists onDelete
+            // MARK: Update Stored Lists
             DispatchQueue.main.async { userLists.saveLists() }
         })
         .navigationBarTitle(Text("ToDo Lists"))
         
         .navigationBarItems(leading:
-                                Button(action: {
+                                
+                                HStack {
+                                    
+                                    Button("Notify") { NotificationManager.sampleNotification() }
+                                    
+                                    Button(action: {
                                     
                                     withAnimation(.easeInOut) {
-                                        
-                                        // MARK: Call addNewList
-                                        _ = allLists.addNewList()
-                                        
-                                        // MARK: Update Stored Lists onDelete
-                                        DispatchQueue.main.async { userLists.saveLists() }
+                                    
+                                    // MARK: Call addNewList
+                                    _ = allLists.addNewList()
+                                    
+                                    // MARK: Update Stored Lists
+                                    DispatchQueue.main.async { userLists.saveLists() }
                                     }
                                     
-                                }) {
-                                    
-                                    HStack {
-                                        Image(systemName: "plus")
-                                        Text("Add").font(.headline)
+                                    }) {
+                                        
+                                        HStack {
+                                            Image(systemName: "plus")
+                                            Text("Add").font(.headline)
+                                        }
+                                        .padding(0)
+                                        .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
                                     }
-                                    .padding(0)
-                                    .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
-                                },
+                                }
+                            ,
                             
                             trailing:
                                 Button(action: {

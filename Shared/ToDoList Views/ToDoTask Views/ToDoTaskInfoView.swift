@@ -7,10 +7,16 @@
 
 import SwiftUI
 
+//let onceUponATime = Date(timeIntervalSince1970: 0)
+var onceUponATime = Date()
+
 struct ToDoTaskInfoView: View {
     
     @ObservedObject var task: ToDoTask
     @Binding var showModal: Bool
+    
+    @State private var datePickerValue: Date = onceUponATime
+    @State private var showDatePicker: Bool = false
     
     var body: some View {
         
@@ -133,11 +139,23 @@ struct ToDoTaskInfoView: View {
                 
                 Section(header: headerItemGroup(imageName: "calendar", text: "Reminde me on the")) {
                     
-                    DatePicker(selection: $task.dueDateTime,
-                               in: Date()...,
-                               displayedComponents: [.hourAndMinute, .date] ,
-                               label: {Text("Date & Time")} )
+                    // MARK: Date Picker
+                    if self.showDatePicker {
                     
+                        DatePicker(selection: $datePickerValue,
+                                   displayedComponents: [.hourAndMinute, .date] ,
+                                   label: {Text("Date & Time")} )
+                    
+                        Button("Remove the Due Date") {
+                            onceUponATime = Date()
+                            self.datePickerValue = onceUponATime
+                            withAnimation(.easeInOut) {self.showDatePicker.toggle()}
+                        }
+                        .foregroundColor(.red)
+                    
+                    } else {
+                        Button("🗓 Pick a Due Date") { withAnimation(.easeInOut) {self.showDatePicker.toggle()} }
+                    }
                 }
                 
                 
@@ -187,19 +205,23 @@ struct ToDoTaskInfoView: View {
                 }
                 
             }
-//            .padding(.bottom, keyboard.currentHeight)
-//            .edgesIgnoringSafeArea(.bottom)
         }
+        .onAppear(perform: {
+            
+            if let validDate = task.dueDateTime {
+                self.datePickerValue = validDate
+                withAnimation(.easeInOut) {self.showDatePicker.toggle()}
+            }
+        })
         .onDisappear {
             
-            // MARK: Update Stored Lists onDelete
+            self.task.updateDateAndNotify(dueDate: (self.datePickerValue != onceUponATime) ? self.datePickerValue : nil)
+            
+            
+            // MARK: Update Stored Lists
             DispatchQueue.main.async { userLists.saveLists() }
         }
     }
-    
-//    func endEditing(_ force: Bool) {
-//        UIApplication.shared.endEditing()
-//    }
 }
 
 struct ToDoTaskInfoView_Previews: PreviewProvider {

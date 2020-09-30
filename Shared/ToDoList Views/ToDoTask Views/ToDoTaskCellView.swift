@@ -10,7 +10,7 @@ import SwiftUI
 struct ToDoTaskCellView: View {
     
     @ObservedObject var task: ToDoTask
-    @State private var moreInfoTapped: Bool = false
+    @State private var moreInfoTapped: Bool = true
     
     var body: some View {
         
@@ -56,7 +56,7 @@ struct ToDoTaskCellView: View {
                     { Text("\(task.todoName)"); Image(systemName: "\(task.todoShape.name)") }
                 
                 Button(action: {} )
-                { Text("Due on \( customDateFormatter.string(from: task.dueDateTime)) ")
+                {   Text("Due on: \((task.dueDateTime != nil) ? customDateFormatter.string(from: task.dueDateTime!) : "Select a Due Date")")
                     Image(systemName: "calendar") }
                 
                 Button(action: { withAnimation { task.isCompleted.toggle() } })
@@ -104,7 +104,7 @@ struct ToDoCellRowItem: View {
                 .onTapGesture {
                     task.isCompleted.toggle()
                     
-                    // MARK: Update Stored Lists onDelete
+                    // MARK: Update Stored Lists
                     DispatchQueue.main.async { userLists.saveLists() }
                 }
             
@@ -116,6 +116,22 @@ struct ToDoCellRowItem: View {
                                                        task.todoGradientEndColor.color]))
         }
         .padding(.horizontal)
+    }
+}
+
+extension Text {
+    
+    func dueDateDisplayer() -> some View {
+        self.font(.caption)
+            .fontWeight(.medium)
+            .foregroundColor(.secondary).opacity(0.60)
+    }
+    
+    func overdueDateDisplayer() -> some View {
+            self.italic()
+            .font(.caption)
+            .fontWeight(.bold)
+            .foregroundColor(.pink).opacity(0.60)
     }
 }
 
@@ -137,10 +153,29 @@ struct TaskEditBarView: View {
                     .padding(0)
                 
                 
-                Text("Due on: \( customMiniDateFormatter.string(from: task.dueDateTime) )")
-                    .font(.caption)
-                    .fontWeight(.medium)
-                    .foregroundColor(.secondary).opacity(0.60)
+                // MARK: Date Subinfo Formatting
+                if let validDueDate = task.dueDateTime {
+                    
+                    if validDueDate < Date() {
+                        
+                        HStack(spacing: 0) {
+                            Text("Overdue: ").overdueDateDisplayer()
+                            Text(validDueDate, style: .relative).overdueDateDisplayer()
+                            Text(" ago...").overdueDateDisplayer()
+                        }
+                        
+                    } else {
+                        
+                        Text("Due on: \(customMiniDateFormatter.string(from: validDueDate))")
+                            .dueDateDisplayer()
+                    }
+                    
+                } else {
+
+                    Text("Select a Due Date")
+                        .dueDateDisplayer()
+                }
+                
             }
             .padding(.leading, -18)
             
@@ -154,7 +189,7 @@ struct TaskEditBarView: View {
                     .onTapGesture {
                         task.isMyFavorite.toggle()
                         
-                        // MARK: Update Stored Lists onDelete
+                        // MARK: Update Stored Lists
                         DispatchQueue.main.async { userLists.saveLists() }
                     }
                 
@@ -164,7 +199,7 @@ struct TaskEditBarView: View {
                     .onTapGesture {
                         showingModal.toggle()
                         
-                        // MARK: Update Stored Lists onDelete
+                        // MARK: Update Stored Lists
                         DispatchQueue.main.async { userLists.saveLists() }
                     }
                 

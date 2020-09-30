@@ -266,11 +266,11 @@ extension ToDoList: Encodable {
 
 extension AllLists {
     
-    func saveLists() {
+    func saveLists(verbose: Bool = false) {
         
         do {
             
-            try saveListsData(self.todoLists)
+            try saveListsData(self.todoLists, verbose: verbose)
             reloadWidgets()
             
         } catch {
@@ -312,6 +312,8 @@ extension ToDoList {
         }).count == 0 else {
             return false
         }
+        
+        task.updateParentListInfo(from: self.todoListName)
         
         self.todoTasks.append(task)
         return true

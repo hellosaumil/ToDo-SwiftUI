@@ -25,6 +25,7 @@
 		6B28A8BA24E347B9006921C8 /* AppLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A8B924E347B9006921C8 /* AppLogoView.swift */; };
 		6B28A8F224E34A6C006921C8 /* QuickListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28A8F124E34A6C006921C8 /* QuickListView.swift */; };
 		6B28A8FC24E36584006921C8 /* localLists.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B28A8FB24E36584006921C8 /* localLists.json */; };
+		6B443BBC2509ACE30011FC90 /* NotificationRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B443BBB2509ACE30011FC90 /* NotificationRegistry.swift */; };
 		6B4E6A7D24EB42F900584AC1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28A8D924E3498D006921C8 /* WidgetKit.framework */; };
 		6B4E6A7E24EB42F900584AC1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B28A8DB24E3498D006921C8 /* SwiftUI.framework */; };
 		6B4E6A8324EB42FA00584AC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B4E6A8224EB42FA00584AC1 /* Assets.xcassets */; };
@@ -113,6 +114,7 @@
 		6B28A8DE24E3498D006921C8 /* QuickListsInfoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListsInfoWidget.swift; sourceTree = "<group>"; };
 		6B28A8F124E34A6C006921C8 /* QuickListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickListView.swift; sourceTree = "<group>"; };
 		6B28A8FB24E36584006921C8 /* localLists.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = localLists.json; sourceTree = "<group>"; };
+		6B443BBB2509ACE30011FC90 /* NotificationRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRegistry.swift; sourceTree = "<group>"; };
 		6B4E6A7524EB3F0F00584AC1 /* ToDoWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoWidgetsBundle.swift; sourceTree = "<group>"; };
 		6B4E6A7C24EB42F900584AC1 /* ToDoWidgetsExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ToDoWidgetsExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B4E6A8224EB42FA00584AC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				6B628FD624DF35E0008E496E /* GradientColorRoll.swift */,
 				6B03EFA624E219A600D70A03 /* SearchBar.swift */,
 				6B7EB4EC24DFCF2E006ED2B0 /* BiometricsAuthentication.swift */,
+				6B443BBB2509ACE30011FC90 /* NotificationRegistry.swift */,
 				6B28A8B924E347B9006921C8 /* AppLogoView.swift */,
 			);
 			path = "Helper Views";
@@ -449,6 +452,7 @@
 				6B628FC224DF327B008E496E /* ToDoListsMasterView.swift in Sources */,
 				6B628FB924DF311F008E496E /* UserData.swift in Sources */,
 				6B628FD724DF35E0008E496E /* GradientColorRoll.swift in Sources */,
+				6B443BBC2509ACE30011FC90 /* NotificationRegistry.swift in Sources */,
 				6B21366324DF2D500078E7EA /* ContentView.swift in Sources */,
 				6B628FB024DF2FE1008E496E /* Data.swift in Sources */,
 				6B747FDB24E607180062F5C8 /* EmojiHelper.swift in Sources */,
