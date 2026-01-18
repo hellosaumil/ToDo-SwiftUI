@@ -56,7 +56,7 @@ The app uses modern SwiftUI patterns including:
 
 ## 🔄 Migration Note
 
-> This app was **originally written in 2020** targeting **iOS 14** using the SwiftUI framework available at that time.
+> This app was **originally written by-hand in 2020** targeting **iOS 14** using the SwiftUI framework available at that time.
 >
 > In **January 2026**, it was **revamped to iOS 26 Liquid Glass** design language using **vibecoding** on **Google Antigravity IDE** powered by **Claude Opus 4.5**.
 
