@@ -1,4 +1,4 @@
-# ToDo-SwiftUI ✅
+# ToDo-SwiftUI 📱
 
 A modern, feature-rich ToDo list app built with SwiftUI featuring beautiful gradient themes, biometric authentication, and a sleek Liquid Glass design.
 
