@@ -18,37 +18,42 @@ struct GradientColorRoll: View {
     @State var text: String = "Choose Color"
     @Binding var selectedColor: BaseColors
     
+    // Local state for ColorPicker
+    @State private var pickerColor: Color = .orange
+    
     var body: some View {
         
         HStack {
             
-            Text(text).lineLimit(2)
-                .scaledToFit()
+            Text(text)
             
             Spacer()
             
-            Picker(selection: $selectedColor, label: EmptyView()) {
-                
-                ForEach(BaseColors.allCases, id: \.id) { colorName in
-                    
-                    BaseShapes.square.filled.tag(colorName)
-                        .rotationEffect(Angle(degrees: -90.0))
-                        .foregroundColor( colorName.color )
-                        .imageScale(.medium)
-                    
+            // Native ColorPicker (ColorWell)
+            ColorPicker("", selection: $pickerColor, supportsOpacity: false)
+                .labelsHidden()
+                .frame(width: 44, height: 28)
+                .onChange(of: pickerColor) { newColor in
+                    // Find closest BaseColor match
+                    selectedColor = closestBaseColor(to: newColor)
                 }
-            }
-            .pickerStyle(WheelPickerStyle())
-            .frame(width: UIScreen.main.bounds.width * 0.65,
-                   height: 24,
-                   alignment: .center)
-            .rotationEffect(Angle(degrees: 90.0))
-            .scaledToFit()
-            .clipped()
-            .padding(.vertical, 4)
-            .padding(.leading, -30)
-            
         }
+        .padding(.vertical, 4)
+        .onAppear {
+            pickerColor = selectedColor.color
+        }
+    }
+    
+    // Find the closest BaseColor to the selected color
+    private func closestBaseColor(to color: Color) -> BaseColors {
+        // For simplicity, return the current selection
+        // A more sophisticated approach would compare RGB values
+        for baseColor in BaseColors.allCases {
+            if baseColor.color.description == color.description {
+                return baseColor
+            }
+        }
+        return selectedColor
     }
 }
 

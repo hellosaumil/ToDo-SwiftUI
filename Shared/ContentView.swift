@@ -10,12 +10,16 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var userData: UserData
+    @State private var searchText: String = ""
+    @State private var navigationPath = NavigationPath()
     
     var body: some View {
         
-        NavigationView {
+        NavigationStack(path: $navigationPath) {
             
-            ToDoListsMasterView(allLists: userData.currentUserLists)
+            ToDoListsMasterView(allLists: userData.currentUserLists, searchText: $searchText, navigationPath: $navigationPath)
+                .navigationTitle("ToDo Lists")
+                .searchable(text: $searchText, prompt: "Search a list by name or icon...")
             
             Text("Choose a List to see its tasks")
                 .foregroundColor(.secondary)

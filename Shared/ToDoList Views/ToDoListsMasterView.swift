@@ -10,12 +10,11 @@ import SwiftUI
 struct ToDoListsMasterView: View {
     
     @ObservedObject var allLists: AllLists
+    @Binding var searchText: String
+    @Binding var navigationPath: NavigationPath
     
     @State private var showingModal: Bool = false
     @State private var showingDelete: Bool = false
-    
-    @State private var searchText: String = ""
-    @State private var showingSearch: Bool = false
     
     var body: some View {
         
@@ -39,9 +38,18 @@ struct ToDoListsMasterView: View {
                         
                         ForEach( allLists.filterLists(query: searchText), id: \.self) { list in
                             
-                            // MARK: Call ToDoListCellView
-                            ToDoListCellView(list: list)
-                                .padding(.trailing, -16)
+                            // Use ZStack to hide NavigationLink disclosure indicator
+                            ZStack {
+                                // Hidden NavigationLink for navigation
+                                NavigationLink(value: list) {
+                                    EmptyView()
+                                }
+                                .opacity(0)
+                                
+                                // Visible cell content
+                                ToDoListCellView(list: list, navigationPath: $navigationPath)
+                            }
+                            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
                             
                         }
                         .onDelete { (IndexSet) in
@@ -53,75 +61,40 @@ struct ToDoListsMasterView: View {
                             }
                         }
                     }
-                    .padding(.trailing)
                     .listStyle(PlainListStyle())
-                    .padding(.top, showingSearch ? 40 : 0 )
+                    .navigationDestination(for: ToDoList.self) { list in
+                        ToDoTasksDetailView(toDoList: list)
+                    }
                 }
             }
-            
-            if showingSearch && !allLists.todoLists.isEmpty  {
-                
-                SearchBar(message: "Search a list by name or icon...", query: $searchText, isActive: $showingSearch)
-            }
-            
         }
         .onDisappear(perform: {
             // MARK: Update Stored Lists
             DispatchQueue.main.async { userLists.saveLists() }
         })
-        .navigationBarTitle(Text("ToDo Lists"))
-        
-        .navigationBarItems(leading:
-                                
-                                HStack {
-                                    
-                                    Button("Notify") { NotificationManager.sampleNotification() }
-                                    
-                                    Button(action: {
-                                    
-                                    withAnimation(.easeInOut) {
-                                    
-                                    // MARK: Call addNewList
-                                    _ = allLists.addNewList()
-                                    
-                                    // MARK: Update Stored Lists
-                                    DispatchQueue.main.async { userLists.saveLists() }
-                                    }
-                                    
-                                    }) {
-                                        
-                                        HStack {
-                                            Image(systemName: "plus")
-                                            Text("Add").font(.headline)
-                                        }
-                                        .padding(0)
-                                        .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
-                                    }
-                                }
-                            ,
-                            
-                            trailing:
-                                Button(action: {
-                                    
-                                    withAnimation(.easeInOut) {
-                                        searchText = ""
-                                        showingSearch.toggle() }
-                                    
-                                }) {
-                                    
-                                    HStack {
-                                        Text("Search").font(.headline)
-                                        Image(systemName: "magnifyingglass")
-                                    }
-                                    .padding(0)
-                                    .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
-                                    
-                                }
-        )
-        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { NotificationManager.sampleNotification() }) {
+                    Image(systemName: "bell.badge")
+                        .foregroundColor(.secondary)
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    withAnimation(.easeInOut) {
+                        _ = allLists.addNewList()
+                        DispatchQueue.main.async { userLists.saveLists() }
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "plus")
+                        Text("Add").font(.headline)
+                    }
+                    .foregroundOverlay(myGradient(type: .linear, colors: [.pink, .purple]))
+                }
+            }
+        }
         .sheet(isPresented: $showingModal, onDismiss: {showingModal = false}) {
-            
-            
             // MARK: Call ToDoListInfoView
             ToDoListInfoView(list: allLists.todoLists[allLists.todoLists.count-1],
                              showModal: $showingModal)
@@ -131,12 +104,8 @@ struct ToDoListsMasterView: View {
 
 struct ToDoListsMasterView_Previews: PreviewProvider {
     static var previews: some View {
-        
         ForEach([ [], randomLists ], id: \.self) { lists  in
-            
-            //            NightAndDay {
-            ToDoListsMasterView(allLists: AllLists(lists: lists))
-            //            }
+            ToDoListsMasterView(allLists: AllLists(lists: lists), searchText: .constant(""), navigationPath: .constant(NavigationPath()))
         }
     }
 }
