@@ -18,14 +18,14 @@ A modern, feature-rich ToDo list app built with SwiftUI featuring beautiful grad
 
 | Original iOS 14 (2020) | Revamped iOS 26 (Liquid Glass) |
 | :---: | :---: |
-| <img src="demo/ToDoList_original_iOS14.gif" width="400"> | <img src="demo/ToDoList_original_iOS26.gif" width="400"> |
+| <img src="demo/ToDoList_original_iOS14.gif" height="600"> | <img src="demo/ToDoList_original_iOS26.gif" height="600"> |
 
 ### Design Comparison (Static)
 
 | Feature | iOS 14 (Standard) | iOS 26 (Liquid Glass) |
 | :--- | :---: | :---: |
-| **Main View** | <img src="demo/screenshots/iOS14_1.png" width="400"> | <img src="demo/screenshots/iOS26_1.png" width="400"> |
-| **Detail View** | <img src="demo/screenshots/iOS14_2.png" width="400"> | <img src="demo/screenshots/iOS26_2.png" width="400"> |
+| **Main View** | <img src="demo/screenshots/iOS14_1.png" height="600"> | <img src="demo/screenshots/iOS26_1.png" height="600"> |
+| **Detail View** | <img src="demo/screenshots/iOS14_2.png" height="600"> | <img src="demo/screenshots/iOS26_2.png" height="600"> |
 
 *The app has evolved from a simple iOS 14 ToDo list to a premium iOS 26 Liquid Glass experience.*
 
