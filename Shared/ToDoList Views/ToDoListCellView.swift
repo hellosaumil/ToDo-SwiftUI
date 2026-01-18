@@ -32,18 +32,22 @@ struct ToDoListCellView: View {
                     
                     Spacer()
                     
-                    // Lock icon
+                    // Lock icon - single tap to lock/unlock
                     getSystemImage(name: list.isLocked ? "lock.fill" : "lock.open.fill", scale: .small)
                         .foregroundOverlay(myGradient(type: list.todoGradientScheme,
                                                       colors: [list.todoGradientStartColor.color, list.todoGradientEndColor.color]))
                         .opacity( list.isLocked ? 0.75 : 0.50 )
-                        .onTapGesture(count: 2, perform: {
+                        .contentShape(Rectangle().size(width: 44, height: 44))
+                        .onTapGesture {
                             if !list.isLocked {
-                                withAnimation{ list.isLocked = true
+                                withAnimation {
+                                    list.isLocked = true
                                     DispatchQueue.main.async { userLists.saveLists() }
                                 }
-                            } else { authUser() }
-                        })
+                            } else {
+                                authUser()
+                            }
+                        }
                     
                     // Chevron icon - tappable for navigation
                     if !list.isLocked {
