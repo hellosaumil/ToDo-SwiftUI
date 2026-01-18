@@ -12,10 +12,25 @@ A modern, feature-rich ToDo list app built with SwiftUI featuring beautiful grad
 - **🔍 Search** - Quickly find lists and tasks with native search
 - **📱 Widgets** - Home screen widgets to view your tasks at a glance
 
-## Demo
+## Demo Comparison
+
+### Original (iOS 14 - 2020) vs Revamped (iOS 26 - Liquid Glass)
+
+| Component | iOS 14 (Standard) | iOS 26 (Liquid Glass) |
+| :--- | :---: | :---: |
+| **List Overview** | <img src="demo/screenshots/iOS14_1.png" width="300"> | <img src="demo/screenshots/iOS26_1.png" width="300"> |
+| **Task Details** | <img src="demo/screenshots/iOS14_2.png" width="300"> | <img src="demo/screenshots/iOS26_2.png" width="300"> |
+
+### App Evolution (Full Demo)
 
 <p align="center">
-  <img src="demo/demo.gif" alt="ToDo-SwiftUI Demo" width="300">
+  <b>Original App (2020)</b><br>
+  <img src="demo/ToDoList_original_iOS14.gif" alt="iOS 14 Demo" width="300">
+</p>
+
+<p align="center">
+  <b>Liquid Glass Revamp (2026)</b><br>
+  <img src="demo/ToDoList_original_iOS26.gif" alt="iOS 26 Demo" width="300">
 </p>
 
 *App running on iPhone 17 Pro Simulator with iOS 26 Liquid Glass*
