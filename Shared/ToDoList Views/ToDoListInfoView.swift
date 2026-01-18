@@ -168,6 +168,12 @@ struct ToDoListInfoView: View {
 //            .edgesIgnoringSafeArea(.bottom)
             
         }
+        .onChange(of: list.todoGradientStartColor) { _ in
+            DispatchQueue.main.async { userLists.saveLists() }
+        }
+        .onChange(of: list.todoGradientEndColor) { _ in
+            DispatchQueue.main.async { userLists.saveLists() }
+        }
         .onDisappear {
             // MARK: Update Stored Lists
             DispatchQueue.main.async { userLists.saveLists() }

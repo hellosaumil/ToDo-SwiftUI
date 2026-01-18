@@ -7,16 +7,17 @@
 
 import SwiftUI
 
-//let onceUponATime = Date(timeIntervalSince1970: 0)
-var onceUponATime = Date()
+// Placeholder date for comparison - use epoch time
+let defaultPlaceholderDate = Date(timeIntervalSince1970: 0)
 
 struct ToDoTaskInfoView: View {
     
     @ObservedObject var task: ToDoTask
     @Binding var showModal: Bool
     
-    @State private var datePickerValue: Date = onceUponATime
+    @State private var datePickerValue: Date = Date()
     @State private var showDatePicker: Bool = false
+    @State private var hasSelectedDate: Bool = false
     
     var body: some View {
         
@@ -147,14 +148,17 @@ struct ToDoTaskInfoView: View {
                                    label: {Text("Date & Time")} )
                     
                         Button("Remove the Due Date") {
-                            onceUponATime = Date()
-                            self.datePickerValue = onceUponATime
+                            self.hasSelectedDate = false
+                            self.datePickerValue = Date()
                             withAnimation(.easeInOut) {self.showDatePicker.toggle()}
                         }
                         .foregroundColor(.red)
                     
                     } else {
-                        Button("🗓 Pick a Due Date") { withAnimation(.easeInOut) {self.showDatePicker.toggle()} }
+                        Button("🗓 Pick a Due Date") {
+                            self.hasSelectedDate = true
+                            withAnimation(.easeInOut) {self.showDatePicker.toggle()}
+                        }
                     }
                 }
                 
@@ -210,12 +214,31 @@ struct ToDoTaskInfoView: View {
             
             if let validDate = task.dueDateTime {
                 self.datePickerValue = validDate
-                withAnimation(.easeInOut) {self.showDatePicker.toggle()}
+                self.hasSelectedDate = true
+                withAnimation(.easeInOut) {self.showDatePicker = true}
             }
         })
+        .onChange(of: datePickerValue) { newValue in
+            if hasSelectedDate {
+                self.task.updateDateAndNotify(dueDate: newValue)
+            }
+        }
+        .onChange(of: hasSelectedDate) { newValue in
+            if !newValue {
+                self.task.updateDateAndNotify(dueDate: nil)
+            } else {
+                self.task.updateDateAndNotify(dueDate: datePickerValue)
+            }
+        }
+        .onChange(of: task.todoGradientStartColor) { _ in
+            DispatchQueue.main.async { userLists.saveLists() }
+        }
+        .onChange(of: task.todoGradientEndColor) { _ in
+            DispatchQueue.main.async { userLists.saveLists() }
+        }
         .onDisappear {
             
-            self.task.updateDateAndNotify(dueDate: (self.datePickerValue != onceUponATime) ? self.datePickerValue : nil)
+            self.task.updateDateAndNotify(dueDate: self.hasSelectedDate ? self.datePickerValue : nil)
             
             
             // MARK: Update Stored Lists

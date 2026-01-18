@@ -22,33 +22,35 @@ struct GradientColorRoll: View {
         
         HStack {
             
-            Text(text).lineLimit(2)
-                .scaledToFit()
+            Text(text)
             
             Spacer()
             
-            Picker(selection: $selectedColor, label: EmptyView()) {
-                
-                ForEach(BaseColors.allCases, id: \.id) { colorName in
-                    
-                    BaseShapes.square.filled.tag(colorName)
-                        .rotationEffect(Angle(degrees: -90.0))
-                        .foregroundColor( colorName.color )
-                        .imageScale(.medium)
-                    
+            // Color swatch preview
+            RoundedRectangle(cornerRadius: 6)
+                .fill(selectedColor.color)
+                .frame(width: 44, height: 28)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .strokeBorder(Color.secondary.opacity(0.3), lineWidth: 1)
+                )
+            
+            // Picker with menu style for proper binding
+            Picker("", selection: $selectedColor) {
+                ForEach(BaseColors.allCases, id: \.self) { colorName in
+                    HStack {
+                        Circle()
+                            .fill(colorName.color)
+                            .frame(width: 16, height: 16)
+                        Text(colorName.id.capitalized)
+                    }
+                    .tag(colorName)
                 }
             }
-            .pickerStyle(WheelPickerStyle())
-            .frame(width: UIScreen.main.bounds.width * 0.65,
-                   height: 24,
-                   alignment: .center)
-            .rotationEffect(Angle(degrees: 90.0))
-            .scaledToFit()
-            .clipped()
-            .padding(.vertical, 4)
-            .padding(.leading, -30)
-            
+            .pickerStyle(.menu)
+            .labelsHidden()
         }
+        .padding(.vertical, 4)
     }
 }
 
