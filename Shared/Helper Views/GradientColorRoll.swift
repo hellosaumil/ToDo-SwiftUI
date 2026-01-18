@@ -18,9 +18,6 @@ struct GradientColorRoll: View {
     @State var text: String = "Choose Color"
     @Binding var selectedColor: BaseColors
     
-    // Local state for ColorPicker
-    @State private var pickerColor: Color = .orange
-    
     var body: some View {
         
         HStack {
@@ -29,31 +26,31 @@ struct GradientColorRoll: View {
             
             Spacer()
             
-            // Native ColorPicker (ColorWell)
-            ColorPicker("", selection: $pickerColor, supportsOpacity: false)
-                .labelsHidden()
+            // Color swatch preview
+            RoundedRectangle(cornerRadius: 6)
+                .fill(selectedColor.color)
                 .frame(width: 44, height: 28)
-                .onChange(of: pickerColor) { newColor in
-                    // Find closest BaseColor match
-                    selectedColor = closestBaseColor(to: newColor)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .strokeBorder(Color.secondary.opacity(0.3), lineWidth: 1)
+                )
+            
+            // Picker with menu style for proper binding
+            Picker("", selection: $selectedColor) {
+                ForEach(BaseColors.allCases, id: \.self) { colorName in
+                    HStack {
+                        Circle()
+                            .fill(colorName.color)
+                            .frame(width: 16, height: 16)
+                        Text(colorName.id.capitalized)
+                    }
+                    .tag(colorName)
                 }
+            }
+            .pickerStyle(.menu)
+            .labelsHidden()
         }
         .padding(.vertical, 4)
-        .onAppear {
-            pickerColor = selectedColor.color
-        }
-    }
-    
-    // Find the closest BaseColor to the selected color
-    private func closestBaseColor(to color: Color) -> BaseColors {
-        // For simplicity, return the current selection
-        // A more sophisticated approach would compare RGB values
-        for baseColor in BaseColors.allCases {
-            if baseColor.color.description == color.description {
-                return baseColor
-            }
-        }
-        return selectedColor
     }
 }
 

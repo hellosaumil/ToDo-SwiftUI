@@ -12,26 +12,22 @@ A modern, feature-rich ToDo list app built with SwiftUI featuring beautiful grad
 - **🔍 Search** - Quickly find lists and tasks with native search
 - **📱 Widgets** - Home screen widgets to view your tasks at a glance
 
-## Demo Comparison
+## Side-by-Side Evolution
 
-### Original (iOS 14 - 2020) vs Revamped (iOS 26 - Liquid Glass)
+### Animation Comparison (2020 vs 2026)
 
-| Component | iOS 14 (Standard) | iOS 26 (Liquid Glass) |
+| Original iOS 14 (2020) | Revamped iOS 26 (Liquid Glass) |
+| :---: | :---: |
+| <img src="demo/ToDoList_original_iOS14.gif" width="400"> | <img src="demo/ToDoList_original_iOS26.gif" width="400"> |
+
+### Design Comparison (Static)
+
+| Feature | iOS 14 (Standard) | iOS 26 (Liquid Glass) |
 | :--- | :---: | :---: |
-| **List Overview** | <img src="demo/screenshots/iOS14_1.png" width="300"> | <img src="demo/screenshots/iOS26_1.png" width="300"> |
-| **Task Details** | <img src="demo/screenshots/iOS14_2.png" width="300"> | <img src="demo/screenshots/iOS26_2.png" width="300"> |
+| **Main View** | <img src="demo/screenshots/iOS14_1.png" width="400"> | <img src="demo/screenshots/iOS26_1.png" width="400"> |
+| **Detail View** | <img src="demo/screenshots/iOS14_2.png" width="400"> | <img src="demo/screenshots/iOS26_2.png" width="400"> |
 
-### App Evolution (Full Demo)
-
-<p align="center">
-  <b>Original App (2020)</b><br>
-  <img src="demo/ToDoList_original_iOS14.gif" alt="iOS 14 Demo" width="300">
-</p>
-
-<p align="center">
-  <b>Liquid Glass Revamp (2026)</b><br>
-  <img src="demo/ToDoList_original_iOS26.gif" alt="iOS 26 Demo" width="300">
-</p>
+*The app has evolved from a simple iOS 14 ToDo list to a premium iOS 26 Liquid Glass experience.*
 
 *App running on iPhone 17 Pro Simulator with iOS 26 Liquid Glass*
 
